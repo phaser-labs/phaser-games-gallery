@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 class GlobalState {
   specificMusic: boolean = false;
   generalMusic: boolean = false;
+  data: DataGameRoadDice[] = [];
 
   static instance: GlobalState;
 
@@ -17,6 +18,15 @@ class GlobalState {
   diceValue = 0;
 }
 
+interface DataGameRoadDice {
+  id: number;
+  question: string;
+  options: {
+    id: string;
+    label: string;
+    state: 'wrong' | 'success';
+  }[];
+}
 export interface playerType extends Phaser.Physics.Arcade.Sprite {
   score?: number;
 }
