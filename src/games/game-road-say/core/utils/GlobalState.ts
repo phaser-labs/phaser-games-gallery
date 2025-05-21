@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 
 // variables globales
 class GlobalState {
-  [x: string]: DataGameRoadDice[];
   specificMusic: boolean = false;
   generalMusic: boolean = false;
 
