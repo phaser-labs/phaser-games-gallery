@@ -1,0 +1,123 @@
+:root {
+    --cover-background-trasparency: 10%;
+}
+
+.cover-title {
+    --title-size: 70ch;
+    place-items: center;
+    display: grid;
+    grid-template-rows: auto 1fr var(--header-cover-height);
+    grid-template-areas: 'audio audio'
+                        'title image'
+                        'menu image';
+    grid-template-columns: repeat(2, 1fr);
+    position: relative;
+    height: 100%;
+}
+
+.background {
+    mix-blend-mode: multiply;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: var(--header-column-width);
+    height: 100%;
+    transition: background-color 120ms ease-in-out;
+    background-color: color-mix(in srgb, var(--clr-brand), transparent var(--cover-background-trasparency));
+}
+
+html[data-dark-mode="true"] .background {
+    mix-blend-mode: normal;
+    background-color: var(--clr-brand);
+}
+
+.cover-title__audio {
+    grid-area: audio;
+}
+
+.cover-title__title {
+    grid-area: title;
+    place-content: center;
+    isolation: isolate;
+    display: grid;
+    gap: 1em;
+    max-width: var(--title-size);
+}
+
+.cover-title h1 {
+    font-size: var(--fs-700);
+    font-weight: bold;
+    text-align: left;
+}
+
+.cover-title strong {
+    color: var(--clr-accent);
+}
+
+.cover-title__link {
+    --outline-offset: -4px;
+    text-decoration-color: transparent;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: fit-content;
+    padding: 0.3em 1.3em;
+    transition: background-color 120ms ease-in-out;
+    background-color: var(--clr-accent);
+    border: 1px solid transparent;
+    border-radius: 100vw;
+    font-size: var(--fs-300);
+    font-weight: bold;
+    color: var(--clr-text-secondary);
+}
+
+.cover-title__link:is(:hover, :focus) {
+    background-color: color-mix(in srgb, var(--clr-accent), white 20%);
+}
+
+.cover-title__link>svg {
+    --icon-size: 1.9rem;
+}
+
+
+.cover-title__img {
+    --position: 3%;
+    position: relative;
+    top: var(--position);
+    right: var(--position);
+    height: var(--header-cover-image-size, auto);
+    grid-area: image;
+    align-self: start;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .cover-title {
+        place-items: center;
+        grid-template-rows: auto 3fr 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    .background {
+        display: none;
+    }
+
+    .cover-title__title {
+        --title-size: 80ch;
+        place-items: center;
+        display: grid;
+    }
+
+    .cover-title h1 {
+        font-size: var(--fs-600);
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 640px) {
+
+    .cover-title h1 {
+        font-size: var(--fs-400);
+    }
+}

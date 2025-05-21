@@ -1,0 +1,35 @@
+.input {
+    position: relative;
+    display: inline-block;
+}
+
+
+.incorrect::after {
+    content: '✖';
+    color: var(--clr-activity-wrong);
+    background-color: var(--clr-text-secondary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+
+  .correct::after {
+    content: '✔';
+    color: #85a321;
+    background-color: var(--clr-text-secondary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }

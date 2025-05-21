@@ -1,0 +1,23 @@
+.modal {
+    --modal-max-width: 45rem;
+}
+
+:where(.modal__wrapper) {
+    display: grid;
+    height: 100%;
+    place-content: center;
+    text-align: center;
+}
+
+.modal__image {
+    display: block;
+    width: 15.625rem;
+    height: auto;
+    margin-inline: auto;
+}
+
+.modal__title {
+    color: var(--clr-elements-dark-mode);
+    font-weight: bold;
+    font-size: var(--fs-500);
+}

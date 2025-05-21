@@ -1,0 +1,18 @@
+.message-404 h1 {
+    font-size: clamp(3.05rem, 21.75vi + -2.39rem, 18.41rem);
+    letter-spacing: 1rem;
+    -webkit-text-stroke: max(.2rem, .5vw) var(--clr-text-main);
+    -webkit-text-fill-color: transparent;
+}
+
+.message-404__wrapper {
+    grid-area: main;
+}
+
+.message-404 p {
+    font-size: var(--fs-300);
+}
+
+.message-404 strong {
+    color: var(--clr-accent-dark);
+}

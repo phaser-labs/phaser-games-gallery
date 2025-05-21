@@ -1,0 +1,48 @@
+.modal {
+    --modal-max-width: 50rem;
+}
+
+.modal:has(div[data-type="success"]) {
+    --modal-color-title: var(--clr-activity-success);
+    --modal-box-shadow-color: var(--clr-activity-success);
+}
+
+.modal:has(div[data-type="wrong"]) {
+    --modal-color-title: var(--clr-activity-wrong);
+    --modal-box-shadow-color: var(--clr-activity-wrong);
+}
+
+.modal__wrapper {
+    place-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+    text-align: center;
+}
+
+@media screen and (max-width: 920px) {
+
+    .modal__wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.modal__image {
+    margin-inline: auto;
+    display: block;
+    width: 20rem;
+    height: auto;
+}
+
+.modal__title {
+    font-size: var(--fs-700);
+    font-weight: bold;
+    color: var(--modal-color-title, var(--clr-text-main));
+}
+
+.modal__audio {
+    grid-column: 2 / -1;
+}

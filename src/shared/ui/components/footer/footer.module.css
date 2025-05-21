@@ -1,0 +1,104 @@
+.footer {
+    --footer-color-highlight: color-mix(in srgb, var(--clr-accent), white 20%);
+    width: 100%;
+}
+
+.footer ul {
+    gap: 1rem;
+}
+
+.footer__nav-button {
+    --outline-offset: -5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    background-color: transparent;
+    gap: .5rem;
+    border: 1px solid transparent;
+    color: inherit;
+    transition: color, transform 200ms ease-in-out;
+}
+
+.footer__nav-button:disabled {
+    color: var(--clr-accent-dark);
+    cursor: not-allowed;
+}
+
+.footer__nav-button:not(:disabled) svg {
+    color: var(--clr-accent);
+}
+
+.footer__nav-button[data-type="next"] svg {
+    order: 2;
+}
+
+.footer__nav-button[data-type="previous"] svg {
+    transform: rotate(180deg);
+}
+
+.footer__nav-button:not(:disabled):is(:hover, :focus),
+.footer__nav-button:not(:disabled):is(:hover, :focus) svg {
+    color: var(--footer-color-highlight);
+}
+
+.footer__nav-button:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+:is(.footer__nav-link, .footer__nav-ellipsis) {
+    display: grid;
+    place-items: center;
+    min-width: 1.5rem;
+    color: inherit;
+    text-decoration-color: transparent;
+}
+
+.footer__nav-link {
+    position: relative;
+    transition: font-weight 200ms ease-in-out;
+}
+
+.footer__nav-link:is(:hover, :focus-visible) {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.footer__nav-link:is(:hover, [aria-current="page"])::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    border-bottom: 3px solid var(--border-color, var(--clr-accent));
+    transition: border-bottom 200ms ease-in-out;
+}   
+
+.footer__nav-link:hover::after {
+    --border-color: var(--footer-color-highlight);
+
+}
+.footer__nav-link:is(:hover, [aria-current="page"]) {
+    font-weight: bold;
+}
+
+div.footer__nav-tooltip {
+    --tooltip-bg: var(--clr-accent);
+    color: var(--clr-background);
+}
+
+@media screen and (max-width: 1280px) {
+    .footer ul {
+        gap: .5rem;
+    }
+
+    .footer__nav-button svg {
+        --icon-size: 1.3rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .footer__nav-button span {
+        display: none;
+    }
+}

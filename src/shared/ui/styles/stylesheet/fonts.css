@@ -1,0 +1,36 @@
+/* Heebo - Page title */
+@font-face {
+  font-family: 'Exo';
+  src: url('assets/fonts/Exo-Black.woff2') format('woff2');
+  font-weight: 900; /* Black: peso más pesado */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Exo';
+  src: url('assets/fonts/Exo-Bold.woff2') format('woff2');
+  font-weight: 700; /* Bold: peso estándar para negrita */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Exo';
+  src: url('assets/fonts/Exo-Italic.woff2') format('woff2');
+  font-weight: 400; /* Peso normal */
+  font-style: italic; /* Estilo en cursiva */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Exo';
+  src: url('assets/fonts/Exo-Medium.woff2') format('woff2');
+  font-weight: 500; /* Medium: peso intermedio */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Exo';
+  src: url('assets/fonts/Exo-Regular.woff2') format('woff2');
+  font-weight: 400; /* Regular: peso normal */
+  font-display: swap;
+}

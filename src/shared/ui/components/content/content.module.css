@@ -1,0 +1,15 @@
+.content {
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "title"
+    "audio"
+    "content";
+  place-items: center;
+}
+
+
+.content>div[class^="c-row"] {
+  grid-area: content;
+}

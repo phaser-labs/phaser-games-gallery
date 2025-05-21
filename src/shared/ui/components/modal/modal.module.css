@@ -1,0 +1,93 @@
+.modal {
+    --border-radious: 2rem; 
+
+    background-color: var(--clr-background);
+    border-radius: var(--border-radious);
+    block-size: unset;
+    z-index: var(--z-index-modal);
+    box-shadow: -8px 8px 0 0 var(--modal-box-shadow-color, var(--clr-brand));
+}
+
+
+.modal :global(.c-modal-container)::-webkit-scrollbar {
+    border-radius: .625rem;
+    background-color: #f5f5f5;
+    width: .625rem;
+}
+
+.modal :global(.c-modal-container)::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.modal :global(.c-modal-container)::-webkit-scrollbar-thumb {
+    border: 2px solid #f5f5f5;
+    background-color: var(--clr-brand);
+    border-radius: .4375rem;
+}
+
+.modal :global(.c-modal-container) {
+    max-block-size: 70vh;
+}
+
+/* @media screen and (max-width: 1280px) and (orientation: landscape) {
+    .modal :global(.c-modal-container) {
+        max-block-size: 50vh;
+    }
+} */
+
+@media screen and (max-width: 1280px) {
+    div.modal {
+        --border-radious: 1rem;
+        --modal-max-width: calc(100vw - 1rem);
+        --modal-height: calc(100svh - 1rem);
+        block-size: var(--modal-height);
+        width: calc(100vw - 1rem);
+    }
+
+    .modal :global(.c-modal-container) {
+        max-block-size: 100%;
+    }
+}
+
+.modal-overlay {
+    background: #000000;
+    z-index: var(--z-index-modal);
+}
+
+.modal-button {
+    --outline-color: var(--clr-brand);
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: clamp(2rem, 5%, 3rem);
+    display: grid;
+    place-content: center;
+    aspect-ratio: 1 / 1;
+    border: 1px solid transparent;
+    background-color: var(--clr-brand);
+    transform: translate(40%, -40%);
+    color: #f5f5f5;
+    border-radius: 100vw;
+}
+
+.modal-button:hover {
+    background-color: color-mix(in srgb, var(--clr-brand), white 20%);
+}
+
+
+.modal-button svg {
+    --icon-size: 2rem;
+}
+
+@media screen and (max-width: 1280px) {
+    .modal-button {
+        top: .5%;
+        right: .5%;
+        transform: none;
+    }
+
+    .modal-button svg {
+        --icon-size: 1.5rem;
+    }
+}

@@ -1,0 +1,245 @@
+.wrapper_depths {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.fullScreen__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.image_back {
+  aspect-ratio: 21/9;
+}
+
+.image_depth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(1.05);
+  aspect-ratio: 21/9;
+}
+
+.modal_depth {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.bubble {
+  position: absolute;
+
+  transform: scale(0.3);
+}
+
+.container__question {
+  color: #000;
+  background-color: rgb(213, 239, 252);
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  top: 15px;
+  left: 10%;
+  right: 10%;
+}
+
+.fish {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.fish[aria-pressed="true"] {
+  border: .125rem solid var(--border-clr, rgb(255, 183, 52));
+  background-color: #0003;
+  padding: .1875rem;
+  border-radius: .9375rem;
+}
+
+.fish[data-state="true"] {
+  --border-clr: #6f9c39;
+}
+
+.fish[data-state="false"] {
+  --border-clr: #bc4124;
+}
+
+.fish:not(:disabled):hover {
+  filter: brightness(1.2);
+}
+
+.fish:disabled>*:not(svg) {
+  filter: grayscale(1);
+}
+
+.feedback {
+  --size: 27.2px;
+
+  position: absolute;
+  bottom: calc(100% - (var(--size) / 2));
+  left: calc(100% - (var(--size) / 2));
+  display: block;
+  width: var(--size);
+  height: var(--size);
+}
+
+
+.paragraph__fish {
+  margin-top: 3px;
+  background-color: rgb(247, 240, 219);
+  text-align: center;
+  padding: 3px 6px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: 2px solid #fda219;
+}
+
+.score {
+  background-color: rgb(8, 136, 25);
+  color: white;
+  border: 2px solid white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.selectPart {
+  background-color: rgb(247, 228, 199);
+  padding: 2px;
+  border: 2px solid rgb(247, 159, 26);
+}
+
+.container_controls {
+  color: white;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.init_button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+
+  transform: translate(-50%, -50%);
+
+  background-image: url('./assets/images/Boton_Inicio.webp');
+  width: 221px;
+  height: 63px;
+  color: white;
+  font-size: xx-large;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.init_button:hover {
+  filter: brightness(1.2);
+}
+
+@media screen and (max-width: 500px) {
+  .container__question {
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .wrapper_depths {
+    filter: grayscale(0.8);
+  }
+
+  .fish img {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-stop-animations='true']) .fish {
+    transition:
+      top 0.8s,
+      left 0.3s,
+      transform 0.6s;
+
+    animation-name: float;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  html:not([data-stop-animations='true']) .bubble {
+    animation-name: bubble;
+    animation-duration: 6s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  }
+
+  html:not([data-stop-animations='true']) .modal_depth {
+    animation-name: modalIn;
+    animation-duration: 0.4s;
+  }
+}
+
+html[data-dark-mode='true'] .wrapper_depths {
+  opacity: 0.8;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes bubble {
+  0% {
+    bottom: 0%;
+    opacity: 0.7;
+  }
+
+  50% {
+    bottom: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    bottom: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%) scale(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+}

@@ -1,0 +1,44 @@
+.container {
+  position: relative;
+  width: 32px;
+  /* filter: hue-rotate(90deg); */
+}
+
+.torso {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.pat_izq {
+  position: absolute;
+  left: -10px;
+  top: 10px;
+}
+
+.pat_der {
+  position: absolute;
+  right: -10px;
+  top: 10px;
+}
+
+.tenaza_izq {
+  position: absolute;
+  top: -16px;
+  left: -15px;
+}
+
+.tenaza_der {
+  position: absolute;
+  top: -16px;
+  right: -15px;
+  transform: scaleX(-1);
+}
+
+.shadow {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  bottom: -30px;
+}

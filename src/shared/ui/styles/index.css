@@ -1,0 +1,8 @@
+/* Fonts */
+@import url('./stylesheet/fonts.css');
+
+/* Estilos generales*/
+@import url('./stylesheet/global.css');
+
+/* Dark mode */
+@import url('./stylesheet/dark-mode.css');

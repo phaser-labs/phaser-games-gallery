@@ -1,0 +1,30 @@
+.modal {
+    --modal-max-width: 50.375rem;
+}
+
+.modal h2 {
+    font-size: var(--fs-600);
+    color: var(--clr-brand);
+}
+
+.bibliography-link a {
+    word-break: break-all;
+    color: #157f70;
+    transition: color 120ms ease;
+}
+
+.bibliography-link a:hover {
+    color: var(--clr-accent-light);
+}
+
+html[data-dark-mode="true"] .modal :is(h2, strong) {
+    color: var(--clr-text-main);
+}
+
+html[data-dark-mode="true"] .bibliography-link a {
+    color: var(--clr-accent-light);
+}
+
+html[data-dark-mode="true"] .bibliography-link a:hover {
+    color: color-mix(in srgb, var(--clr-accent-light), white 40%);
+}

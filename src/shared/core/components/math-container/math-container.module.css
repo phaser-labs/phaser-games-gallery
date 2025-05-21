@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px) {
+    .mathContainer {
+        font-size: var(--fs-300);
+    }
+}
+  
+@media screen and (max-width: 568px) {
+    .mathContainer {
+        font-size: var(--fs-200);
+    }
+}

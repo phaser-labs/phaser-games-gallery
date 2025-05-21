@@ -1,0 +1,55 @@
+html[data-dark-mode="true"]:root {
+    --clr-elements-dark-mode: #f7f7f7;
+    --clr-dark-mode: #121212;
+    
+    --clr-brand: #4d5d7a;          /* Versión más clara del brand original */
+    --clr-accent: #2975b8;         /* Versión más brillante del accent */
+    --clr-accent-dark: #737373;    /* Gris más claro para mejor visibilidad */
+    --clr-text-main: #e1e1e1;      /* Texto claro para fondo oscuro */
+    --clr-text-secondary: #1a1a1a; /* Invertido para mantener contraste */
+    --clr-background: #1a1f2a;     /* Fondo oscuro basado en el brand color */
+    --clr-activity-success: #23d4ba; /* Versión más brillante del success */
+    --clr-activity-wrong: #ff6b5b;  /* Versión más brillante del wrong */
+}
+
+
+html[data-dark-mode="true"] .c-audio__bar {
+    --audio-background-color: var(--clr-elements-dark-mode);
+    --audio-icon-color: var(--clr-dark-mode);
+    --audio-slider-color: var(--clr-dark-mode);
+}
+
+html[data-dark-mode="true"] .video-player {
+    --video-bg: #01040a;
+    --video-caption-bg: #01040a;
+    --video-slider-bg: #bd0000;
+}
+
+html[data-dark-mode="true"] body {
+    --bg-image: url(assets/base/background-dark.webp);
+}
+
+html[data-dark-mode="true"] .u-subtitle {
+    color: var(--clr-text-main);
+}
+
+html[data-dark-mode="true"] main::-webkit-scrollbar {
+    background-color: var(--clr-background);
+}
+
+html[data-dark-mode="true"] main::-webkit-scrollbar-thumb {
+    border: 2px solid var(--clr-background);
+}
+
+html[data-dark-mode="true"]:has(main[data-home="true"]) .c-interpreter__container {
+    --interpreter-clr-list: #252d42;
+    --interpreter-btn-bg: #252d42;
+}
+
+html[data-dark-mode="true"] .c-video {
+    box-shadow: none;
+}
+
+html[data-dark-mode="true"] .c-interpreter__list {
+    box-shadow: none;
+}

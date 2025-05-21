@@ -1,0 +1,6 @@
+[submodule "src/shared/core"]
+	path = src/shared/core
+	url = git@github.com:200-OVAs-2025/core.git
+[submodule "src/shared/ui"]
+	path = src/shared/ui
+	url = git@github.com:200-OVAs-2025/ova-cobalt-ui-kit.git

@@ -1,0 +1,42 @@
+.accordion-item {
+    --accordion-border-radius: .7rem;
+    --accordion-color-hover: #495c83;
+    border: none;
+}
+
+.accordion-button {
+    --outline-color: var(--clr-brand);
+    background-color: var(--clr-brand);
+    color: var(--clr-text-secondary);
+    font-weight: bold;
+    padding: 0.4rem 1rem;
+    cursor: default;
+    border-radius: var(--accordion-border-radius);
+    transition: border-radius 300ms ease-in-out, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+html[data-dark-mode="true"] .accordion-button {
+    color: var(--clr-text-main);
+}
+
+.accordion-button svg {
+    fill: currentColor;
+}
+
+.accordion-button:hover {
+    background-color: var(--accordion-color-hover);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button[aria-expanded="true"] {
+    border-radius: var(--accordion-border-radius) var(--accordion-border-radius) 0 0;
+}
+
+.accordion-panel {
+    background-color: var(--acordion-panel-bg, #ebeef3);
+    border-radius: 0 0 var(--accordion-border-radius) var(--accordion-border-radius) ;
+}
+
+html[data-dark-mode="true"] .accordion-panel {
+    --acordion-panel-bg: #252d42;
+}

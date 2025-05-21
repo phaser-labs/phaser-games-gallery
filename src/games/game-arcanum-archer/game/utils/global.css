@@ -1,0 +1,581 @@
+@font-face {
+  font-family: 'Underdog';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/game-arcanum-archer/fonts/Underdog-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'quintenssential';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/game-arcanum-archer/fonts/Quintessential-Regular.ttf');
+}
+
+.game-arcanum-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-arcanum-container :is(h1, p, h2, span, div, button) {
+  cursor: url(assets/game-arcanum-archer/images/Controls/cursorHand_grey.png), auto;
+}
+
+/* Pagina inicial */
+.game-arcanum-title-container {
+  width: 60%;
+  height: 20%;
+  border-image-slice: 27 27 27 27 fill;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: stretch stretch;
+  border-image-source: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjY0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICA8ZGVmcy8+CiAgPGc+CiAgICA8cGF0aCBzdHJva2U9Im5vbmUiIGZpbGw9IiM4RTNGMzgiIGQ9Ik01OS44IDUxLjg1IEw1OC4xNSA2MCA1Ny41IDYxLjIgNTYuOCA2MS42IDU2LjM1IDYxLjY1IDE5LjcgNjQgMTguNyA2My44IDE4LjM1IDYzLjYgUTE3Ljc1IDYzLjE1IDE3LjYgNjIuNDUgTDE1LjcgNTMuNzUgUTExLjE1IDUyIDcuMiA0OS45NSBMNC4xNSA0OC4zIDQuMTUgNDguMzUgMS41IDQ2LjcgMSA0Ni41IDAuMjUgNDUuNyAwIDQ0LjY1IDEuMjUgNS4wNSAxLjI1IDQuOTUgUTEuNCAyLjggMi43NSAxLjcgTDIuOTUgMS41IFE0LjU1IC0wLjMgOC4zNSAwLjA1IDY3LjYgNi41IDEyNi44IDYuMzUgTDEyNy4zNSA2LjM1IDEyNy45IDYuMzUgMTI5IDYuMzUgMTMwLjE1IDYuMzUgMTMwLjcgNi4zNSAxMzEuMSA2LjM1IDEzMS4xNSA2LjM1IDEzMy4wNSA2LjM1IFExOTAuMzUgNi4zIDI0Ny42NSAwLjA1IEwyNDcuNyAwLjA1IFEyNTEuMzUgLTAuMyAyNTMuMSAxLjQgTDI1My4zNSAxLjY1IFEyNTQuNSAyLjc1IDI1NC44IDQuODUgTDI1NC44IDUuMDUgMjU2IDQ0LjY1IDI1NS43NSA0NS43NSAyNTUuMDUgNDYuNSAyNTQuNSA0Ni43IDI1MiA0OC4zIDI0OC45NSA0OS45IFEyNDQuOSA1MiAyNDAuMyA1My43NSBMMjM4LjM1IDYyLjQ1IFEyMzguMiA2My4xNSAyMzcuNjUgNjMuNiBMMjM3LjM1IDYzLjggMjM2LjM1IDY0IDE5OS42NSA2MS42NSAxOTkuMjUgNjEuNiAxOTguNSA2MS4xNSBRMTk4IDYwLjY1IDE5Ny44NSA2MCBMMTk2LjI1IDUxLjg1IFExNjQuNjUgNTMuNjUgMTMzLjA1IDUzLjc1IEwxMzAuNyA1My43NSAxMzAuMTUgNTMuNzUgMTI5IDUzLjc1IDEyNy45IDUzLjc1IDEyNy4zNSA1My43NSAxMjYuOCA1My43NSBROTMuNCA1My43NSA1OS44IDUxLjg1IE0yNTEuOCAyLjk1IFEyNTAuNiAxLjg1IDI0Ny44NSAyLjEgMTkwLjQ1IDguMzUgMTMzLjA1IDguNCBMMTMxLjE1IDguNCAxMzEuMSA4LjQgMTMwLjcgOC40IDEzMC4xNSA4LjQgMTI5IDguNCAxMjcuOSA4LjQgMTI3LjM1IDguNCAxMjYuOCA4LjQgUTY3LjUgOC41NSA4LjE1IDIuMSA1LjQ1IDEuODUgNC4yNSAyLjk1IDMuMzUgMy43IDMuMjUgNS4xIEwxLjk1IDQ0LjcgMi4yIDQ0Ljc1IDUuMDUgNDYuNSBROC4yIDQ4LjMgMTEuOCA0OS45NSBMMTcuMzUgNTIuMjUgMTkuNTUgNjIgNDguNyA2MC4wNSA1Ni4yIDU5LjYgNTcuNzUgNTIuMSA1OC4yNSA0OS43IDYyIDQ5Ljk1IFE5NC40NSA1MS43NSAxMjYuOCA1MS43NSBMMTI3LjM1IDUxLjc1IDEyNy45IDUxLjc1IDEyOSA1MS43NSAxMzAuMTUgNTEuNzUgMTMwLjcgNTEuNzUgMTMzLjA1IDUxLjc1IFExNjMuNTUgNTEuNjUgMTk0IDQ5Ljk1IEwxOTcuOCA0OS43IDE5OC4zIDUyLjEgMTk5Ljc1IDU5LjYgMjA3LjQgNjAuMDUgMjM2LjQ1IDYyIDIzOC42IDUyLjI1IDI0NC4zIDQ5LjkgUTI0Ny44IDQ4LjMgMjUxIDQ2LjUgTDI1My44IDQ0Ljc1IDI1NCA0NC43IDI1Mi44NSA1LjEgUTI1Mi42NSAzLjcgMjUxLjggMi45NSIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjRkY3MzY2IiBkPSJNMjUxLjggMi45NSBMMjQ5LjMgMy4yNSBRMTkxLjIgMTEuMiAxMzMuMDUgMTEuNDUgTDEzMS4xNSAxMS40NSAxMzEuMSAxMS40NSAxMzAuNyAxMS40NSAxMzAuMTUgMTEuNDUgMTI5IDExLjQ1IDEyNy45IDExLjQ1IDEyNy4zNSAxMS40NSAxMjYuOCAxMS40NSBRNjYuNzUgMTEuNSA2Ljc1IDMuMjUgTDQuMjUgMi45NSBRNS40NSAxLjg1IDguMTUgMi4xIDY3LjUgOC41NSAxMjYuOCA4LjQgTDEyNy4zNSA4LjQgMTI3LjkgOC40IDEyOSA4LjQgMTMwLjE1IDguNCAxMzAuNyA4LjQgMTMxLjEgOC40IDEzMS4xNSA4LjQgMTMzLjA1IDguNCBRMTkwLjQ1IDguMzUgMjQ3Ljg1IDIuMSAyNTAuNiAxLjg1IDI1MS44IDIuOTUgTTE5OC4zIDUyLjEgTDE5Ny44IDQ5LjcgMTk3Ljg1IDQ5LjcgMTk4LjU1IDQ5LjcgMjA5LjYgNDkgMjM5Ljg1IDQ2LjMgMjQwLjEgNDYuMyAyNDkuOSA0NS4yNSAyNTMuOCA0NC43NSAyNDkuMyA0NS44IDIzOS41NSA0Ny42NSAyMzkuNSA0Ny43IFEyMTguOTUgNTEuMyAxOTguMyA1Mi4xIE01OC4yNSA0OS43IEw1Ny43NSA1Mi4xIFEzNy4wNSA1MS4zIDE2LjU1IDQ3LjcgTDE2LjQgNDcuNjUgNi44NSA0NS44IDIuMiA0NC43NSA2LjI1IDQ1LjI1IDE1Ljg1IDQ2LjMgMTYuMTUgNDYuMyA0Ni4zNSA0OSA1Ny41IDQ5LjcgNTguMjUgNDkuNyIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjRTI2NjVCIiBkPSJNNTguMjUgNDkuNyBMNTcuNSA0OS43IDQ2LjM1IDQ5IDE2LjE1IDQ2LjMgMTUuODUgNDYuMyA2LjI1IDQ1LjI1IDIuMiA0NC43NSAxLjk1IDQ0LjcgMy4yNSA1LjEgUTMuMzUgMy43IDQuMjUgMi45NSBMNi43NSAzLjI1IFE2Ni43NSAxMS41IDEyNi44IDExLjQ1IEwxMjcuMzUgMTEuNDUgMTI3LjkgMTEuNDUgMTI5IDExLjQ1IDEzMC4xNSAxMS40NSAxMzAuNyAxMS40NSAxMzEuMSAxMS40NSAxMzEuMTUgMTEuNDUgMTMzLjA1IDExLjQ1IFExOTEuMiAxMS4yIDI0OS4zIDMuMjUgTDI1MS44IDIuOTUgUTI1Mi42NSAzLjcgMjUyLjg1IDUuMSBMMjU0IDQ0LjcgMjUzLjggNDQuNzUgMjQ5LjkgNDUuMjUgMjQwLjEgNDYuMyAyMzkuODUgNDYuMyAyMDkuNiA0OSAxOTguNTUgNDkuNyAxOTcuODUgNDkuNyAxOTcuOCA0OS43IDE5NCA0OS45NSBRMTYzLjU1IDUxLjY1IDEzMy4wNSA1MS43NSBMMTMwLjcgNTEuNzUgMTMwLjE1IDUxLjc1IDEyOSA1MS43NSAxMjcuOSA1MS43NSAxMjcuMzUgNTEuNzUgMTI2LjggNTEuNzUgUTk0LjQ1IDUxLjc1IDYyIDQ5Ljk1IEw1OC4yNSA0OS43IE0yNDguMiA2LjE1IEwyNDguMyA2LjE1IFExOTAuNjUgMTIuNCAxMzMuMDUgMTIuNDUgTDEzMS4xNSAxMi40NSAxMzEuMSAxMi40NSAxMzAuNyAxMi40NSAxMzAuMTUgMTIuNDUgMTI5IDEyLjQ1IDEyNy45IDEyLjQ1IDEyNy4zNSAxMi40NSAxMjYuOCAxMi40NSBRNjcuMzUgMTIuNiA3LjggNi4xNSBMNy4yIDYuMDUgNi4wNSA0MS4xIDYuNjUgNDEuMiA2LjcgNDEuMiAxNiA0Mi4yNSAxNi4xNSA0Mi4yNSAxNi41NSA0Mi4zIDQ2LjY1IDQ0LjkgNTcuNzUgNDUuNjUgNTguMjUgNDUuNjUgNTguNDUgNDUuNjUgNjIuMyA0NS45IFE5NC42IDQ3LjY1IDEyNi44IDQ3LjY1IEwxMjcuMzUgNDcuNjUgMTI3LjkgNDcuNjUgMTI5IDQ3LjY1IDEzMC4xNSA0Ny42NSAxMzAuNyA0Ny42NSAxMzMuMDUgNDcuNjUgUTE2My40IDQ3LjU1IDE5My43IDQ1LjkgTDE5Ny42IDQ1LjY1IDE5Ny44IDQ1LjY1IDE5Ny44NSA0NS42NSAxOTguMyA0NS42NSAyMDkuMzUgNDQuOSAyMzkuNDUgNDIuMyAyMzkuODUgNDIuMjUgMjM5Ljk1IDQyLjI1IDI0OS40NSA0MS4yIDI0OS41IDQxLjIgMjUwIDQxLjE1IDI0OC45NSA2LjA1IDI0OC4yIDYuMTUgTTEzMS4xNSAxNC41IEwxMzMuMDUgMTQuNSBRMTkwIDE0LjQ1IDI0Ny4wNSA4LjM1IEwyNDcuOTUgMzkuMzUgMjM5Ljc1IDQwLjIgMjM5LjI1IDQwLjI1IDIwOS4yNSA0Mi45IDE5OC4yIDQzLjYgMTk3Ljg1IDQzLjYgMTk3LjU1IDQzLjYgMTk3LjUgNDMuNiAxOTMuNiA0My44NSBRMTYzLjM1IDQ1LjU1IDEzMy4wNSA0NS42NSBMMTMwLjcgNDUuNjUgMTMwLjE1IDQ1LjY1IDEyOSA0NS42NSAxMjcuOSA0NS42NSAxMjcuMzUgNDUuNjUgMTI2LjggNDUuNjUgUTk0LjcgNDUuNjUgNjIuNDUgNDMuODUgTDU4LjU1IDQzLjYgNTguNSA0My42IDU4LjI1IDQzLjYgNTguMiA0My42IDU3LjkgNDMuNiA0Ni44IDQyLjkgMTYuOCA0MC4yNSAxNi4yIDQwLjIgMTYuMTUgNDAuMiA4LjA1IDM5LjM1IDkuMDUgOC4zNSBRNjcuOTUgMTQuNjUgMTI2LjggMTQuNSBMMTI3LjM1IDE0LjUgMTI3LjkgMTQuNSAxMjkgMTQuNSAxMzAuMTUgMTQuNSAxMzAuNyAxNC41IDEzMS4xIDE0LjUgMTMxLjE1IDE0LjUiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0ZGRjFEMiIgZD0iTTEzMS4xNSAxNC41IEwxMzEuMSAxNC41IDEzMC43IDE0LjUgMTMwLjE1IDE0LjUgMTI5IDE0LjUgMTI3LjkgMTQuNSAxMjcuMzUgMTQuNSAxMjYuOCAxNC41IFE2Ny45NSAxNC42NSA5LjA1IDguMzUgTDguMDUgMzkuMzUgMTYuMTUgNDAuMiAxNi4yIDQwLjIgMTYuOCA0MC4yNSA0Ni44IDQyLjkgNTcuOSA0My42IDU4LjIgNDMuNiA1OC4yNSA0My42IDU4LjUgNDMuNiA1OC41NSA0My42IDYyLjQ1IDQzLjg1IFE5NC43IDQ1LjY1IDEyNi44IDQ1LjY1IEwxMjcuMzUgNDUuNjUgMTI3LjkgNDUuNjUgMTI5IDQ1LjY1IDEzMC4xNSA0NS42NSAxMzAuNyA0NS42NSAxMzMuMDUgNDUuNjUgUTE2My4zNSA0NS41NSAxOTMuNiA0My44NSBMMTk3LjUgNDMuNiAxOTcuNTUgNDMuNiAxOTcuODUgNDMuNiAxOTguMiA0My42IDIwOS4yNSA0Mi45IDIzOS4yNSA0MC4yNSAyMzkuNzUgNDAuMiAyNDcuOTUgMzkuMzUgMjQ3LjA1IDguMzUgUTE5MCAxNC40NSAxMzMuMDUgMTQuNSBMMTMxLjE1IDE0LjUgTTI0OC4yIDYuMTUgTDI0OC45NSA2LjA1IDI1MCA0MS4xNSAyNDkuNSA0MS4yIDI0OS40NSA0MS4yIDIzOS45NSA0Mi4yNSAyMzkuODUgNDIuMjUgMjM5LjQ1IDQyLjMgMjA5LjM1IDQ0LjkgMTk4LjMgNDUuNjUgMTk3Ljg1IDQ1LjY1IDE5Ny44IDQ1LjY1IDE5Ny42IDQ1LjY1IDE5My43IDQ1LjkgUTE2My40IDQ3LjU1IDEzMy4wNSA0Ny42NSBMMTMwLjcgNDcuNjUgMTMwLjE1IDQ3LjY1IDEyOSA0Ny42NSAxMjcuOSA0Ny42NSAxMjcuMzUgNDcuNjUgMTI2LjggNDcuNjUgUTk0LjYgNDcuNjUgNjIuMyA0NS45IEw1OC40NSA0NS42NSA1OC4yNSA0NS42NSA1Ny43NSA0NS42NSA0Ni42NSA0NC45IDE2LjU1IDQyLjMgMTYuMTUgNDIuMjUgMTYgNDIuMjUgNi43IDQxLjIgNi42NSA0MS4yIDYuMDUgNDEuMSA3LjIgNi4wNSA3LjggNi4xNSBRNjcuMzUgMTIuNiAxMjYuOCAxMi40NSBMMTI3LjM1IDEyLjQ1IDEyNy45IDEyLjQ1IDEyOSAxMi40NSAxMzAuMTUgMTIuNDUgMTMwLjcgMTIuNDUgMTMxLjEgMTIuNDUgMTMxLjE1IDEyLjQ1IDEzMy4wNSAxMi40NSBRMTkwLjY1IDEyLjQgMjQ4LjMgNi4xNSBMMjQ4LjIgNi4xNSIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjMDAwMDAwIiBmaWxsLW9wYWNpdHk9IjAuMTAxOTYwNzg0MzEzNzI1NDkiIGQ9Ik0xOTYuMjUgNTEuODUgUTE2NC42NSA1Ni4xIDEzMy4wNSA1Ni40IEwxMzIuMTUgNTYuNCAxMzEuMSA1Ni40IDEzMC43IDU2LjQgMTMwLjE1IDU2LjQgMTI5IDU2LjQgMTI3LjkgNTYuNCAxMjcuMzUgNTYuNCAxMjYuOCA1Ni40IFE5My40IDU2LjQgNTkuOCA1MS44NSA5My40IDUzLjc1IDEyNi44IDUzLjc1IEwxMjcuMzUgNTMuNzUgMTI3LjkgNTMuNzUgMTI5IDUzLjc1IDEzMC4xNSA1My43NSAxMzAuNyA1My43NSAxMzMuMDUgNTMuNzUgUTE2NC42NSA1My42NSAxOTYuMjUgNTEuODUiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0M2NTk0RiIgZD0iTTI1My44IDQ0Ljc1IEwyNTEgNDYuNSBRMjQ3LjggNDguMyAyNDQuMyA0OS45IEwyMzguNiA1Mi4yNSBRMjMyLjg1IDU0LjM1IDIyNi4wNSA1Ni4yIEwyMTYuNjUgNTguNDUgMjA3LjQgNjAuMDUgMTk5Ljc1IDU5LjYgMTk4LjMgNTIuMSBRMjE4Ljk1IDUxLjMgMjM5LjUgNDcuNyBMMjM5LjU1IDQ3LjY1IDI0OS4zIDQ1LjggMjUzLjggNDQuNzUgTTU3Ljc1IDUyLjEgTDU2LjIgNTkuNiA0OC43IDYwLjA1IDM5LjQ1IDU4LjQ1IDI5Ljk1IDU2LjIgUTIzLjIgNTQuMzUgMTcuMzUgNTIuMjUgTDExLjggNDkuOTUgUTguMiA0OC4zIDUuMDUgNDYuNSBMMi4yIDQ0Ljc1IDYuODUgNDUuOCAxNi40IDQ3LjY1IDE2LjU1IDQ3LjcgUTM3LjA1IDUxLjMgNTcuNzUgNTIuMSIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjQUQ0RDQ1IiBkPSJNMjM4LjYgNTIuMjUgTDIzNi40NSA2MiAyMDcuNCA2MC4wNSAyMTYuNjUgNTguNDUgMjI2LjA1IDU2LjIgUTIzMi44NSA1NC4zNSAyMzguNiA1Mi4yNSBNNDguNyA2MC4wNSBMMTkuNTUgNjIgMTcuMzUgNTIuMjUgUTIzLjIgNTQuMzUgMjkuOTUgNTYuMiBMMzkuNDUgNTguNDUgNDguNyA2MC4wNSIvPgogIDwvZz4KPC9zdmc+');
+  border-style: solid;
+}
+
+.game-arcanum-title {
+  font-family: 'Underdog', sans-serif;
+  font-size: 3rem;
+  color: #3b2c29;
+  text-shadow:
+    3px 3px 0 #eee,
+    -1px -1px 0 #eee,
+    1px -1px 0 #eee,
+    -1px 1px 0 #eee,
+    1px 1px 0 #eee;
+  margin: 0;
+}
+
+.game-arcanum-btn-play {
+  font-family: 'Underdog', sans-serif;
+  font-size: 1.5rem;
+  color: #3b2c29;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+}
+
+/* Pagina de instrucciones */
+
+.game-arcanum-book-container {
+  width: 328px;
+  height: 380px;
+  display: flex !important;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.instructions-left-panel,
+.instructions-right-panel {
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 380px;
+  overflow: hidden;
+}
+
+.game-arcanum-book-title {
+  font-family: 'quintenssential', sans-serif;
+  font-size: 3rem;
+  color: #3b2c29;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-arcanum-book-instructions {
+  font-family: 'quintenssential', sans-serif;
+  font-size: 1.4rem;
+  color: #3b2c29;
+  margin: 0;
+  padding: 0 1rem;
+  line-height: 2rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-arcanum-book-list {
+  font-family: 'quintenssential', sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0 1rem;
+  list-style-type: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-arcanum-book-list li {
+  position: relative;
+  padding-left: 58px;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.game-arcanum-book-list li::before {
+  content: url('assets/game-arcanum-archer/images/Controls/arrowBrown_right.png');
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-38%) scale(1);
+  pointer-events: none;
+}
+
+.game-arcanum-book-list button {
+  background-color: transparent;
+  border: none;
+}
+
+.instruction-button {
+  font-family: 'Underdog', sans-serif;
+  font-size: 1.1rem;
+  color: #3b2c29;
+  background-color: transparent;
+  border: 1px solid #3b2c29;
+  border-radius: 4px;
+  padding: 6px 10px;
+  width: 55%;
+  text-align: center;
+  margin: 5px;
+}
+
+.instruction-button:hover {
+  background-color: #47393656;
+}
+
+/* Dialogo */
+.game-arcanum-dialog-container {
+  width: 95%;
+  height: 130px;
+  background-color: rgb(219 219 219 / 77%);
+  border-radius: 0 10px 10px 10px;
+  display: flex !important;
+  border: 2px solid #3b2c29;
+  align-items: center;
+}
+
+.game-arcanum-dialog-content {
+  display: flex;
+  padding: 0 1rem;
+  gap: 20px;
+  height: 130px;
+  min-width: 130px;
+  position: relative;
+  align-items: center;
+}
+
+.game-arcanum-book-image1 {
+  width: 100px;
+}
+
+.game-arcanum-btn-continue {
+  background-color: transparent;
+  background-image: url(assets/game-arcanum-archer/images/Controls/round_brown.png);
+  background-size: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: #3b2c29;
+  border: none;
+  font-size: 16px;
+  padding: 10px;
+  margin: 5px;
+  font-family: 'Underdog';
+  font-weight: bold;
+  align-self: center;
+  width: 180px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-arcanum-btn-continue:hover {
+  transform: scale(1.05);
+}
+
+.game-arcanum-book-text {
+  font-family: 'Underdog', sans-serif;
+  font-size: 1rem;
+  color: #3b2c29;
+  margin: 0;
+  height: 130px;
+  max-width: 608px;
+}
+
+.game-arcanum-book-text2 {
+  font-family: 'Underdog', sans-serif;
+  font-size: 1rem;
+  color: #3b2c29;
+  margin: 0;
+  position: absolute;
+  top: -29%;
+  left: 0px;
+  background-color: rgb(219 219 219 / 77%);
+  border-radius: 10px 10px 0 0;
+  height: 38px;
+  padding: 4px;
+  border-top: 2px solid #3b2c29;
+  border-right: 2px solid #3b2c29;
+  border-left: 2px solid #3b2c29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.game-arcanum-btn-more {
+  background-color: transparent;
+  background-image: url(assets/game-arcanum-archer/images/Controls/round_brown.png);
+  background-size: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: #3b2c29;
+  border: none;
+  font-size: 25px;
+  margin: 5px;
+  font-family: 'Underdog';
+  align-self: center;
+  width: 180px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-arcanum-btn-more:hover {
+  transform: scale(1.05);
+}
+
+#dialog-text {
+  margin: 4% auto 0;
+  height: 110px;
+  text-align: justify;
+  min-width: 514px;
+}
+
+#dialog-text2 {
+  margin: 4% auto 0;
+  height: 100px;
+  text-align: justify;
+  min-width: 546px;
+}
+
+/* Map scene */
+
+.game-arcanum-map-title {
+  font-family: 'quintenssential', sans-serif;
+  font-size: 3rem;
+  color: #3b2c29;
+  text-shadow:
+    2px 1px 0 #deb58c,
+    -1px -1px 0 #deb58c,
+    1px -1px 0 #deb58c,
+    -1px 1px 0 #deb58c,
+    1px 1px 0 #deb58c;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*  Estilos base comunes para todos los botones de nivel */
+.game-arcanum-btn-level-base {
+  width: 100px;
+  height: 100px;
+  border: none;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 4rem;
+  background-color: transparent;
+  filter: drop-shadow(7px 11px 4px #000);
+  cursor: none;
+}
+
+/* Estilo para nivel DESBLOQUEADO*/
+.game-arcanum-btn-level-unlocked {
+  background-image: url('assets/game-arcanum-archer/images/Controls/parchment.png');
+}
+.game-arcanum-btn-level-unlocked:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(9px 13px 6px #111);
+}
+
+/* --- Estilo para nivel COMPLETADO --- */
+.game-arcanum-btn-level-completed {
+  background-image: url('assets/game-arcanum-archer/images/Controls/parchment2.png');
+  opacity: 0.8;
+}
+
+.game-arcanum-btn-level-completed:hover {
+  transform: scale(1.02);
+}
+
+/* --- Estilo para nivel BLOQUEADO --- */
+.game-arcanum-btn-level-locked {
+  background-image: url('assets/game-arcanum-archer/images/Controls/parchment_locked.png');
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+#arrow-icon {
+  transition: transform 0.3s ease;
+}
+.game-arcanum-btn-close {
+  background-color: transparent;
+  background-image: url(assets/game-arcanum-archer/images/Controls/checkbox_brown_cross.png);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: none;
+  width: 38px;
+  height: 38px;
+  position: fixed;
+  top: -14px;
+  right: -7px;
+}
+
+.game-arcanum-btn-is-open {
+  width: 95%;
+  height: 50px;
+  align-content: center;
+}
+
+.game-arcanum-btn-open {
+  width: 220px;
+  height: 80px;
+  font-size: 2rem;
+  margin: 0 auto;
+  font-family: 'Underdog';
+  color: #3b2c29;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid;
+  background-color: #c9c9c9c9;
+}
+
+.game-arcanum-btn-open.hidden {
+  display: none !important;
+}
+
+.game-arcanum-btn-open:not(.hidden) {
+  display: flex !important;
+}
+
+@keyframes slideOutDown {
+  0% {
+    transform: translateY(400);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(22px, 100vh);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  0% {
+    transform: translate(22px, 100vh);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(22px, 10vh);
+    opacity: 1;
+  }
+}
+
+.btnHidden {
+  animation: slideOutDown 0.4s forwards;
+}
+
+.lastText {
+  position: relative;
+}
+
+.lastText::after {
+  content: attr(data-last-chars);
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+}
+
+/* estilos para la pregunta y las opciones */
+
+.game-arcanum-question {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.game-arcanum-options {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.game-arcanum-warn-content {
+  font-size: 1.8rem;
+  font-family: 'Underdog';
+  color: #121212;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 650px;
+  height: 400px;
+  border-image-slice: 27 27 27 27 fill;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: stretch stretch;
+  border-image-source: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxkZWZzLz4KICA8Zz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iIzZENEIyNyIgZD0iTTIgNSBMMiA0NCAzIDQ1IDIgNDYgMiA1MCA0IDUyIDIgNTQgMiA1OSBRMiA2MiA1IDYyIEw0NCA2MiA0NiA2MCA0OCA2MiA1OSA2MiBRNjIgNjIgNjIgNTkgTDYyIDE4IDYwIDE2IDYyIDE0IDYyIDUgUTYyIDIgNTkgMiBMMjQgMiAyMyAzIDIyIDIgMTggMiAxNiA0IDE0IDIgNSAyIFEyIDIgMiA1IE01IDAgTDE0IDAgMTYgMiAxOCAwIDIyIDAgMjMgMSAyNCAwIDU5IDAgUTY0IDAgNjQgNSBMNjQgMTQgNjIgMTYgNjQgMTggNjQgNTkgUTY0IDY0IDU5IDY0IEw0OCA2NCA0NiA2MiA0NCA2NCA1IDY0IFEwIDY0IDAgNTkgTDAgNTQgMiA1MiAwIDUwIDAgNDYgMSA0NSAwIDQ0IDAgNSBRMCAwIDUgMCIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjQjQ3QjQxIiBkPSJNMiA1IFEyIDIgNSAyIEwxNCAyIDE2IDQgMTggMiAyMiAyIDIzIDMgMjQgMiA1OSAyIFE2MiAyIDYyIDUgTDYyIDE0IDYwIDE2IDYyIDE4IDYyIDU5IFE2MiA2MiA1OSA2MiBMNDggNjIgNDYgNjAgNDQgNjIgNSA2MiBRMiA2MiAyIDU5IEwyIDU0IDQgNTIgMiA1MCAyIDQ2IDMgNDUgMiA0NCAyIDUgTTYgNTggTDU4IDU4IDU4IDYgNiA2IDYgNTgiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0EzNzAzQSIgZD0iTTYgNTggTDYgNiA1OCA2IDU4IDU4IDYgNTggTTU0IDggTDQyIDggNDAgMTAgMzggOCAxMCA4IDggOCA4IDEwIDggMTggOSAxOSA4IDIwIDggNTQgOCA1NiAxMCA1NiAyOCA1NiAyOSA1NSAzMCA1NiA1NCA1NiA1NiA1NiA1NiA1NCA1NiA0MiA1NSA0MSA1NiA0MCA1NiAxMCA1NiA4IDU0IDgiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0ZGRjFEMiIgZD0iTTU0IDggTDU2IDEwIDU2IDQwIDU1IDQxIDU2IDQyIDU2IDU0IDU0IDU2IDMwIDU2IDI5IDU1IDI4IDU2IDEwIDU2IDggNTQgOCAyMCA5IDE5IDggMTggOCAxMCAxMCA4IDM4IDggNDAgMTAgNDIgOCA1NCA4Ii8+CiAgICA8cGF0aCBzdHJva2U9Im5vbmUiIGZpbGw9IiNEMkM2QUMiIGQ9Ik01NCA4IEw1NiA4IDU2IDEwIDU0IDggTTU2IDU0IEw1NiA1NiA1NCA1NiA1NiA1NCBNMTAgNTYgTDggNTYgOCA1NCAxMCA1NiBNOCAxMCBMOCA4IDEwIDggOCAxMCIvPgogIDwvZz4KPC9zdmc+');
+  border-style: solid;
+  background-color: transparent;
+  transform: translate(2px, -35px);
+}
+
+.game-arcanum-warn-text {
+  font-size: 2.2rem;
+}
+
+.game-arcanum-btn-warn {
+  padding: 8px 16px;
+  background-color: #c7c4c478;
+  border: 2px solid #714b23;
+  border-radius: 10px;
+}
+
+.game-arcanum-btn-warn:hover {
+  outline: 3px dashed #714b23d1;
+  outline-offset: 2px;
+}
+
+.game-arcanum-btn-warn:focus-visible,
+.game-arcanum-btn-open:focus-visible,
+.game-arcanum-btn-more:focus-visible,
+.game-arcanum-btn-close:focus-visible {
+  outline: 3px solid #005fcc; /* Un azul brillante como ejemplo */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilo de Foco para los botones de nivel en el mapa */
+.game-arcanum-btn-level-base:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 3px;
+  filter: drop-shadow(7px 11px 4px #000) brightness(1.2); /* Ejemplo: brillo + sombra */
+}
+
+/* Estilo de Foco para el Canvas del Juego */
+canvas:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+}
+
+/* Asegurar que el cursor por defecto sea visible cuando el canvas tiene foco */
+canvas:focus-visible {
+  cursor: default;
+}
+
+/*Restaurar cursor personalizado solo en hover si no hay foco de teclado */
+canvas:not(:focus-visible):hover {
+  cursor: url(assets/game-arcanum-archer/images/Controls/cursorHand_grey.png), auto;
+}
+.game-arcanum-container :is(h1, p, h2, span, div, button):not(:focus-visible):hover {
+  cursor: url(assets/game-arcanum-archer/images/Controls/cursorHand_grey.png), auto;
+}
+
+.target-label-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.target-label-button:focus-visible {
+  outline: 3px solid #00e1ff;
+  outline-offset: 2px;
+  background-color: rgba(0, 50, 80, 0.8);
+}
+
+/* UI */
+
+#game-ui-container {
+  width: 130px;
+  height: 110px;
+  position: fixed;
+  top: -3px;
+  left: -3px;
+  color: #3b2c29;
+  justify-content: center;
+  border: 2px solid;
+  background-color: #c9c9c9c9;
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Exo', 'Underdog', sans-serif;
+  font-size: 1.2rem;
+  z-index: 10000;
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  border-image-slice: 27 27 27 27 fill;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: stretch stretch;
+  border-image-source: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxkZWZzLz4KICA8Zz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iIzZENEIyNyIgZD0iTTIgNSBMMiA0NCAzIDQ1IDIgNDYgMiA1MCA0IDUyIDIgNTQgMiA1OSBRMiA2MiA1IDYyIEw0NCA2MiA0NiA2MCA0OCA2MiA1OSA2MiBRNjIgNjIgNjIgNTkgTDYyIDE4IDYwIDE2IDYyIDE0IDYyIDUgUTYyIDIgNTkgMiBMMjQgMiAyMyAzIDIyIDIgMTggMiAxNiA0IDE0IDIgNSAyIFEyIDIgMiA1IE01IDAgTDE0IDAgMTYgMiAxOCAwIDIyIDAgMjMgMSAyNCAwIDU5IDAgUTY0IDAgNjQgNSBMNjQgMTQgNjIgMTYgNjQgMTggNjQgNTkgUTY0IDY0IDU5IDY0IEw0OCA2NCA0NiA2MiA0NCA2NCA1IDY0IFEwIDY0IDAgNTkgTDAgNTQgMiA1MiAwIDUwIDAgNDYgMSA0NSAwIDQ0IDAgNSBRMCAwIDUgMCIvPgogICAgPHBhdGggc3Ryb2tlPSJub25lIiBmaWxsPSIjQjQ3QjQxIiBkPSJNMiA1IFEyIDIgNSAyIEwxNCAyIDE2IDQgMTggMiAyMiAyIDIzIDMgMjQgMiA1OSAyIFE2MiAyIDYyIDUgTDYyIDE0IDYwIDE2IDYyIDE4IDYyIDU5IFE2MiA2MiA1OSA2MiBMNDggNjIgNDYgNjAgNDQgNjIgNSA2MiBRMiA2MiAyIDU5IEwyIDU0IDQgNTIgMiA1MCAyIDQ2IDMgNDUgMiA0NCAyIDUgTTYgNTggTDU4IDU4IDU4IDYgNiA2IDYgNTgiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0EzNzAzQSIgZD0iTTYgNTggTDYgNiA1OCA2IDU4IDU4IDYgNTggTTU0IDggTDQyIDggNDAgMTAgMzggOCAxMCA4IDggOCA4IDEwIDggMTggOSAxOSA4IDIwIDggNTQgOCA1NiAxMCA1NiAyOCA1NiAyOSA1NSAzMCA1NiA1NCA1NiA1NiA1NiA1NiA1NCA1NiA0MiA1NSA0MSA1NiA0MCA1NiAxMCA1NiA4IDU0IDgiLz4KICAgIDxwYXRoIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0ZGRjFEMiIgZD0iTTU0IDggTDU2IDEwIDU2IDQwIDU1IDQxIDU2IDQyIDU2IDU0IDU0IDU2IDMwIDU2IDI5IDU1IDI4IDU2IDEwIDU2IDggNTQgOCAyMCA5IDE5IDggMTggOCAxMCAxMCA4IDM4IDggNDAgMTAgNDIgOCA1NCA4Ii8+CiAgICA8cGF0aCBzdHJva2U9Im5vbmUiIGZpbGw9IiNEMkM2QUMiIGQ9Ik01NCA4IEw1NiA4IDU2IDEwIDU0IDggTTU2IDU0IEw1NiA1NiA1NCA1NiA1NiA1NCBNMTAgNTYgTDggNTYgOCA1NCAxMCA1NiBNOCAxMCBMOCA4IDEwIDggOCAxMCIvPgogIDwvZz4KPC9zdmc+);
+  border-style: solid;
+}
+
+.ui-element {
+  display: flex;
+  gap: 0.4rem;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+}
+
+.ui-icon {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ui-value {
+  font-weight: bold;
+  min-width: 20px;
+  text-align: right;
+}

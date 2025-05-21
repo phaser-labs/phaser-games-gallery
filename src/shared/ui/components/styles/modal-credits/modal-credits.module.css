@@ -1,0 +1,17 @@
+
+.modal {
+    --modal-max-width: 50.375rem;
+}
+
+.modal h2 {
+    font-size: var(--fs-600);
+    color: var(--clr-brand);
+}
+
+.modal strong {
+    color: var(--clr-brand);
+}
+
+html[data-dark-mode="true"] .modal :is(h2, strong) {
+    color: var(--clr-text-main);
+}

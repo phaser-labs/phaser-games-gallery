@@ -1,0 +1,83 @@
+.container {
+  position: relative;
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+@media screen and (max-width: 1120px) {
+  .container__responsive {
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .container__responsive {
+    transform: scale(0.6);
+  }
+}
+
+.container:hover {
+  background-color: #0003;
+}
+
+.container:focus {
+  background-color: #0003;
+  outline: none;
+}
+
+.container:disabled {
+  filter: grayscale(1);
+}
+
+.letter {
+  position: absolute;
+  top: 50%;
+  left: 37%;
+  color: #000;
+  font-size: 30px;
+  font-weight: 600;
+  transform: translate(-50%, -50%);
+}
+
+.corcho {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  right: -15%;
+  z-index: -1;
+}
+
+.bubble {
+  position: absolute;
+  top: -20%;
+  transform: translate(-50%, -50%);
+  right: -40%;
+  z-index: -2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-stop-animations='true']) .container {
+    animation-name: float;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+
+    transition: background-color 0.3s;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}

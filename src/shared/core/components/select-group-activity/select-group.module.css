@@ -1,0 +1,78 @@
+.select {
+    --select-btn-clr: var(--clr-brand);
+    --select-border-clr: var(--clr-brand);
+    font-style: italic;
+}
+
+.select--wrong {
+    --select-btn-clr: var(--clr-activity-wrong);
+    --select-border-clr: var(--clr-activity-wrong);
+    composes: u-validation-wrong from global;
+}
+
+.select--success {
+    --select-btn-clr: var(--clr-activity-success);
+    --select-border-clr: var(--clr-activity-success);
+    composes: u-validation-success from global;
+}
+
+.select:global(.c-select) {
+    --select-padding: 0 .5rem;
+}
+
+.select :global(.c-select-button) {
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--select-border-clr);
+    background-color: var(--clr-background);
+    border-radius: .5rem;
+    text-align: start;
+    height: auto;
+    align-items: center;
+    color: inherit;
+}
+
+.select :global(.c-select-button:disabled) :global(.c-select-button__text) {
+    color: inherit;
+}
+
+.select :global(.c-select-button__text) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+html[data-dark-mode="true"] .select :global(.c-select-button) {
+    color: var(--clr-text-main);
+}
+
+.select :global(.c-select-button__icon) {
+    background-color: var(--select-btn-clr);
+}
+
+:global(.c-select-popover) {
+    background-color: var(--clr-background);
+    border: 2px solid var(--clr-brand);
+    overflow-y: auto;
+}
+
+:global(.c-select-list) {
+    margin-block: 0;
+    border-radius: .625rem;
+}
+
+:global(.c-select-list) li {
+    padding: .3125rem .625rem;
+}
+
+:global(.c-select-list) li[data-option-focus="true"] {
+    --outline-color: var(--clr-accent-dark);
+    --outline-offset: -0.25rem;
+    background-color: var(--clr-brand);
+    color: #ffffff;
+}
+
+:global(.c-select-list) li[aria-disabled="true"] {
+    background-color: #c7c7c7;
+    text-decoration: line-through;
+}

@@ -1,0 +1,104 @@
+.wrapper {
+    --drag-bg-clr: var(--clr-brand);
+    --drag-txt-clr: #fbfbfb;
+    --drag-shadow: 0 2px 2px 1px #60606057;
+    --drag-height: 2rem;
+    --drag-width: 18ch;
+}
+
+.general-drag {
+    box-shadow: none;
+}
+
+:is(.general-drag, div.drop) {
+    border: 2px dotted var(--drag-bg-clr);
+    border-radius: .4375rem;
+}
+
+.drag {
+    --outline-color: #fbfbfb;
+    --outline-offset: -.25rem;
+
+    position: relative;
+    padding: .2rem 1.125rem;
+    width: 100%;
+    min-height: var(--drag-height);
+    color: var(--drag-txt-clr);
+    font-style: italic;
+    background-color: var(--drag-bg-clr);
+    border: 1px solid transparent;
+    border-radius: .4375rem;
+    box-shadow: var(--drag-shadow);
+    transition: background-color 120ms ease;
+}
+
+html[data-dark-mode="true"] .drag {
+    box-shadow: none;
+}
+
+.drag[data-validation] {
+    cursor: not-allowed;
+}
+
+.drag[data-validation]::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.6rem;
+    display: grid;
+    place-content: center;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+    background-color: var(--clr-background);
+    box-shadow: 2px 2px 3px 0px #60606057;
+    font-style: normal;
+    z-index: 2;
+}
+
+
+
+.drag[data-validation="true"] {
+    --drag-bg-clr: var(--clr-activity-success);
+    --drag-txt-clr: #1a1a1a;
+}
+
+.drag[data-validation="true"]::after {
+    content: '✔';
+    color: var(--clr-activity-success);
+}
+
+.drag[data-validation="false"] {
+    --drag-bg-clr: var(--clr-activity-wrong);
+    --drag-txt-clr: #1a1a1a;
+}
+
+.drag[data-validation="false"]::after {
+    content: '✖';
+    color: var(--clr-activity-wrong);
+}
+
+button.drag--dragging {
+    --drag-bg-clr: var(--clr-accent-dark);
+    transition: none;
+    cursor: grabbing;
+}
+
+div.drop {
+    --space: .2rem;
+
+    padding: var(--space);
+    width: var(--drag-width);
+    min-height: calc(var(--drag-height) + var(--space));
+    height: 100%;
+    background-color: var(--clr-background);
+    box-shadow: var(--drag-shadow);
+}
+
+.drop--over {
+    --drag-bg-clr: var(--clr-accent-dark);
+}
+
+html[data-dark-mode="true"] div.drop {
+    box-shadow: none;
+}

@@ -1,0 +1,17 @@
+.modal {
+    --modal-max-width: 50.375rem;
+}
+
+.modal h2 {
+    font-size: var(--fs-300);
+}
+
+.bibliography-link a {
+    word-break: break-all;
+    color: var(--clr-accent-dark);
+    transition: color 120ms ease;
+}
+
+.bibliography-link a:hover {
+    color: var(--clr-accent);
+}

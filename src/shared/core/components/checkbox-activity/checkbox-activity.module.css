@@ -1,0 +1,51 @@
+div.checkbox {
+    --input-check-clr: var(--clr-background);
+    --input-check-border-clr: #11203c;
+    --input-check-bg: #11203c;
+    --input-size: 1.6rem;
+    --input-size-svg: 1.2em;
+    --input-check-gap: 1rem;
+
+    padding: .5rem 1rem;
+    justify-content: flex-start;
+    font-style: italic;
+    background-color: var(--clr-background);
+    border-radius: .5rem;
+    box-shadow: 2px 2px 3px 0px #60606057;
+}
+
+div.checkbox label::first-letter {
+    color: var(--clr-text-main);
+    font-weight: bold;
+}
+
+.checkbox:has(input:checked) label::first-letter {
+    color: var(--clr-brand);
+}
+
+.checkbox[data-state="right"] {
+    --input-check-bg: var(--clr-activity-success);
+}
+
+.checkbox[data-state="wrong"] {
+    --input-check-bg: var(--clr-activity-wrong);
+}
+
+.checkbox :global(.c-input-check__box) {
+    min-inline-size: var(--input-size);
+    min-block-size: var(--input-size);
+    border: 1.8px solid var(--input-check-border-clr);
+}
+
+.checkbox :global(.c-input-check__icon) svg {
+    width: var(--input-size-svg);
+    height: var(--input-size-svg);
+}
+
+html[data-dark-mode="true"] .checkbox>div {
+    border: 2px solid white;
+}
+
+html[data-dark-mode="true"] .checkbox>div:focus-within {
+    outline: max(2px, .08em) solid white;
+}

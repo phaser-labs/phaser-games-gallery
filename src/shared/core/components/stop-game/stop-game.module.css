@@ -1,0 +1,146 @@
+/* Container initial message  */
+.stop-game-container-question {
+    background-color: #fffef0;
+    border: 4px solid #8080b3;
+    border-radius: 13px;
+    padding: 0.5rem;
+    width: fit-content;
+    min-height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        text-align: center;
+        width: 60ch;
+    }
+}
+
+/* radio */
+.radio-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.radio-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #3c518c;
+    border: 2px solid white;
+    padding: 0.5rem;
+    border-radius: 22px;
+    width: 18.75rem;
+    min-height: 9.375rem;
+    text-align: center;
+    display: flex;
+    place-content: center;
+    position: relative;
+    transition: background-color 0.4s ease;
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+}
+
+.radio-input:has(input[data-state="correct"]) {
+    background-color: #498c43;
+    font-weight: 600;
+}
+
+.radio-input:has(input[data-state="incorrect"]) {
+    background-color: var(--clr-activity-wrong);
+    font-weight: 600;
+}
+
+.radio-input:has(input[data-state="incorrect"])::before {
+    content: "✖";
+    position: absolute;
+    top: -1.1rem;
+    right: 43%;
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    background-color: rgb(233, 93, 93);
+    color: white;
+    font-weight: 800;
+    z-index: 10;
+}
+
+.radio-input:has(input[data-state="correct"])::before {
+    content: "✔";
+    position: absolute;
+    top: -1.1rem;
+    right: 43%;
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    background-color: rgb(38, 160, 64);
+    color: white;
+    font-weight: 800;
+    z-index: 10;
+}
+
+.radio-input:focus-within {
+    background-color: var(--clr-brand);
+}
+
+/* buttons */
+.stop-game-initial-button {
+    background-color: #e61919;
+    padding: 0.5rem;
+    width: 12.5rem;
+    border: 4px solid #fffef0;
+    border-radius: 13px;
+    color: #fffef0;
+    font-size: 1.9rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.stop-game-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+
+@keyframes move {
+    0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.01;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+    html:not([data-stop-animations="true"]) .move-image {
+        animation: move .8s infinite ease-in-out;
+    }
+}
+
+html[data-dark-mode="true"] .stop-game-container-question {
+    color: #000;
+}

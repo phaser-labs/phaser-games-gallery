@@ -1,0 +1,466 @@
+    /* body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    } */
+
+    .gameFrog__container {
+        width: 100%;
+        height: 70vh;
+    }
+
+    /* definimos estilos para el div que contiene el juego */
+    .gameFrog__game-container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .gameFrog__botonStart {
+        background-color: rgb(103, 165, 22);
+        color: white;
+        width: 100px;
+        height: 40px;
+        padding-right: 15px;
+        text-align: right;
+        border-radius: 10px;
+        border: none;
+        cursor: pointe;
+        box-shadow: gray 0px 5px 0px 0px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .gameFrog__botonStart::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 15px;
+        width: 30px;
+        height: 30px;
+        background-image: url('assets/game-jump-frog/images/play_arrow.png');
+        background-size: 100% 100%;
+        display: inline-block;
+    }
+
+    .gameFrog__botonconfig {
+        width: 40px;
+        height: 40px;
+        background-color: rgb(103, 165, 22);
+        border: none;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .gameFrog__botonconfig:hover {
+        background-color: rgb(78, 134, 4);
+    }
+
+    .gameFrog__botonconfig::before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 5px;
+        left: 4px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="%23FFFFFF"><path d="m382-80-18.67-126.67q-17-6.33-34.83-16.66-17.83-10.34-32.17-21.67L178-192.33 79.33-365l106.34-78.67q-1.67-8.33-2-18.16-.34-9.84-.34-18.17 0-8.33.34-18.17.33-9.83 2-18.16L79.33-595 178-767.67 296.33-715q14.34-11.33 32.34-21.67 18-10.33 34.66-16L382-880h196l18.67 126.67q17 6.33 35.16 16.33 18.17 10 31.84 22L782-767.67 880.67-595l-106.34 77.33q1.67 9 2 18.84.34 9.83.34 18.83 0 9-.34 18.5Q776-452 774-443l106.33 78-98.66 172.67-118-52.67q-14.34 11.33-32 22-17.67 10.67-35 16.33L578-80H382Zm55.33-66.67h85l14-110q32.34-8 60.84-24.5T649-321l103.67 44.33 39.66-70.66L701-415q4.33-16 6.67-32.17Q710-463.33 710-480q0-16.67-2-32.83-2-16.17-7-32.17l91.33-67.67-39.66-70.66L649-638.67q-22.67-25-50.83-41.83-28.17-16.83-61.84-22.83l-13.66-110h-85l-14 110q-33 7.33-61.5 23.83T311-639l-103.67-44.33-39.66 70.66L259-545.33Q254.67-529 252.33-513 250-497 250-480q0 16.67 2.33 32.67 2.34 16 6.67 32.33l-91.33 67.67 39.66 70.66L311-321.33q23.33 23.66 51.83 40.16 28.5 16.5 60.84 24.5l13.66 110Zm43.34-200q55.33 0 94.33-39T614-480q0-55.33-39-94.33t-94.33-39q-55.67 0-94.5 39-38.84 39-38.84 94.33t38.84 94.33q38.83 39 94.5 39ZM480-480Z"/></svg>');
+        background-size: cover
+    }
+
+    .gameFrog__containerSettings {
+        border: 1px solid var(--clr-activity-success);
+        width: 800px;
+        height: 550px;
+        background-color: rgba(11, 21, 0, 0.98);
+        color: white;
+        overflow: hidden;
+        display: none;
+    }
+
+    .gameFrog__containerTittle {
+        width: 200px;
+        height: 50px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .gameFrog__containerTittle h2 {
+        font-size: 32px;
+    }
+
+    .gameFrog__containerTittle span {
+        display: flex;
+    }
+
+    .gameFrog__switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .gameFrog__switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .gameFrog__slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .gameFrog__slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.gameFrog__slider {
+        background-color: green;
+    }
+
+    input:focus+.gameFrog__slider {
+        box-shadow: 0 0 1px green;
+    }
+
+    input:checked+.gameFrog__slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .gameFrog__slider.gameFrog__round {
+        border-radius: 34px;
+    }
+
+    .gameFrog__slider.gameFrog__round:before {
+        border-radius: 50%;
+    }
+
+    /* estilos del boton de espandir el auido */
+    .gameFrog__sound {
+        overflow: hidden;
+        height: 85px;
+        transition: .5s ease-in-out;
+    }
+
+    .gameFrog__ocultar {
+        height: 50px;
+        height: 111px;
+        display: none;
+    }
+
+    .gameFrog__containerSound {
+        display: flex;
+        padding: 1rem;
+        border-bottom: 2px solid var(--clr-activity-success) !important;
+    }
+
+    .gameFrog__buttonSound {
+        display: flex;
+        background: rgb(44, 75, 3);
+        border: 1px solid var(--clr-activity-success);
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gameFrog__buttonSound:focus-visible {
+        outline: white solid 2px;
+    }
+
+    .gameFrog__containerSound,
+    .gameFrog__buttonSound2 {
+        font-size: 32px;
+        background: transparent;
+        border: none;
+        color: white;
+    }
+
+    .gameFrog__buttonSound:hover svg {
+        cursor: pointer;
+        fill: var(--clr-activity-success);
+        stroke: var(--clr-activity-success);
+    }
+
+    .gameFrog__containerSound button:hover {
+
+        cursor: pointer;
+        color: var(--clr-activity-success);
+    }
+
+    .gameFrog__general,
+    .gameFrog__specific {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 2px solid var(--clr-activity-success);
+    }
+
+    .gameFrog__ocultar2 {
+        height: 330px;
+        overflow: hidden;
+        transition: .5s ease-in-out;
+        border-bottom: 2px solid var(--clr-activity-success);
+        display: none;
+        padding: 1rem;
+    }
+
+    .gameFrog__ocultar2 img {
+        margin: 0 auto;
+        width: 300px;
+    }
+
+    .gameFrog__btnFullScreen {
+        width: 40px;
+        height: 40px;
+        background-color: rgb(103, 165, 22);
+        border: none;
+        position: relative;
+        cursor: pointer;
+
+    }
+
+    .gameFrog__btnFullScreen:hover {
+        background-color: rgb(78, 134, 4);
+
+    }
+
+    .gameFrog__btnFullScreen::before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 5px;
+        left: 4px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="%23FFFFFF"><path d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Z"/></svg>');
+        background-size: cover;
+    }
+
+    .gameFrog__containerPrincipal {
+        width: 100%;
+        height: 70px;
+        background-color: #186415;
+        border-top: 3px solid black;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .gameFrog__container_vidas {
+        width: 69px;
+        padding: 8px;
+    }
+
+    .gameFrog__title,
+    .gameFrog__puntos,
+    .gameFrog__container_puntos strong,
+    .gameFrog__container_vidas strong {
+        font-size: 18px;
+        color: white;
+        font-weight: 900;
+    }
+
+    .gameFrog__numero_vidas {
+        display: flex;
+        justify-content: space-around;
+        align-self: center;
+        width: 50px;
+        height: 27px;
+        border-radius: 5px;
+        background: rgb(88, 138, 35);
+        box-shadow: 0 -1px 0 rgb(43, 75, 4), 0 1px 0 rgb(155, 216, 76);
+    }
+
+    .gameFrog__container_puntos {
+        width: 90px;
+        padding: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+    }
+
+    .gameFrog__numero_puntos {
+        display: flex;
+        justify-content: space-around;
+        align-self: center;
+        width: 80px;
+        height: 27px;
+        border-radius: 5px;
+        background: rgb(88, 138, 35);
+        box-shadow: 0 -1px 0 rgb(43, 75, 4), 0 1px 0 rgb(155, 216, 76);
+    }
+
+    .gameFrog__containerPregunta {
+        width: 95%;
+        height: 70px;
+        background-color: rgb(250, 255, 243);
+        border: 2px solid #186415;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+    }
+
+    .gameFrog__container_numero_pregunta {
+        position: absolute;
+        width: 27px;
+        top: 0;
+        left: 5px;
+        height: 26px;
+    }
+
+    .gameFrog__containerOpciones {
+        width: 57%;
+        height: 235px;
+    }
+
+    .gameFrog__opcion {
+        position: absolute;
+        width: 145px;
+        height: 144px;
+        background-color: transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+
+    }
+
+    .gameFrog__opcion:nth-child(1) {
+        top: 36%;
+        left: 1%;
+    }
+
+    .gameFrog__opcion:nth-child(2) {
+        top: 3%;
+        left: 34%;
+    }
+
+    .gameFrog__opcion:nth-child(3) {
+        top: 36%;
+        left: 67%;
+    }
+
+    .gameFrog__opcion_indice {
+        width: 26px;
+        height: 26px;
+        border-radius: 100px;
+        text-align: center;
+        background-color: #186415;
+        color: white;
+        font-weight: 900;
+    }
+
+    .gameFrog__opcion button {
+        width: 92%;
+        height: 117px;
+        overflow-y: hidden;
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-weight: 900;
+    }
+
+    .gameFrog__opcion button:hover {
+        overflow-y: auto;
+        cursor: pointer;
+    }
+
+    @keyframes spin360 {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .gameFrog__mi-svg svg {
+        animation: spin360 60s linear infinite;
+        transform-origin: center center;
+    }
+
+    .gameFrog__felicidades,
+    .gameFrog__ganaste {
+        opacity: 1 !important;
+
+        color: white;
+        font-weight: 900;
+        text-shadow: 1px 6px 5px black;
+    }
+
+    .gameFrog__ganaste {
+        font-size: 6rem;
+    }
+
+    .gameFrog__felicidades {
+        font-size: 3rem;
+    }
+
+    .gameFrog__mi-score {
+        width: 300px;
+        height: auto;
+        border-top: 4px solid white;
+        padding: 0.5rem;
+    }
+
+    .gameFrog__mi-score>.gameFrog__mi-score_container {
+        width: 100%;
+        /* height: 50px; */
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        font-size: 22px;
+        text-shadow: 1px 1px 1px black;
+
+    }
+
+    .gameFrog__btnVolver {
+        width: 150px;
+        height: 50px;
+
+
+    }
+
+    .gameFrog__btnVolver button {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 10px;
+        background-color: rgb(103, 165, 22);
+        border: #186415;
+        cursor: pointer;
+        color: white;
+        font-size: 20px;
+        font-weight: 900;
+        box-shadow: 0px 6px 0px 0px rgb(19, 75, 2)
+    }
+
+    .gameFrog__btnVolver button:hover {
+        box-shadow: 0px 3px 0px 0px rgb(19, 75, 2);
+        transform: translateY(3px);
+    }

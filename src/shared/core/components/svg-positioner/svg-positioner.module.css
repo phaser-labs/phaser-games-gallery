@@ -1,0 +1,33 @@
+.container {
+  --svg-width: 0;
+  --svg-height: 0;
+  position: relative;
+  margin-inline: auto;
+  max-width: var(--svg-container-max-width, 62.5rem);
+}
+
+.element {
+  position: absolute;
+  top: var(--svg-element-y-position, 0);
+  left: var(--svg-element-x-position, 0);
+  width: var(--svg-element-width, 0);
+  height: var(--svg-element-height, 0);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.element::-webkit-scrollbar {
+  background-color: lightgrey;
+  border-radius: 10px;
+  width: 10px;
+}
+
+.element::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.element::-webkit-scrollbar-thumb {
+  border: 2px solid lightgrey;
+  background-color: lightslategray;
+  border-radius: 7px;
+}

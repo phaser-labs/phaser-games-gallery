@@ -1,0 +1,119 @@
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('assets/game-maze/fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.gameMaze__container {
+  position: relative;
+  height: 70vh;
+  max-width: 600px;
+  margin: 60px auto;
+  background-color: whitesmoke;
+}
+
+.gameMaze__question {
+  border: #121212 solid 1px;
+  border-radius: 0.7rem;
+  position: absolute;
+  z-index: 10;
+  padding: 1rem;
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  text-align: center;
+  display: grid;
+  place-content: center;
+  box-shadow: 2px 2px 3px #60606057;
+}
+
+html[data-dark-mode='true'] .gameMaze__question {
+  background-color: #121212;
+}
+
+.gameMaze__question ul {
+  list-style: none;
+  text-align: left;
+  padding-inline-start: 0;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gameMaze__question ul li {
+  border-radius: 0.7rem;
+  box-shadow: 2px 2px 3px #60606057;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.gameMaze__question button {
+  margin: 0 auto;
+  width: 6rem;
+}
+
+.gameMaze__question button:hover {
+  transform: translateY(-2px);
+}
+
+/* Feedback Modal */
+
+.feedbackModal {
+  max-width: 400px;
+  max-height: 300px;
+}
+
+.feedbackModalContent {
+  height: 100%;
+  padding: 4rem;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.feedbackModalContent h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para el contenedor del teclado */
+
+.dpad-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.dpad-container button {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 20px;
+  align-self: center;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dpad-container .btn-left {
+  border-right: none;
+}
+
+.dpad-container .btn-down {
+  border-top: none;
+}
+
+.dpad-container .btn-right {
+  border-left: none;
+}
+
+.dpad-container .btn-up {
+  border-bottom: none;
+}
+
+.dpad-container button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}

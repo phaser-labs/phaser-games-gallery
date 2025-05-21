@@ -1,0 +1,39 @@
+button.button {
+    --button-text-color: #f5f5f5;
+    --button-bg-color: var(--clr-accent);
+    --button-padding: clamp(0.2rem, 1%, 0.3rem) .5rem;
+    --outline-color: var(--clr-accent);
+    --button-gap: .26em;
+
+    width: fit-content;
+    cursor: default;
+    border-radius: .6rem;
+    font-weight: bold;
+    transition: background-color 120ms ease-in-out, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button.button:is(:hover, :focus) {
+    --button-bg-color: color-mix(in srgb, var(--clr-accent) 80%, white 20%);
+}
+
+button.button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+button.button::first-letter {
+    text-transform: uppercase;
+}
+
+html[data-dark-mode="true"] button.button {
+    --button-text-color: #ffff;
+}
+
+button.button:disabled {
+    --button-text-color: var(--clr-text-secondary);
+    --button-bg-color: var(--clr-accent-dark);
+    cursor: not-allowed;
+}
+
+button.button>svg {
+    --icon-size: 1.5rem;
+}

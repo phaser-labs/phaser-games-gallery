@@ -1,0 +1,32 @@
+
+.downloadLink{
+    
+    background: var(--clr-accent-dark);
+    color: #121212;
+    padding: clamp(0.2rem, 1%, 0.3rem) .6rem;
+
+    display: flex;
+    width: fit-content;
+    text-decoration: none;
+    align-items: center;
+    font-weight: normal;
+    margin-inline: .5rem;
+    border-radius: .6rem;
+    transition: background-color 120ms ease-in-out;
+}
+
+.downloadLink:is(:hover, :focus) {
+    background: #ff9239;
+}
+
+.downloadLink::first-letter {
+    text-transform: uppercase;
+}
+
+html[data-dark-mode="true"] .downloadLink {
+    color: var(--clr-text-secondary);
+}
+
+.downloadLink > svg {
+   --icon-size: 1.5rem;
+}

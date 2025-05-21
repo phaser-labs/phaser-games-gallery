@@ -1,0 +1,223 @@
+.wrapper_depths {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.fullScreen__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.image_back {
+  aspect-ratio: 21/9;
+}
+
+.image_depth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(1.05);
+  aspect-ratio: 21/9;
+}
+
+.modal_depth {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.bubble {
+  position: absolute;
+  transform: scale(0.3);
+}
+
+.container_controls {
+  color: white;
+  margin-top: .625rem;
+  display: flex;
+  justify-content: center;
+}
+
+.crab_container {
+  position: absolute;
+  bottom: 20%;
+  left: 20%;
+}
+
+.crap_surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container__bottles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  justify-content: center;
+}
+
+.container_word {
+  position: absolute;
+  bottom: .625rem;
+  left: 0;
+  right: 0;
+  margin: 0 5%;
+  padding: .625rem;
+  display: flex;
+  justify-content: space-evenly;
+  font-weight: 600;
+  font-size: var(--fs-300);
+  background-color: #e0f1eb;
+  border: .1875rem solid #a7833b;
+  border-radius: .8rem;
+}
+
+.container_word button {
+  --outline-color: #a7833b;
+  padding: 0 .125rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.container_word button.select {
+  background-color: rgb(152, 227, 230);
+}
+
+.container_word button:not(:disabled):hover {
+  box-shadow: 0 0 0 2px #a7833b;
+}
+
+.container_word button:disabled {
+  cursor: not-allowed;
+  color: initial;
+}
+
+.container_word.wrong {
+  background-color: #f9bbbc;
+}
+
+.container_word.success {
+  background-color: #dfebbd;
+}
+
+.container_word .icon {
+  --size: 2.2rem;
+
+  position: absolute;
+  bottom: calc(100% - (var(--size) / 2));
+  left: calc(100% - (var(--size) / 2));
+  display: block;
+  width: var(--size);
+  height: var(--size);
+}
+
+button.cancel_button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-30%, -30%);
+  font-size: .8125rem;
+  border: none;
+  background-color: rgb(172, 173, 173);
+  border-radius: 50%;
+  padding: .3125rem;
+  cursor: pointer;
+}
+
+.cancel_button:hover {
+  filter: brightness(1.2);
+}
+
+@media screen and (max-width: 31.25rem) {
+  .wrapper_depths {
+    filter: grayscale(0.8);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-stop-animations='true']) .fish {
+    transition:
+      top 0.8s,
+      left 0.3s,
+      transform 0.6s;
+
+    animation-name: float;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  html:not([data-stop-animations='true']) .bubble {
+    animation-name: bubble;
+    animation-duration: 6s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  }
+
+  html:not([data-stop-animations='true']) .modal_depth {
+    animation-name: modalIn;
+    animation-duration: 0.4s;
+  }
+
+  html:not([data-stop-animations='true']) .container_word span {
+    transition: background-color 0.5s;
+  }
+}
+
+html[data-dark-mode='true'] .wrapper_depths {
+  opacity: 0.8;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0rem);
+  }
+
+  50% {
+    transform: translateY(.625rem);
+  }
+
+  100% {
+    transform: translateY(0rem);
+  }
+}
+
+@keyframes bubble {
+  0% {
+    bottom: 0%;
+    opacity: 0.7;
+  }
+
+  50% {
+    bottom: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    bottom: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%) scale(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+}

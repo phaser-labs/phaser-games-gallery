@@ -1,0 +1,57 @@
+div.radio {
+    --input-radio-clr: var(--clr-background);
+    --input-radio-border-clr: var(--clr-accent);
+    --input-radio-bg: var(--clr-accent);
+    --input-size: 1.6rem;
+    --input-size-svg: 1.2em;
+    --input-radio-gap: 1rem;
+
+    padding: .5rem 1rem;
+    justify-content: flex-start;
+    font-style: italic;
+    background-color: var(--clr-background);
+    border-radius: .7rem;
+    box-shadow: 2px 2px 3px 0px #60606057;
+}
+
+div.radio label::first-letter {
+    color: var(--clr-text-main);
+    font-weight: bold;
+    font-style: normal;
+}
+
+.radio:has(input:checked) label::first-letter {
+    color: var(--clr-accent);
+}
+
+.radio[data-state="right"] {
+    --input-radio-bg: var(--clr-activity-success);
+}
+
+.radio[data-state="wrong"] {
+    --input-radio-bg: var(--clr-activity-wrong);
+}
+
+.radio :global(.c-input-radio__box) {
+    min-inline-size: var(--input-size);
+    min-block-size: var(--input-size);
+    border: 1.8px solid var(--input-radio-border-clr);
+}
+
+.radio :global(.c-input-radio__icon) svg {
+    width: var(--input-size-svg);
+    height: var(--input-size-svg);
+}
+
+html[data-dark-mode="true"] .radio>div {
+    border: 2px solid white;
+}
+
+html[data-dark-mode="true"] div.radio {
+    background-color: #252d42;
+    box-shadow: none
+}
+
+html[data-dark-mode="true"] .radio>div:focus-within {
+    outline: max(2px, .08em) solid white;
+}

@@ -1,0 +1,39 @@
+button.button {
+    --button-text-color: var(--clr-text-secondary);
+    --button-bg-color: #252329;
+    --button-padding: .2rem .3rem;
+    --outline-color: #252329;
+    --button-gap: .26em;
+
+    display: none;
+    width: fit-content;
+    cursor: pointer;
+    border-radius: .3125rem;
+    font-weight: normal;
+    margin: .312rem;
+}
+
+@media screen and (max-width: 1280px)  {
+    button.button  {
+        display: block;
+    }
+}
+
+button.button::first-letter {
+    text-transform: uppercase;
+}
+
+button.button:disabled {
+    --button-bg-color: var(--clr-brand-dark);
+    cursor: not-allowed;
+}
+
+button.button>svg {
+    --icon-size: 1.3rem;
+}
+
+div.tooltip {
+    --tooltip-bg: #252329;
+    --tooltip-arrow-bg: #252329;
+    color: var(--clr-text-secondary);
+}

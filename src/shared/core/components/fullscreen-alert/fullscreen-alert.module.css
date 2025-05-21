@@ -1,0 +1,30 @@
+.alert {
+    --clr-bg: #ebf8ff;
+    --clr-text: var(--clr-brand);
+    --svg-size: 3rem;
+
+    display: none;
+    grid-template-columns: var(--svg-size) 1fr;
+    padding: 0.575rem 0.8rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    border: 2px solid var(--clr-text);
+}
+
+@media screen and (max-width: 1280px) and (orientation: portrait) {
+    .alert {
+        display: grid;
+    }
+}
+
+html[data-dark-mode="true"] .alert {
+    --clr-bg: var(--clr-brand);
+    --clr-text: var(--clr-text-main);
+}
+
+.alert svg {
+    --icon-size: var(--svg-size);
+}

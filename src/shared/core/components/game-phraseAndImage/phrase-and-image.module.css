@@ -1,0 +1,61 @@
+.card {
+    border: none;
+    width: 170px;
+    /* height: 160px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: #fbb40a;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+.card>div {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+}
+
+.card p {
+    background-color: #634323;
+    color: var(--clr-background);
+    width: 100%;
+    text-align: center;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.imgElement {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+html[data-dark-mode="true"] .card p {
+    background-color: var(--clr-elements-dark-mode);
+}
+
+html[data-dark-mode="true"] .textCard[data-value="true"],
+.textCard[data-value="true"] {
+    background-color: var(--clr-activity-success);
+
+}
+
+html[data-dark-mode="true"] .textCard[data-value="false"],
+.textCard[data-value="false"] {
+    background-color: var(--clr-activity-wrong);
+
+}
+
+html[data-dark-mode="true"] .textCard[data-value="false"],
+html[data-dark-mode="true"] .textCard[data-value="false"] {
+    color: var(--clr-elements-dark-mode)
+}
