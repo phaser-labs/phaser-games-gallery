@@ -189,7 +189,7 @@ export class Menu extends Phaser.Scene {
           <p>Salta a cualquier lugar haciendo clic con el botón principal del ratón.
           También puedes hacerlo usando las teclas tab para seleccionar la opción que crea que es  correcta y enter para verificar
           si la respuesta es correcta. Para devolverse use las techas  shift + tab</p>
-          <img src="./assets/images/teclado1.png" alt="uso de teclas flecha arriba, izquierda, derecha">
+          <img src="assets/images/teclado1.png" alt="uso de teclas flecha arriba, izquierda, derecha">
         </div>
     </div>
     `;

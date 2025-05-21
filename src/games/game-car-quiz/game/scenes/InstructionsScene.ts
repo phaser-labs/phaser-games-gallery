@@ -153,12 +153,12 @@ export class InstructionsScene extends Phaser.Scene {
 
   const keybord = this.add.dom(150, 350, "img", null, "").setScale(0.4);
   const imgKeybord = keybord.node as HTMLImageElement;
-  imgKeybord.src = "/assets/game-car-question/img/Controls/keyboard.png";
+  imgKeybord.src = "assets/game-car-question/img/Controls/keyboard.png";
   imgKeybord.alt = "Control del teclado";
 
   const mouse = this.add.dom(530, 350, "img", null, "").setScale(0.3);
   const imgMouse = mouse.node as HTMLImageElement;
-  imgMouse.src = "/assets/game-car-question/img/Controls/mouse.png";
+  imgMouse.src = "assets/game-car-question/img/Controls/mouse.png";
   imgMouse.alt = "Control con mouse";
 
 

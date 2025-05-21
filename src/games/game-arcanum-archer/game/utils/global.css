@@ -446,6 +446,7 @@
   border-style: solid;
   background-color: transparent;
   transform: translate(2px, -35px);
+  z-index: 1000000 !important;
 }
 
 .game-arcanum-warn-text {
@@ -544,7 +545,7 @@ canvas:not(:focus-visible):hover {
   gap: 6px;
   font-family: 'Exo', 'Underdog', sans-serif;
   font-size: 1.2rem;
-  z-index: 10000;
+  z-index: 1 !important;
   font-weight: bold;
   pointer-events: none;
   user-select: none;

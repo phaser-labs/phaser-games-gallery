@@ -229,7 +229,7 @@ useEffect(() => {
         </div>
       )}
 
-      <div ref={gameContainer} id={containerId} tabIndex={0} />
+      <div ref={gameContainer} id={containerId} tabIndex={0} style={{maxHeight: '44vh'}} />
 
       {/* Modales */}
 

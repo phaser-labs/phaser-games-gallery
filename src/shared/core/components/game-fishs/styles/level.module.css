@@ -140,7 +140,7 @@
 
   transform: translate(-50%, -50%);
 
-  background-image: url('./assets/images/Boton_Inicio.webp');
+  background-image: url('assets/images/Boton_Inicio.webp');
   width: 221px;
   height: 63px;
   color: white;

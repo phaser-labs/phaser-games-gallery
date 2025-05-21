@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 1060,
+  width: 1113,
   height: 500,
   backgroundColor: '#121212',
   transparent: true,

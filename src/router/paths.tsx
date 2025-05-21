@@ -10,32 +10,32 @@ export const paths: PathType[] = [
   },
   {
     title: 'Frog Jump',
-    path: '/games/frog-jumping',
+    path: '/frog-jumping',
     component: <FrogJump />
   },
   {
     title: 'Arcanum Archer',
-    path: '/games/arcanum-archer',
+    path: '/arcanum-archer',
     component: <ArcanumArcher />
   },
   {
     title: 'Car Question',
-    path: '/games/car-question',
+    path: '/car-question',
     component: <CarQuestion />
   },
   {
     title: 'Game Maze',
-    path: '/games/maze-game',
+    path: '/maze-game',
     component: <GameMazeQuestion />
   },
   {
     title: 'Camino del desafio',
-    path: '/games/road-say',
+    path: '/road-say',
     component: <RoadSay />
   },
   {
     title: 'Desafío del Arquero',
-    path: '/games/arquery-game',
+    path: '/arquery-game',
     component: <GameArquerySimple />
   }
 ];
