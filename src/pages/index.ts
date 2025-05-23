@@ -5,3 +5,4 @@ export { GameMazeQuestion } from '@/pages/GameMazeQuestion';
 export { ArcanumArcher } from '@/pages/ArcanumArcher';
 export { CarQuestion } from '@/pages/CarQuestion';
 export { RoadSay } from '@/pages/RoadSay';
+export { GameMemoryCard } from '@/pages/GameMemoryCard';

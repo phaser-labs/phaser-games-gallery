@@ -34,5 +34,10 @@ export const dataGames: dataGameProps[] = [
         name: 'Arcanum Archer',
         image: "assets/images/arcanum-archer.webp",
         url: 'arcanum-archer',
+    },
+    {
+        name: 'Juego de Memoria',
+        image: "assets/images/game-memory.webp",
+        url: 'memory-card',
     }
 ];

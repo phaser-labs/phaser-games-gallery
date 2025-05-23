@@ -1,4 +1,4 @@
-import { ArcanumArcher, CarQuestion, FrogJump, GameArquerySimple, GameMazeQuestion, Home, RoadSay } from '@/pages';
+import { ArcanumArcher, CarQuestion, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, Home, RoadSay } from '@/pages';
 
 import type { PathType } from '../types/types';
 
@@ -37,5 +37,10 @@ export const paths: PathType[] = [
     title: 'Desafío del Arquero',
     path: '/arquery-game',
     component: <GameArquerySimple />
+  },
+  {
+    title: 'juego de memoria',
+    path: '/memory-card',
+    component: <GameMemoryCard />
   }
 ];

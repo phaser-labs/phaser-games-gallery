@@ -52,6 +52,10 @@ body,
   background-color: var(--bg-white);
 }
 
+.card-game-container img {
+  min-height: 70px;
+}
+
 .card-game-container button {
   width: 290px;
   height: 70px;
