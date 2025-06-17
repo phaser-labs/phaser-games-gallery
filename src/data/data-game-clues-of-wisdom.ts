@@ -1,4 +1,4 @@
-import { LevelStructure } from '@/game-clues-of-wisdom/utils/types';
+import { LevelStructure } from '../games/game-clues-of-wisdom/utils/types';
 
 /* 
 Este ejemplo de datos es para completar la frase con palabras específicas. (Words con isTarget: true)
