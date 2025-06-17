@@ -1,0 +1,418 @@
+@font-face {
+  font-family: 'CluesOfWisdom';
+  src: url('assets/game-clues-of-wisdom/fonts/VT323-Regular.ttf') format('truetype');
+}
+
+.gamePistas_container {
+  position: relative;
+  height: 70vh;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.prompt-text-display {
+  font-family: 'CluesOfWisdom';
+  font-size: 1.8rem;
+  color: #fff2db;
+  text-align: center;
+  margin: 0 auto;
+  background-image: url(assets/game-clues-of-wisdom/images/madera1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 20%;
+  overflow: auto;
+  border: 2px solid #3c3c19;
+  border-radius: 8px;
+  visibility: hidden !important;
+}
+
+@keyframes prompt-pop-in {
+  0% {
+    transform: scale(0.5) translateY(0px) translateX(-200);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) translateY(100px) translateX(-300);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0) translateX(-100);
+    opacity: 1;
+  }
+}
+
+.prompt-pop-in {
+  animation: prompt-pop-in 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  visibility: visible !important;
+}
+
+.game-clues-button-back-menu {
+  background-image: url('assets/game-clues-of-wisdom/images/Home.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+
+.game-clues-container {
+  font-family: 'CluesOfWisdom';
+  font-size: 2.5rem;
+  color: #fff2db;
+  text-align: center;
+  margin: 0 auto;
+  background-image: url(assets/game-clues-of-wisdom/images/madera1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 80%;
+  height: 20%;
+  border: 2px solid #3c3c19;
+  border-radius: 8px;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-clues-container__buttons {
+  display: grid;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+
+.game-clues-button {
+  font-family: 'CluesOfWisdom';
+  font-size: 2.5rem;
+  color: #fff2db;
+  text-align: center;
+  margin: 0 auto;
+  background-image: url(assets/game-clues-of-wisdom/images/madera1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 50%;
+  border: 2px solid #3c3c19;
+  border-radius: 8px;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.game-clues-instruction-container {
+  border-image-slice: 27 27 27 27 fill;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 0px 0px 0px 0px;
+  border-image-repeat: stretch stretch;
+  border-image-source: url('assets/game-clues-of-wisdom/images/madera1.png');
+  border-style: solid;
+  width: 96%;
+  height: 95%;
+  margin: 1rem;
+  padding: 1.5rem;
+  color: #fff2db;
+  font-family: 'CluesOfWisdom';
+  overflow-y: auto;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-clues-instruction__title {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 3rem;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.game-clues-instruction__title2 {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 4rem;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-clues-instruction__paragraph {
+  text-align: center;
+  margin: 0 auto;
+  font-size: 2rem;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.game-clues-instruction__list {
+  font-size: 2.3rem;
+  line-height: 2.6rem;
+  margin-top: 0;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-left: 28px;
+  margin-bottom: 0;
+}
+
+.game-clues-instruction-container::-webkit-scrollbar-thumb {
+  background-color: #c17234;
+}
+
+.game-clues-instruction-container::-webkit-scrollbar-track {
+  background-color: #d38c54;
+}
+
+.game-clues-instruction__list li {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.game-clues-instruction__list li::before {
+  content: url('assets/game-clues-of-wisdom/images/acorn-preview.gif');
+  position: absolute;
+  left: 0px;
+  top: 40%;
+  transform: translateY(-38%) scale(1.5);
+  pointer-events: none;
+}
+
+.game-clues-instruction__list li::marker {
+  display: none;
+  color: transparent;
+}
+
+.game-back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 20;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: scale 0.2s;
+  width: 50px;
+  height: 40px;
+  background-image: url('assets/game-clues-of-wisdom/images/Left-Arrow.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.game-back-button:hover {
+  scale: 1.1;
+}
+
+.game-clues-controls__list {
+  font-size: 1.7rem;
+  line-height: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+    text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+}
+
+.game-clues-controls__list li {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 0.8rem;
+  list-style: none;
+}
+
+.game-clues__text {
+  font-size: 1.5rem;
+  text-align: center;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+}
+.game-clues__text2 {
+  font-size: 2.8rem;
+  text-align: center;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+}
+
+.game-clues-controls__list li::before {
+  content: url('assets/game-clues-of-wisdom/images/acorn-preview.gif');
+  position: absolute;
+  left: 0px;
+  top: 20%;
+  transform: translateY(-45%) scale(1.8);
+  pointer-events: none;
+}
+
+.game-clues-controls__sublist li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  list-style: none;
+}
+
+.game-clues-controls__sublist li::before {
+  content: '-';
+  position: absolute;
+  left: 0px;
+  top: 40%;
+  transform: translateY(-38%) scale(1.5);
+  pointer-events: none;
+}
+.game-start-button {
+  background-color: #3c3c19;
+  color: #fff2db;
+  text-shadow:
+    3px 2px 0 #22130e,
+    -1px -1px 0 #22130e,
+    1px -1px 0 #22130e,
+    -1px 1px 0 #22130e,
+    1px 1px 0 #22130e;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 12px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.game-start-button:hover {
+  background-color: #5a5a1f;
+}
+
+.game-clues-endgame__container {
+  margin: 23% auto;
+}
+
+/* Estilos para el botón de volumen */
+.volume-control-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.volume-button-settings {
+  background-color: transparent;
+  border: 2px solid #fff2db;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  width: 90px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.volume-button-settings:focus {
+  outline: 2px solid #ffd700;
+}
+
+.volume-icon {
+  display: inline-block;
+  width: 52px;
+  height: 52px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.volume-icon-full {
+  background-image: url('assets/game-clues-of-wisdom/images/volume-full.png');
+}
+
+.volume-icon-half {
+  background-image: url('assets/game-clues-of-wisdom/images/volume-half.png');
+}
+
+.volume-icon-muted {
+  background-image: url('assets/game-clues-of-wisdom/images/volume-muted.png');
+}
+
+#volume-label, #key-label {
+  margin-bottom: 8px;
+  font-size: 2.5rem;
+}
+
+#key-input {
+  font-size: 2.5rem;
+    font-family: 'CluesOfWisdom';
+    width: 14%;
+    background-color: #d4aa6f;
+    border: 2px solid #74492f;
+    border-radius: 8px;
+}
+
+.key-config-section {
+      display: flex
+;
+    flex-direction: column;
+    align-items: center;
+}

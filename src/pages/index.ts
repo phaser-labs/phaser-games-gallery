@@ -6,3 +6,4 @@ export { ArcanumArcher } from '@/pages/ArcanumArcher';
 export { CarQuestion } from '@/pages/CarQuestion';
 export { RoadSay } from '@/pages/RoadSay';
 export { GameMemoryCard } from '@/pages/GameMemoryCard';
+export { CluesOfWisdom } from '@/pages/CluesOfWisdom';

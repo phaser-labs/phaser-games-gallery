@@ -39,5 +39,10 @@ export const dataGames: dataGameProps[] = [
         name: 'Juego de Memoria',
         image: "assets/images/game-memory.webp",
         url: 'memory-card',
+    },
+    {
+        name: 'Pistas de Sabiduría',
+        image: "assets/images/game-clues-of-wisdom.webp",
+        url: 'clues-of-wisdom',
     }
 ];
