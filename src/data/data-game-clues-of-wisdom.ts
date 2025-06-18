@@ -3,10 +3,9 @@ import { LevelStructure } from '../games/game-clues-of-wisdom/utils/types';
 /* 
 Este ejemplo de datos es para completar la frase con palabras específicas. (Words con isTarget: true)
 
-La otra forma de jugar es armar toda la frase. (Con un string del tipo "El zorro marrón saltó sobre el perro perezoso.")
-y este dentro de la logica del mismo juego separarla en palabras y marcar todas como isTarget: true.
+La forma de jugar es armar toda la frase. Las palabras deben estar en el orden correcto.
 
-Dentro del juego el orden de estas palabras no importa, pero el orden de las palabras en el promptText sí importa.
+El orden de las palabras en el Text sí importa.
 Por lo que ya tienen que estar en el orden correcto para que el juego funcione bien.
 
 Cada palabra dentro del array de words (tanto del modo completar frase como del modo armar frase) va a tener un orden por index.

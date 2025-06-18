@@ -97,3 +97,13 @@ body,
   width: 46px;
   height: 46px;
 }
+
+.list_star {
+  gap: 5px;
+  list-style-type: auto;
+}
+
+.list_star li::marker {
+  content: "⭐";
+  margin-right: 2px;
+}

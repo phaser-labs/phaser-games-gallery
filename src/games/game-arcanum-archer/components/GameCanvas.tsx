@@ -8,14 +8,12 @@ import { DialogCollection, FeedbackCollection,Question } from "../game/utils/typ
 import "../game/utils/global.css"; 
 import "./feedbackStyles.css";
 
-// Props que recibe el componente Canvas
 interface CanvasProps {
   dialogs?: DialogCollection; 
   data: Question[];
   feedbacks?: FeedbackCollection;
   id?: string;
 }
-
 // Tipo para manejar el estado interno del feedback
 type FeedbackState = {
   show: boolean;
@@ -31,11 +29,10 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
   const gameId = `game-phaser-${id || 'default'}`;
   // Ref para mantener la instancia del juego Phaser entre renders
   const phaserGameInstance = useRef<Phaser.Game | null>(null);
-
   // Estado de React para controlar la visibilidad y contenido del feedback
   const [feedback, setFeedback] = useState<FeedbackState>({
     show: false,
-    type: 'correct', // Valor inicial por defecto
+    type: 'correct', 
     message: '',     
     title: '',       
   });
@@ -49,26 +46,21 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
     if (feedbacks) {
         loadFeedbacks(feedbacks);
     }
-
-    // --- Inicialización de Phaser ---
+    // Inicialización de Phaser
     if (!gameContainer.current) {
         console.error("Game container ref is not available.");
         return;
     }
-
     // Evitar crear múltiples instancias del juego si el componente se re-renderiza innecesariamente
     if (phaserGameInstance.current) {
         console.warn("Phaser game instance already exists. Skipping creation.");
         return;
     }
     const game = new PhaserGame({ gameId: gameId });
-
     phaserGameInstance.current = game;
 
-    // --- Configuración del Listener de Eventos para Feedback ---
+    // Configuración del Listener de Eventos para Feedback
     const handleFeedbackEvent = (data: { type: 'correct' | 'incorrect'; message: string }) => { 
-      
-
       // Actualizar el estado de React para mostrar el feedback
       setFeedback({
         show: true,
@@ -81,7 +73,6 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
       const hideTimeout = setTimeout(() => {
         setFeedback(prev => ({ ...prev, show: false }));
       }, 4000);
-
       return () => clearTimeout(hideTimeout);
     };
 
@@ -93,12 +84,10 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
     }
 
     return () => {
-
       // Se eliminar el listener de eventos para evitar fugas de memoria
       if (phaserGameInstance.current && phaserGameInstance.current.events) {
           phaserGameInstance.current.events.off('show-feedback', handleFeedbackEvent);
       }
-
       // Liberar recursos
       if (phaserGameInstance.current) {
           phaserGameInstance.current.destroy(true); 
@@ -112,7 +101,6 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
     <>
     <div className="game-arcanum-container" style={{ position: 'relative' }}>
       <div ref={gameContainer} id={gameId} />
-
       {/* Div oculto para anuncios ARIA Live */}
       <div id="game-announcer"
            aria-live="polite"
@@ -122,7 +110,6 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
              padding: 0, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', border: 0
            }}>
       </div>
-
     </div>
 
      <div

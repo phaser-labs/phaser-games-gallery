@@ -1,93 +1,116 @@
 import { useEffect, useState } from 'react';
-import { Audio,Button, Col,Modal, Row } from 'books-ui';
+import { Audio, Button, Col, Modal, Row } from 'books-ui';
 
-import { BtnBack } from "@/components/btnBack"
-import { dataGameRoadDice } from "@/data/data-dame-road-say";
+import { BtnBack } from '@/components/btnBack';
+import { dataGameRoadDice } from '@/data/data-dame-road-say';
 import RoadDice from '@/games/game-road-say/RoadDice';
 import { ModalFeedback } from '@/shared/core/components';
 
-import "books-ui/styles";
+import 'books-ui/styles';
 
 import { Radios } from '../components/radio-activity';
-
-
 
 const MODALS = {
   SUCCESS: 'modal-correct-activity',
   WRONG: 'modal-wrong-activity'
 };
-const PREGUNTAS ={
-  PREGUNTA3: "PREGUNTA3",
-  PREGUNTA7: "PREGUNTA7",
-  PREGUNTA13: "PREGUNTA13",
-  PREGUNTA18: "PREGUNTA18",
-  PREGUNTA22: "PREGUNTA22"
-}
+const PREGUNTAS = {
+  PREGUNTA3: 'PREGUNTA3',
+  PREGUNTA7: 'PREGUNTA7',
+  PREGUNTA13: 'PREGUNTA13',
+  PREGUNTA18: 'PREGUNTA18',
+  PREGUNTA22: 'PREGUNTA22'
+};
 export const RoadSay = () => {
   const [isOpen, setIsOpen] = useState<string | null>(null);
   const [accumulated, setAccumulated] = useState<number>(0);
-  const [result, setResult] = useState<boolean |null>(null);
+  const [result, setResult] = useState<boolean | null>(null);
   const [currentStep, setCurrentStep] = useState<number>(0);
-
 
   useEffect(() => {
     const handler = (e: Event) => {
-      const custom = e as CustomEvent<{ accumulated: number, resultNull: boolean|null, currentStep: number }>;
+      const custom = e as CustomEvent<{ accumulated: number; resultNull: boolean | null; currentStep: number }>;
       setAccumulated(custom.detail.accumulated);
       setResult(custom.detail.resultNull);
       setCurrentStep(custom.detail.currentStep);
     };
     window.addEventListener('accumulatedChange', handler);
-    if(currentStep=== accumulated){
+    if (currentStep === accumulated) {
       setTimeout(() => {
         const activityResult = `PREGUNTA${accumulated}`;
-        setIsOpen(PREGUNTAS[ activityResult  as keyof typeof PREGUNTAS ]);
-      }, 1500)
+        setIsOpen(PREGUNTAS[activityResult as keyof typeof PREGUNTAS]);
+      }, 1500);
     }
     return () => {
       window.removeEventListener('accumulatedChange', handler);
     };
-  }, [accumulated, currentStep, ]);
+  }, [accumulated, currentStep]);
 
   const event = new CustomEvent('updateGameState', {
-    detail: { result, isOpen },
+    detail: { result, isOpen }
   });
   window.dispatchEvent(event);
-
 
   const closeModal = () => {
     setIsOpen(null);
   };
- const handleValidate =
-    ({ result }: { result: boolean }) => {
-      setResult(result);
-      const activityResult = result ? `SUCCESS` : `WRONG`;
-      console.log(activityResult);
-      setIsOpen(MODALS[activityResult as keyof typeof MODALS]);
-
-    };
+  const handleValidate = ({ result }: { result: boolean }) => {
+    setResult(result);
+    const activityResult = result ? `SUCCESS` : `WRONG`;
+    console.log(activityResult);
+    setIsOpen(MODALS[activityResult as keyof typeof MODALS]);
+  };
   return (
-   <>
+    <>
       <div className="header">
         <BtnBack />
         <h1>Camino de preguntas</h1>
       </div>
-      <div className={'container'}>
-         <Audio a11y src={`assets/audios/ally/aud_des_ova-26_sld-17__1.mp3`} />
+      <div className={'container'} style={{ gridTemplateColumns: '1fr' }}>
+        <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
+          <h2 className=" u-fs-400">Descripción del juego:</h2>
+          <p>
+            En este juego, el jugador avanza por un sendero con el objetivo de llegar al final. El movimiento se
+            rige por el resultado de un dado. A lo largo del recorrido, existen cinco casillas clave (posiciones 3, 7,
+            13, 18 y 22) que funcionan como barreras de conocimiento. Cuando el personaje del jugador cae en una de
+            estas casillas, el juego se detiene para plantear una pregunta. El jugador debe seleccionar la opción
+            correcta para poder conservar su progreso. Un fallo en la respuesta tiene como consecuencia la pérdida de
+            todo el avance, devolviendo al personaje a la línea de salida. Para ganar, es necesario navegar con éxito
+            todo el camino, superando cada uno de los cinco desafíos de trivia.
+          </p>
+          <p className="u-fs-300 u-font-bold">Características:</p>
+          <ul className="u-flow list_star">
+            <li>
+              <p>
+                <strong>Preguntas:</strong> Se podrá realizar unicamente 5 preguntas.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Respuestas:</strong> Se pueden tener multiples opciones de respuestas.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Recomendaciones:</strong> Ideal la utilización de opciones largas o cortas.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <Audio a11y src={`assets/audios/ally/aud_des_ova-26_sld-17__1.mp3`} />
         <Row justifyContent="center" alignItems="center">
           <Col xs="12" hd="10">
-            <Audio
-              addClass="u-mb-2"
-
-              src={`assets/audios/aud_ova-26_sld-17_1.mp3`}
-            />
-            <p aria-live='polite' className='u-sr-only'> el avatar se encuentra en la casilla numero  {currentStep}</p>
+            <Audio addClass="u-mb-2" src={`assets/audios/aud_ova-26_sld-17_1.mp3`} />
+            <p aria-live="polite" className="u-sr-only">
+              {' '}
+              el avatar se encuentra en la casilla numero {currentStep}
+            </p>
             <RoadDice dataGameRoadDice={dataGameRoadDice}></RoadDice>
           </Col>
         </Row>
-     
-      {/* modal de feedback */}
-      {/* <Modal isOpen={MODALS.SUCCESS === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+
+        {/* modal de feedback */}
+        {/* <Modal isOpen={MODALS.SUCCESS === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
         <Modal.Overlay />
         <Modal.Content addClass="feedbackModal">
           <Modal.CloseButton />
@@ -109,90 +132,49 @@ export const RoadSay = () => {
           </div>
         </Modal.Content>
       </Modal> */}
-       <ModalFeedback
-              type="success"
-              isOpen={MODALS.SUCCESS === isOpen}
-              onClose={closeModal}
-              finalFocusRef="#main">
-              <p>Correcto!</p>
-            </ModalFeedback>
-            <ModalFeedback
-              type="wrong"
-           isOpen={MODALS.WRONG === isOpen}
-              onClose={closeModal}
-              finalFocusRef="#main">
-              <p>Incorrecto</p>
-            </ModalFeedback>
-      {/* modales de preguntas */}
-      <Modal isOpen={PREGUNTAS.PREGUNTA3 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
-        {/* <Modal.Overlay /> */}
-        <div className='overlay'>
-          <Modal.Content addClass="feedbackModal">
-            {/* <Modal.CloseButton /> */}
-            <div className="feedbackModalContent">
-                  <strong >Pregunta 1.</strong>
-                <p>
-                  ¿Cuál es el país más grande del mundo en superficie?
-                </p>
+        <ModalFeedback type="success" isOpen={MODALS.SUCCESS === isOpen} onClose={closeModal} finalFocusRef="#main">
+          <p>Correcto!</p>
+        </ModalFeedback>
+        <ModalFeedback type="wrong" isOpen={MODALS.WRONG === isOpen} onClose={closeModal} finalFocusRef="#main">
+          <p>Incorrecto</p>
+        </ModalFeedback>
+        {/* modales de preguntas */}
+        <Modal isOpen={PREGUNTAS.PREGUNTA3 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+          {/* <Modal.Overlay /> */}
+          <div className="overlay">
+            <Modal.Content addClass="feedbackModal">
+              {/* <Modal.CloseButton /> */}
+              <div className="feedbackModalContent">
+                <strong>Pregunta 1.</strong>
+                <p>¿Cuál es el país más grande del mundo en superficie?</p>
                 <div className={`u-grid`} style={{ '--grid-gap': '1rem', '--grid-min': '1fr' } as React.CSSProperties}>
                   <Radios onResult={handleValidate}>
-                    <Radios.Radio
-                      id="1-1"
-                      label="a. China"
-                      state="wrong"
-
-                    />
-                    <Radios.Radio
-                      id="1-2"
-                      label="b.Estados Unidos"
-                      state="wrong"
-
-                    />
-                    <Radios.Radio
-                      id="1-3"
-                      label="c. Rusia"
-                      state="success"
-
-                    />
+                    <Radios.Radio id="1-1" label="a. China" state="wrong" />
+                    <Radios.Radio id="1-2" label="b.Estados Unidos" state="wrong" />
+                    <Radios.Radio id="1-3" label="c. Rusia" state="success" />
                     <Row justifyContent="center" alignItems="center">
                       <Radios.Button>
                         <Button label="Comprobar" />
                       </Radios.Button>
-
                     </Row>
                   </Radios>
                 </div>
-            </div>
-          </Modal.Content>
-        </div>
-      </Modal>
-      <Modal isOpen={PREGUNTAS.PREGUNTA7 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
-        <Modal.Overlay />
-        <Modal.Content addClass="feedbackModal">
-          {/* <Modal.CloseButton /> */}
-          <div className="feedbackModalContent">
-              <strong >Pregunta 2.</strong>
+              </div>
+            </Modal.Content>
+          </div>
+        </Modal>
+        <Modal isOpen={PREGUNTAS.PREGUNTA7 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+          <Modal.Overlay />
+          <Modal.Content addClass="feedbackModal">
+            {/* <Modal.CloseButton /> */}
+            <div className="feedbackModalContent">
+              <strong>Pregunta 2.</strong>
               <p> ¿Quién pintó la obra “La última cena”? </p>
               <div className={`u-grid`} style={{ '--grid-gap': '1rem', '--grid-min': '1fr' } as React.CSSProperties}>
                 <Radios onResult={handleValidate}>
-                  <Radios.Radio
-                    id="1-1"
-                    label="a. Miguel Ángel"
-                    state="wrong"
-
-                  />
-                  <Radios.Radio
-                    id="1-2"
-                    label="b. Leonardo da Vinci"
-                    state="success"
-
-                  />
-                  <Radios.Radio
-                    id="1-3"
-                    label="c. Rafael"
-                    state="wrong"
-
-                  />
+                  <Radios.Radio id="1-1" label="a. Miguel Ángel" state="wrong" />
+                  <Radios.Radio id="1-2" label="b. Leonardo da Vinci" state="success" />
+                  <Radios.Radio id="1-3" label="c. Rafael" state="wrong" />
                   <Row justifyContent="center" alignItems="center">
                     <Radios.Button>
                       <Button label="Comprobar" />
@@ -200,38 +182,21 @@ export const RoadSay = () => {
                   </Row>
                 </Radios>
               </div>
-          </div>
-        </Modal.Content>
-      </Modal>
-      <Modal isOpen={PREGUNTAS.PREGUNTA13 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
-        <Modal.Overlay />
-        <Modal.Content addClass="feedbackModal">
-          {/* <Modal.CloseButton /> */}
-          <div className="feedbackModalContent">
-                <strong >Pregunta 3.</strong>
-               <p>
-                ¿Cuál es el elemento químico representado por el símbolo "O"?
-              </p>
+            </div>
+          </Modal.Content>
+        </Modal>
+        <Modal isOpen={PREGUNTAS.PREGUNTA13 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+          <Modal.Overlay />
+          <Modal.Content addClass="feedbackModal">
+            {/* <Modal.CloseButton /> */}
+            <div className="feedbackModalContent">
+              <strong>Pregunta 3.</strong>
+              <p>¿Cuál es el elemento químico representado por el símbolo "O"?</p>
               <div className={`u-grid`} style={{ '--grid-gap': '1rem', '--grid-min': '1fr' } as React.CSSProperties}>
                 <Radios onResult={handleValidate}>
-                  <Radios.Radio
-                    id="1-1"
-                    label="a.  Oro"
-                    state="wrong"
-
-                  />
-                  <Radios.Radio
-                    id="1-2"
-                    label="b. Osmio"
-                    state="wrong"
-
-                  />
-                  <Radios.Radio
-                    id="1-3"
-                    label="c. Oxígeno"
-                    state="success"
-
-                  />
+                  <Radios.Radio id="1-1" label="a.  Oro" state="wrong" />
+                  <Radios.Radio id="1-2" label="b. Osmio" state="wrong" />
+                  <Radios.Radio id="1-3" label="c. Oxígeno" state="success" />
                   <Row justifyContent="center" alignItems="center">
                     <Radios.Button>
                       <Button label="Comprobar" />
@@ -239,74 +204,43 @@ export const RoadSay = () => {
                   </Row>
                 </Radios>
               </div>
-          </div>
-        </Modal.Content>
-      </Modal>
-      <Modal isOpen={PREGUNTAS.PREGUNTA18 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
-        <Modal.Overlay />
-        <Modal.Content addClass="feedbackModal">
-          {/* <Modal.CloseButton /> */}
-          <div className="feedbackModalContent">
-                <strong >Pregunta 4.</strong>
-               <p>¿En qué continente se encuentra el río Nilo? </p>
+            </div>
+          </Modal.Content>
+        </Modal>
+        <Modal isOpen={PREGUNTAS.PREGUNTA18 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+          <Modal.Overlay />
+          <Modal.Content addClass="feedbackModal">
+            {/* <Modal.CloseButton /> */}
+            <div className="feedbackModalContent">
+              <strong>Pregunta 4.</strong>
+              <p>¿En qué continente se encuentra el río Nilo? </p>
               <div className={`u-grid`} style={{ '--grid-gap': '1rem', '--grid-min': '1fr' } as React.CSSProperties}>
                 <Radios onResult={handleValidate}>
-                  <Radios.Radio
-                    id="1-1"
-                    label="a. Asia"
-                    state="wrong"
-
-                  />
-                  <Radios.Radio
-                    id="1-2"
-                    label="b. África"
-                    state="success"
-
-                  />
-                  <Radios.Radio
-                    id="1-3"
-                    label="c. América"
-                    state="wrong"
-
-                  />
+                  <Radios.Radio id="1-1" label="a. Asia" state="wrong" />
+                  <Radios.Radio id="1-2" label="b. África" state="success" />
+                  <Radios.Radio id="1-3" label="c. América" state="wrong" />
                   <Row justifyContent="center" alignItems="center">
                     <Radios.Button>
                       <Button label="Comprobar" />
                     </Radios.Button>
-
                   </Row>
                 </Radios>
               </div>
-          </div>
-        </Modal.Content>
-      </Modal>
-      <Modal isOpen={PREGUNTAS.PREGUNTA22 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
-        <Modal.Overlay />
-        <Modal.Content addClass="feedbackModal">
-          {/* <Modal.CloseButton /> */}
-          <div className="feedbackModalContent">
-                <strong >Pregunta 5.</strong>
-               <p> ¿Qué planeta es conocido como “el planeta rojo”? </p>
+            </div>
+          </Modal.Content>
+        </Modal>
+        <Modal isOpen={PREGUNTAS.PREGUNTA22 === isOpen} onClose={closeModal} finalFocusRef={'.gameMaze__question'}>
+          <Modal.Overlay />
+          <Modal.Content addClass="feedbackModal">
+            {/* <Modal.CloseButton /> */}
+            <div className="feedbackModalContent">
+              <strong>Pregunta 5.</strong>
+              <p> ¿Qué planeta es conocido como “el planeta rojo”? </p>
               <div className={`u-grid`} style={{ '--grid-gap': '1rem', '--grid-min': '1fr' } as React.CSSProperties}>
                 <Radios onResult={handleValidate}>
-                  <Radios.Radio
-                    id="1-1"
-                    label="a. Venus"
-                    state="wrong"
-
-                  />
-                  <Radios.Radio
-                    id="1-2"
-                    label="b. Marte"
-                    state="success"
-
-                  />
-                  <Radios.Radio
-                    id="1-3"
-                    label="c. Júpiter"
-                    state="wrong"
-
-                  />
+                  <Radios.Radio id="1-1" label="a. Venus" state="wrong" />
+                  <Radios.Radio id="1-2" label="b. Marte" state="success" />
+                  <Radios.Radio id="1-3" label="c. Júpiter" state="wrong" />
                   <Row justifyContent="center" alignItems="center">
                     <Radios.Button>
                       <Button label="Comprobar" />
@@ -314,10 +248,10 @@ export const RoadSay = () => {
                   </Row>
                 </Radios>
               </div>
-          </div>
-        </Modal.Content>
-      </Modal>
+            </div>
+          </Modal.Content>
+        </Modal>
       </div>
     </>
-  )
-}
+  );
+};
