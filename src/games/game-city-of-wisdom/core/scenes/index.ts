@@ -1,0 +1,14 @@
+export { Main } from './MainScene';
+export { Menu } from './MenuScene';
+export { BookStoreScene } from './BookStoreScene';
+export { CarworkshopScene } from './CarworkshopScene';
+export { CoffeScene } from './CoffeScene';
+export { GasStationScene } from './GasStationScene';
+export { HouseScene } from './HouseScene';
+export { MuseumScene } from './MuseumScene';
+export { PoliceScene } from './PoliceScene';
+export { ShoolScene } from './ShoolScene';
+export { ChurchScene } from './ChurchScene';
+export { StoreScene } from './StoreScene';
+export { FireStationScene } from './FireStationScene';
+export { InstructionsScene } from './InstructionsScene';

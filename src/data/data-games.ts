@@ -44,5 +44,10 @@ export const dataGames: dataGameProps[] = [
         name: 'Pistas de Sabiduría',
         image: "assets/images/game-clues-of-wisdom.webp",
         url: 'clues-of-wisdom',
+    },
+    {
+        name: 'Ciudad de Sabiduría',
+        image: "assets/images/city-of-wisdom.webp",
+        url: 'city-of-wisdom',
     }
 ];

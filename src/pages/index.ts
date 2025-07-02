@@ -7,3 +7,4 @@ export { CarQuestion } from '@/pages/CarQuestion';
 export { RoadSay } from '@/pages/RoadSay';
 export { GameMemoryCard } from '@/pages/GameMemoryCard';
 export { CluesOfWisdom } from '@/pages/CluesOfWisdom';
+export { CityOfWisdom } from '@/pages/CityOfWisdom';
