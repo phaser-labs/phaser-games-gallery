@@ -19,18 +19,19 @@
   ],
   "dependencies": {
     "books-ui": "^0.1.24",
+    "eventemitter3": "^5.0.1",
     "framer-motion": "11.15.0",
+    "phaser": "^3.88.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "wouter": "3.3.5",
-    "eventemitter3": "^5.0.1",
-    "phaser": "^3.88.2"
+    "wouter": "3.3.5"
   },
   "devDependencies": {
     "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
     "@eslint/js": "9.17.0",
     "@spiriit/vite-plugin-svg-spritemap": "3.0.0",
+     "@types/matter-js": "^0.19.8",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "@vitejs/plugin-basic-ssl": "1.2.0",

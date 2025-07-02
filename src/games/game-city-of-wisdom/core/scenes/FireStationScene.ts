@@ -1,4 +1,4 @@
-import { createSlider } from '@/components/slider/slider';
+import { createSlider } from '../../../../../public/slider/slider';
 
 import { Main } from './MainScene';
 

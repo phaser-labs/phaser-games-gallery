@@ -41,7 +41,8 @@ export default defineConfig({
       '@ui': `${path.resolve(__dirname, 'src/shared/ui')}/`,
       '@pages': `${path.resolve(__dirname, 'src/pages')}/`,
       '@router': `${path.resolve(__dirname, 'src/router')}/`,
-      '@styles': `${path.resolve(__dirname, `src/styles`)}/`
+      '@styles': `${path.resolve(__dirname, `src/styles`)}/`,
+      '@assets': `${path.resolve(__dirname, `src/assets`)}/`
     }
   },
   server: {

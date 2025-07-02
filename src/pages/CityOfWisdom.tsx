@@ -34,7 +34,7 @@ export const CityOfWisdom = () => {
               </li>
             </ul>
           </div>
-          <Col xs="12" hd="10">
+          <Col xs="12">
             <PathOfWisdom />
           </Col>
         </Row>
