@@ -20,9 +20,9 @@ export class InstructionsScene extends Phaser.Scene {
     <h1 class="cityOfWisdom__title"> CITY OF WISDOM </h1>
     <ul class="cityOfWisdom__text">
       <li>Usa las flechas para caminar por la ciudad.</li>
-      <li>acercate a las puertas de cada edificio si desea conocer  los elementos que los compone.</li>
-      <li>Confirma si deseas conocer los elementos </li>
-      <li>Preciona  los botones de siguiente y atras para conocer los elementos que tiene cada edificio</li>
+      <li>Acércate a las puertas de cada edificio si deseas conocer los elementos que los componen.</li>
+      <li>Confirma si deseas conocer los elementos. </li>
+      <li>Presiona los botones de siguiente y atrás para conocer los elementos que tiene cada edificio.</li>
     </ul>
     <button  class="cityOfWisdom__btnIniciar" id="startButton">Iniciar</button>
     `;
