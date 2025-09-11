@@ -49,5 +49,10 @@ export const dataGames: dataGameProps[] = [
         name: 'Ciudad de Sabiduría',
         image: "assets/images/city-of-wisdom.webp",
         url: 'city-of-wisdom',
-    }
+    },
+    {
+        name: 'Juego de Reorganizar Frases',
+        image: "assets/images/game-reorganize.webp",
+        url: 'game-reorganize',
+    },
 ];

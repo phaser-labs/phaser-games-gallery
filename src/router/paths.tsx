@@ -1,4 +1,4 @@
-import { ArcanumArcher, CarQuestion, CityOfWisdom, CluesOfWisdom, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, Home, RoadSay } from '@/pages';
+import { ArcanumArcher, CarQuestion, CityOfWisdom, CluesOfWisdom, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, GameReorganize, Home, RoadSay } from '@/pages';
 
 import type { PathType } from '../types/types';
 
@@ -52,5 +52,10 @@ export const paths: PathType[] = [
     title: 'Ciudad de Sabiduria',
     path: '/city-of-wisdom',
     component: <CityOfWisdom />
-  }
+  },
+  {
+    title: 'Juego de Reorganizar Frases',
+    path: '/game-reorganize',
+    component: <GameReorganize />
+  },
 ];

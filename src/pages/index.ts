@@ -8,3 +8,4 @@ export { RoadSay } from '@/pages/RoadSay';
 export { GameMemoryCard } from '@/pages/GameMemoryCard';
 export { CluesOfWisdom } from '@/pages/CluesOfWisdom';
 export { CityOfWisdom } from '@/pages/CityOfWisdom';
+export { GameReorganize } from '@/pages/GameReorganize';
