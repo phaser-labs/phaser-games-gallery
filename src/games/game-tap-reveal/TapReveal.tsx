@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { GlobalOptions, Questions} from "../types/AppTypes"
+import { GlobalOptions, Questions} from "../../types/AppTypes"
 
 import PhaserGame from './core/main'; // Importa el juego
 import { globalState } from './core/utils/GlobalState'; // Importa el estado global
