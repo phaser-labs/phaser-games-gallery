@@ -1,0 +1,1196 @@
+    body {
+        background-color: #ffffff !important;
+        color: black !important;
+    }
+
+    @font-face {
+        font-family: 'LibertinusKeyboard';
+        src: url('assets/fonts/LibertinusKeyboard-Regular.ttf') format('truetype');
+    }
+
+    .tapReveal__container {
+        width: 100%;
+        height: 70vh;
+        margin: 0 auto;
+    }
+
+    /* .tapReveal__container canvas {
+        border-radius: 40px;
+    } */
+    .tapReveal__containerMenu {
+        border: 1px solid rgb(8, 48, 224);
+        width: 100%;
+        height: 110vh;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .tapReveal__containerMenuTexthtml {
+        width: 100%;
+        height: 836px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .tapReveal__containerTexthtml {
+        width: 1100px;
+        height: 700px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    #tapReveal__score {
+        grid-column: 1/ 2;
+        grid-row: 1 / 3;
+        width: 190px;
+        height: 100px;
+        justify-self: center;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .tapReveal__score_2 h2 {
+        text-align: left;
+        font-family: Comic Sans MS;
+        font-weight: bold;
+        font-size: 40px;
+        color: #ffffff;
+        text-align: center;
+        text-shadow: -1px 0 #414D68, 0 1px #414D68, 1px 0 #414D68, 0 -1px #414D68, -2px 2px 0 #414D68, 2px 2px 0 #414D68, 1px 1px #414D68, 2px 2px #414D68, 3px 3px #414D68, 4px 4px #414D68, 5px 5px #414D68;
+    }
+
+    .tapReveal__score_1 h2 {
+        text-align: left;
+        font-family: Arial Black;
+        font-weight: bold;
+        font-size: 40px;
+        background: #202020;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.4), 0px -1px 1px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .tapReveal_trofeo {
+        width: 250px;
+        height: 200px;
+        padding: 1rem;
+    }
+
+    .tapReveal__score_3 .panel {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+        background: linear-gradient(45deg, #ff4e5066, #f9d42385, #6cdc2494, #514a9d)
+    }
+
+    .tapReveal__score_3 .panel span {
+        font-size: 70px;
+        font-weight: 900;
+        text-shadow: 2px 2px 0px white;
+    }
+
+    #svg circle {
+        stroke-dashoffset: 0;
+        transition: stroke-dashoffset 1s linear;
+        stroke: #666;
+        stroke-width: 1em;
+    }
+
+    #svg #bar {
+        stroke: #FF9F1E;
+    }
+
+    .tapReveal__score_cont {
+        display: block;
+        height: 200px;
+        width: 200px;
+        margin: 2em auto;
+        box-shadow: 0 0 1em black;
+        border-radius: 100%;
+        position: relative;
+    }
+
+    .tapReveal__score_cont span {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: anchor-center;
+        color: white;
+        font-size: 76px;
+        font-weight: bold;
+        z-index: 1;
+        border-radius: 100%;
+    }
+
+    .tapReveal__score_cont:after {
+        content: " ";
+        position: absolute;
+        height: 160px;
+        width: 160px;
+        left: 50%;
+        top: 50%;
+        /* box-shadow: inset 0 0 8em black; */
+        margin-top: -80px;
+        margin-left: -80px;
+        border-radius: 100%;
+        background-color: rgb(0, 0, 0);
+    }
+
+    /* .percentage {
+        font-size: 0.5em;
+        text-anchor: middle;
+        fill: #333;
+    } */
+
+    .tapReveal__score_1 {
+        grid-column: 1/ 2;
+        grid-row: 1 / 3;
+        justify-self: center;
+        align-self: center;
+    }
+
+    /* .tapReveal__score_2 {
+        border: 5px solid red;
+    }
+
+    .tapReveal__score_3 {
+        border: 5px solid blue;
+    } */
+
+    .tapReveal__score h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .tapReveal__actions_1,
+    .tapReveal__actions_2,
+    .tapReveal__actions_3 {
+        grid-column: 3 / 4;
+        grid-row: 1 / 3;
+        width: 200px;
+        height: 200px;
+        justify-self: center;
+        align-self: center;
+        border: 11px solid #00ffe5;
+        background-color: brown;
+        border-radius: 160px;
+        position: relative;
+    }
+
+
+
+
+    .tapReveal__actions_1 button {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        border: none;
+        color: #ffffff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        position: absolute;
+        top: 238px;
+        left: 88px;
+    }
+
+    .tapReveal__actions_1 span,
+    .tapReveal__actions_3 span {
+        display: none;
+    }
+
+    .tapReveal__actions_1 button:nth-child(1) {
+        top: -62px;
+        left: 47px;
+    }
+
+    .tapReveal__actions_1 button:nth-child(2) {
+        top: 36px;
+        left: -43px;
+    }
+
+    .tapReveal__actions_1 button:nth-child(3) {
+        top: 37px;
+        left: 140px;
+    }
+
+    .tapReveal__actions_1 button:nth-child(4) {
+        top: 130px;
+        left: 26px;
+    }
+
+    .tapReveal__actions_2 {
+        border: none;
+        border-radius: 0px;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .tapReveal__actions_2 button {
+        width: 80%;
+        height: 100px;
+        position: relative;
+        border-radius: 10px;
+        background: rgb(255, 27, 0);
+        background: linear-gradient(0deg, rgba(255, 27, 0, 1) 0%, rgba(251, 75, 2, 1) 100%);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+        color: white;
+        font-size: 25px;
+        font-family: fantasy
+    }
+
+
+
+
+    .tapReveal__actions_2 button:hover {
+        color: #f0094a;
+        background: transparent;
+        box-shadow: none;
+        background: white;
+    }
+
+    .tapReveal__actions_2 button:before,
+    .tapReveal__actions_2 button:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 5px;
+        width: 0;
+        background: #f0094a;
+        box-shadow:
+            -1px -1px 5px 0px #fff,
+            7px 7px 20px 0px #0003,
+            4px 4px 5px 0px #0002;
+        transition: 400ms ease all;
+    }
+
+    .tapReveal__actions_2 button:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+    }
+
+    .tapReveal__actions_2 button:hover:before,
+    .tapReveal__actions_2 button:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+    }
+
+    .tapReveal__actions_2 button img {
+        display: none;
+    }
+
+    .tapReveal__actions_3 {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 1rem;
+        /* margin: 0.5rem; */
+        border: none;
+        width: 100%;
+        height: 100%;
+        border-radius: initial;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        position: inherit;
+        background: inherit;
+    }
+
+    .tapReveal__actions_3 button {
+        width: 160px;
+        height: 210px;
+        border: none;
+        color: transparent;
+        /* background: RED; */
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: self-start;
+        padding: 10px;
+        background-size: 100% 100%;
+        position: relative;
+        background-position: center;
+        cursor: pointer;
+    }
+
+    .tapReveal__actions_3 button:nth-child(1) {
+        background-image: url("assets/images/colorFully_1.jpg")
+    }
+
+    .tapReveal__actions_3 button:nth-child(2) {
+        background-image: url("assets/images/colorFully_2.jpg")
+    }
+
+    .tapReveal__actions_3 button:nth-child(3) {
+        background-image: url("assets/images/colorFully_3.jpg")
+    }
+
+    .tapReveal__actions_3 button:nth-child(4) {
+        background-image: url("assets/images/colorFully_4.jpg")
+    }
+
+    .tapReveal__actions_3 button img {
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+        padding: 0rem;
+        background-color: #ffffff;
+        box-shadow: 3px 7px 9px 0px #111;
+        position: relative;
+    }
+
+    @keyframes moveBorder {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 400% 50%;
+        }
+    }
+
+    .tapReveal__actions_3 button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        padding: 4px;
+        /* grosor del borde */
+        border-radius: inherit;
+        background: linear-gradient(90deg, #ff3d77, #ffd000, #00e0ff, #8a3dff, #ff3d77);
+        background-size: 400% 400%;
+
+        /* máscara para que se vea solo el borde */
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: moveBorder 4s linear infinite;
+    }
+
+
+
+    .tapReveal__actions_3 button span {
+        display: block;
+        color: rgb(255, 255, 255);
+        font-size: 25px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: bolder;
+        text-shadow: 3px 0px 0px #000000;
+    }
+
+    /* botones  de las opciones  */
+    .tapReveal__containerOptions_1,
+    .tapReveal__containerOptions_2,
+    .tapReveal__containerOptions_3 {
+        grid-column: 1/ 4;
+        grid-row: 3/ 4;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        overflow-y: auto;
+    }
+
+    .tapReveal__containerOptions_1 .tapReveal__option {
+        padding: 12px 24px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #ff4e50, #f9d423, #24c6dc, #514a9d);
+        background-size: 300% 300%;
+        transition: transform 0.2s ease-in-out;
+        animation: moverGradiente 5s ease infinite;
+    }
+
+    .tapReveal__option[disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    /* Efecto al pasar el mouse */
+    .tapReveal__option:hover {
+        transform: scale(1.05);
+    }
+
+    /* Animación del degradado */
+    @keyframes moverGradiente {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+    /* botones del estilos 2 */
+    .tapReveal__containerOptions_2 .tapReveal__option {
+        --c: #fff;
+        /* text color */
+        background: linear-gradient(90deg, #0000 33%, #fff5, #0000 67%) var(--_p, 100%)/300% no-repeat,
+            #004dff;
+        /* background color */
+        color: #0000;
+        border: none;
+        transform: perspective(500px) rotateY(calc(20deg*var(--_i, -1)));
+        text-shadow: calc(var(--_i, -1)* 0.08em) -.01em 0 var(--c),
+            calc(var(--_i, -1)*-0.08em) .01em 2px #0004;
+        outline-offset: .1em;
+        transition: 0.3s;
+    }
+
+    .tapReveal__containerOptions_2 .tapReveal__option:hover,
+    .tapReveal__containerOptions_2 .tapReveal__option:focus-visible {
+        --_p: 0%;
+        --_i: 1;
+    }
+
+    .tapReveal__containerOptions_2 .tapReveal__option:active {
+        text-shadow: none;
+        color: var(--c);
+        box-shadow: inset 0 0 9e9q #0005;
+        transition: 0s;
+    }
+
+    .tapReveal__containerOptions_2 .tapReveal__option {
+        font-weight: bold;
+        font-size: 2rem;
+        margin: 0;
+        cursor: pointer;
+        padding: .1em .3em;
+    }
+
+    /* botones estilos 3 */
+
+    .tapReveal__containerOptions_3 .tapReveal__option {
+        border: none;
+        background: rgb(251, 33, 117);
+        background: linear-gradient(0deg, rgba(251, 33, 117, 1) 0%, rgba(234, 76, 137, 1) 100%);
+        color: #fff;
+        overflow: hidden;
+        font-size: 2rem;
+        position: relative;
+
+    }
+
+    .tapReveal__containerOptions_3 .tapReveal__option:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .tapReveal__containerOptions_3 .tapReveal__option:before {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: -180px;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        background-color: #fff;
+        animation: shiny-btn1 3s ease-in-out infinite;
+    }
+
+    .tapReveal__containerOptions_3 .tapReveal__option:hover {
+        opacity: .7;
+    }
+
+    .tapReveal__containerOptions_3 .tapReveal__option:active {
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .3),
+            -4px -4px 6px 0 rgba(116, 125, 136, .2),
+            inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+            inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+    }
+
+    @keyframes shiny-btn1 {
+        0% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0;
+        }
+
+        80% {
+            -webkit-transform: scale(0) rotate(45deg);
+            opacity: 0.5;
+        }
+
+        81% {
+            -webkit-transform: scale(4) rotate(45deg);
+            opacity: 1;
+        }
+
+        100% {
+            -webkit-transform: scale(50) rotate(45deg);
+            opacity: 0;
+        }
+    }
+
+
+    .tapReveal__score_cont_2>.gaugewrap {
+        width: 250px;
+        height: 250px;
+        position: relative;
+        display: inline-block;
+        border-radius: 50%;
+        box-sizing: padding-box;
+        padding: 2rem;
+        box-shadow: 1px 3px 1px 0 hsla(0, 0%, 0%, 0.4), inset 0 3px 1px 1px hsla(0, 0%, 100%, 0.7);
+        background: linear-gradient(30deg, hsla(0, 0%, 100%, 0.5) 20%, hsla(0, 0%, 0%, 0.3) 50%, hsla(0, 0%, 100%, 0.4) 80%), linear-gradient(105deg, hsla(0, 0%, 0%, 0.5) 20%, hsla(0, 0%, 100%, 0.3) 50%, hsla(0, 0%, 0%, 0.4) 80%), linear-gradient(135deg, hsla(210, 15%, 35%, 0.5) 0%, hsla(240, 15%, 50%, 0.5) 20%, hsla(220, 15%, 45%, 0.5) 23%, hsla(230, 30%, 60%, 0.5) 30%, hsla(230, 40%, 60%, 0.5) 45%, hsla(240, 25%, 50%, 0.5) 75%, hsla(230, 15%, 25%, 0.5) 90%, hsla(210, 25%, 10%, 0.5) 100%), linear-gradient(to bottom, hsl(0, 0%, 50%), hsl(0, 0%, 0%));
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap:before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        width: 92%;
+        height: 92%;
+        border-radius: 50%;
+        top: 4%;
+        left: 4%;
+        background: linear-gradient(45deg, hsla(0, 0%, 100%, 0.5) 20%, hsla(0, 0%, 0%, 0.3) 50%, hsla(0, 0%, 100%, 0.4) 80%), linear-gradient(120deg, hsla(0, 0%, 0%, 0.7) 20%, hsla(0, 0%, 100%, 0.5) 50%, hsla(0, 0%, 0%, 0.5) 80%);
+        box-shadow: -1px -2px 1px 0 hsla(0, 0%, 100%, 0.9), inset -2px -4px 1px 0 hsla(0, 0%, 100%, 0.9), inset 2px -4px 0 2px hsla(0, 0%, 0%, 0.7), 1px 2px 0 0 hsla(0, 0%, 0%, 0.7);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 0 1px 0 0 hsla(0, 0%, 85%, 0.5), inset 0 1px 1px 2px hsla(0, 0%, 0%, 0.5);
+        overflow: hidden;
+        box-shadow: -1px -2px 1px 2px hsla(0, 0%, 0%, 0.5), 1px 2px 1px 2px hsla(0, 0%, 100%, 0.6);
+        background:
+            linear-gradient(180deg, transparent 70%, #000 9%),
+            linear-gradient(272deg, transparent 50%, #c00 50%),
+            linear-gradient(5deg, transparent 56%, #cc0 72%),
+            linear-gradient(150deg, #000 50%, #0c0 40% 50%);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial {
+        position: relative;
+        display: inline-block;
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        top: 0.6rem;
+        left: 0.9rem;
+        background: linear-gradient(to bottom, #aaa, #666);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label {
+        position: absolute;
+        display: inline-block;
+        color: hsla(0, 0%, 100%, 0.5);
+        font-style: normal;
+        font-weight: 400;
+        line-height: 2rem;
+        font-size: 1.25rem;
+        font-family: Atomic Age;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        padding: 6px;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label:first-of-type {
+        top: 10rem;
+        left: -16px;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label:nth-of-type(2) {
+        top: 2.5rem;
+        left: -12px;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label:nth-of-type(3) {
+        top: -2.25rem;
+        left: 50%;
+        transform: translate(-50%);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label:nth-of-type(4) {
+        top: 2.5rem;
+        right: -6px;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial>label:nth-of-type(5) {
+        top: 10rem;
+        right: 0px;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .indicator {
+        position: absolute;
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        top: 4rem;
+        left: 4rem;
+        border-radius: 50%;
+        transform-origin: 50% 50%;
+        background: hsl(0, 90%, 25%);
+        z-index: 999;
+        background: radial-gradient(circle at center, #eee 10%, #111 20%, hsl(0, 90%, 25%) 20%, hsl(0, 90%, 10%));
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .indicator:after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        border-radius: 100% 100% 0 0;
+        width: 0.5rem;
+        height: 7rem;
+        top: -6.5rem;
+        left: 0.75rem;
+        background: hsl(0, 90%, 25%);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .indicator+i {
+        position: absolute;
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        top: 7.3rem;
+        left: 7.15rem;
+        border-radius: 50%;
+        transform-origin: 50% 50%;
+        background: hsla(0, 0%, 0%, 0.4);
+        z-index: 1;
+        background: transparent;
+        box-shadow: 0 0 2px 0 hsla(0, 0%, 0%, 0.3);
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .indicator::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        border-radius: 100% 100% 0 0;
+        width: 0.5rem;
+        height: 6rem;
+        top: -84px;
+        left: 1.2rem;
+        background: hsla(0, 0%, 0%, 0.4);
+        z-index: -1;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .dialbase {
+        position: absolute;
+        display: inline-block;
+        width: 14rem;
+        height: 4rem;
+        left: 50%;
+        transform: translate(-50%);
+        background: black;
+        top: 12.05rem;
+    }
+
+    .tapReveal__score_cont_2>.gaugewrap .gauge .dial .dialbase output {
+        /* box-shadow: 0 0 1px 1px hsl(190, 40%, 20%); */
+        position: relative;
+        display: inline-block;
+        width: 80%;
+        background: #000;
+        top: -4.5rem;
+        left: 9%;
+        z-index: 20000;
+        color: #ffffff;
+        text-align: center;
+        font-size: 2.8rem;
+        font-weight: bold;
+    }
+
+    .slidewrap {
+        position: relative;
+        display: inline-block;
+        width: 4rem;
+        height: 20rem;
+        margin-right: 2rem;
+        background: linear-gradient(135deg, hsla(210, 15%, 35%, 0.5) 0%, hsla(240, 15%, 50%, 0.5) 20%, hsla(220, 15%, 45%, 0.5) 23%, hsla(230, 30%, 60%, 0.5) 30%, hsla(230, 40%, 60%, 0.5) 45%, hsla(240, 25%, 50%, 0.5) 75%, hsla(230, 15%, 25%, 0.5) 90%, hsla(210, 25%, 10%, 0.5) 100%), linear-gradient(to bottom, hsl(0, 0%, 0%), hsl(0, 0%, 50%), hsl(0, 0%, 0%)), linear-gradient(to right, hsl(0, 0%, 0%), hsl(0, 0%, 50%), hsl(0, 0%, 0%));
+        border-radius: 1rem;
+        padding: 2rem 0;
+        text-align: center;
+        box-shadow: 0 0 1px 0 #000, 1px 2px 1px -1px #111;
+    }
+
+    .slidewrap:before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        background: linear-gradient(to bottom, hsla(0, 0%, 100%, 0.4) 0, transparent 20%);
+        transform: rotate(-45deg);
+        z-index: 999;
+    }
+
+    .slidewrap #slider.ui-slider-vertical {
+        position: relative;
+        display: inline-block;
+        width: 1rem;
+        height: 100%;
+        border-radius: 1rem;
+        box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.5), 0 1px 0 1px hsla(0, 0%, 60%, 0.5), inset 0 2px 1px 1px hsla(0, 0%, 0%, 0.75);
+        background: linear-gradient(to right, transparent 45%, #111 50%, transparent 55%), linear-gradient(to bottom, hsl(220, 15%, 20%), hsl(220, 15%, 35%), hsl(220, 15%, 15%));
+    }
+
+    .slidewrap #slider.ui-slider-vertical .ui-slider-handle {
+        position: absolute;
+        display: inline-block;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        background: linear-gradient(150deg, #aaa, #555);
+        box-shadow: inset 1px 2px 0 1px hsla(0, 0%, 80%, 0.7), inset 0 0 1px 2px #333, -3px 8px 1px -1px hsla(0, 0%, 0%, 0.4), 6px 16px 3px -2px hsla(0, 0%, 0%, 0.25);
+    }
+
+    .slidewrap #slider.ui-slider-vertical .ui-slider-handle:focus {
+        outline: none;
+    }
+
+    .slidewrap #slider.ui-slider-vertical .ui-slider-handle:after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        top: 0.5rem;
+        left: 0.5rem;
+        box-shadow: 0 1px 0 1px #999;
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #111;
+        background: repeating-radial-gradient(circle farthest-side at center, transparent 0px, transparent 4px, #222 4px, #111 5px), linear-gradient(to bottom, #222, #aaa);
+    }
+
+    .ghostme {
+        opacity: 0;
+    }
+
+    .hideme {
+        visibility: none;
+    }
+
+    .showme {
+        visibility: visible;
+    }
+
+    .abs {
+        position: absolute;
+    }
+
+    .rel {
+        position: relative;
+    }
+
+    .buryme {
+        display: none;
+    }
+
+    .blockme {
+        display: block;
+    }
+
+    .ilblockme {
+        display: inline-block;
+    }
+
+    .inlineme {
+        display: inline;
+    }
+
+    .tableme {
+        display: table;
+    }
+
+    .ailb {
+        position: absolute;
+        display: inline-block;
+    }
+
+    .rilb {
+        position: relative;
+        display: inline-block;
+    }
+
+    .ab {
+        position: absolute;
+        display: block;
+    }
+
+    .rb {
+        position: relative;
+        display: block;
+    }
+
+    .nofo:focus {
+        outline: none;
+    }
+
+    .raise {
+        box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.5), 0 2px 1px -1px hsla(0, 0%, 0%, 0.5), 0 4px 1px -2px hsla(0, 0%, 0%, 0.5);
+    }
+
+    .lower {
+        box-shadow: 0 1px 0 0 hsla(0, 0%, 85%, 0.5), inset 0 1px 1px 2px hsla(0, 0%, 0%, 0.5);
+    }
+
+    /* .tapReveal__option button {
+        display: none;
+    } */
+
+    .tapReveal__containerOptions {
+        display: none
+    }
+
+    .tapReveal__actions {
+        display: none
+    }
+
+    .tapReveal__containerImage_html {
+        width: 50px;
+        height: 50px;
+        z-index: 10000;
+        position: absolute;
+        top: 50%;
+        left: 100%;
+    }
+
+    .tapReveal__containerFeedbackCorrect_html,
+    .tapReveal__containerFeedbackIncorrect_html {
+        width: 100%;
+        height: 100%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tapReveal__feedbackCorrect,
+    .tapReveal__feedbackIncorrect {
+        position: relative;
+        width: 130%;
+        height: 800px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -82px;
+        left: -127px;
+    }
+
+    .tapReveal__feedbackIncorrect {
+        background: radial-gradient(#ff3d77, #f0094a, hsl(0, 90%, 25%));
+    }
+
+    .tapReveal__feedbackCorrect {
+        background: radial-gradient(#568b55, #3b8633, hsl(118, 97%, 12%));
+    }
+
+    .floating-img {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        animation: floatAnim 4s ease-in-out infinite alternate;
+    }
+
+    .tapReveal__correcto,
+    .tapReveal__incorrecto {
+        font-size: 80px;
+        font-weight: bold;
+        text-shadow: 2px 2px 0px black;
+        color: white;
+        z-index: 1000;
+        text-align: center;
+    }
+
+    @keyframes floatAnim {
+        from {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        to {
+            transform: translateY(-30px) rotate(10deg);
+        }
+    }
+
+    .cityOfWisdom__btns {
+        background-image: url("assets/images/btnStart.png");
+        background-color: transparent;
+        border: none;
+        background-size: 100% 100%;
+        width: 300px;
+        height: 100px;
+        font-size: 36px;
+        font-weight: bolder;
+        cursor: pointer;
+
+    }
+
+    .cityOfWisdom__btns:focus {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
+        color: #ff0000;
+        fill: red;
+
+    }
+
+    .cityOfWisdom__btns:focus svg {
+        fill: red;
+    }
+
+    .tapReveal__Title_stardScene {
+        font-family: "LibertinusKeyboard", serif;
+        font-size: 5rem;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+        text-shadow: 2px 2px 0px black;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .tapReveal__Title_stardScene:active {
+        transform: scale(0.95);
+    }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(7, 0, 0, 0.5);
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+    }
+
+    .instructionsText {
+        color: #fff;
+        font-size: 25px;
+        font-family: monospace;
+        padding: -6rem;
+        margin: 0 6rem;
+        height: 400px;
+        overflow-x: auto;
+    }
+
+    .instructionsText li ol {
+        list-style: disc;
+
+    }
+
+    .tapReveal__containerMenuButtons {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 2rem;
+        margin-top: 2rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tapReveal__trophyAndScore {
+        width: 99%;
+        height: 550px;
+        position: relative;
+
+    }
+
+    .tapReveal__trophyAndScore .tapReveal__trophyImage {
+        position: absolute;
+        right: 44%;
+        bottom: 18%;
+        width: 125px;
+        height: auto;
+    }
+
+    .tapReveal__trophyAndScore .tapReveal__lamppostLeft {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 550px;
+        z-index: 100;
+
+    }
+
+    .tapReveal__trophyAndScore .tapReveal__lamppostRight {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 550px;
+        z-index: 100;
+    }
+
+    .tapReveal__trophyAndScore .scoreImage {
+        position: absolute;
+        left: 50%;
+        top: 23%;
+        transform: translate(-50%, -50%);
+        width: 1000px;
+        height: auto;
+        z-index: 50;
+
+    }
+
+    .tapReveal__trophyAndScore .tapReveal__textScore {
+        position: absolute;
+        left: 50%;
+        top: 88%;
+        transform: translate(-50%, -50%);
+        width: 220px;
+        height: auto;
+        z-index: 50;
+        color: white;
+        text-align: center;
+        font-size: 43px;
+        font-weight: bold;
+        border: 2px solid white;
+        box-shadow: -1px 8px 20px 6px #ffffff;
+    }
+
+    /* etilos para accesibilidad */
+    .tapReveal__btnShowAll:focus,
+    .tapReveal__btnShowOne:focus,
+    .tapReveal__btnSoundShowCross:focus,
+    .tapReveal__btnShowAllCenter:focus {
+        outline: 4px solid #000000;
+    }
+
+    .tapReveal__btnChose:focus {
+        outline: 2px solid black;
+    }
+
+    .tapReveal__actions_2>button:focus {
+        outline: 3px solid rgb(255, 255, 255);
+    }
+
+    .tapReveal__containerOptions_2 button:focus {
+        outline: 3px solid rgb(255, 255, 255);
+    }
+
+    .u-sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .tapReveal__lost .container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        height: 500px;
+    }
+
+    .tapReveal__lost .button span {
+        transform: skew(-10deg);
+        display: block;
+        float: left;
+        text-shadow: #533d4a 1px 1px,
+            #533d4a 2px 2px,
+            #533d4a 3px 3px,
+            #533d4a 4px 4px;
+    }
+
+    .tapReveal__lost h2 {
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 90px;
+        margin: 0;
+        line-height: 90px;
+        letter-spacing: 2px;
+
+        width: 630px;
+        height: auto;
+        font-family: fantasy;
+        font-weight: bolder;
+    }
+
+    .tapReveal__textScore {
+
+        width: 220px;
+        height: auto;
+        z-index: 50;
+        color: white;
+        text-align: center;
+        font-size: 43px;
+        font-weight: bold;
+        border: 2px solid white;
+        box-shadow: -1px 8px 20px 6px #ffffff;
+    }
+
+    .tapReveal__lost .title {
+        transform: translateX(0%) rotate(-10deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .tapReveal__lost .title span {
+        transform: skew(-10deg);
+        display: block;
+        float: left;
+        text-shadow: #533d4a 1px 1px,
+            #533d4a 2px 2px,
+            #533d4a 3px 3px,
+            #533d4a 4px 4px,
+            #533d4a 5px 5px,
+            #533d4a 6px 6px;
+        min-width: 10px;
+        min-height: 10px;
+        position: relative;
+        color: #ffffff;
+    }

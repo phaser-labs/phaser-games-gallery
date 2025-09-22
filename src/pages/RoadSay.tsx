@@ -8,7 +8,7 @@ import { ModalFeedback } from '@/shared/core/components';
 
 import 'books-ui/styles';
 
-import { Radios } from '../components/radio-activity';
+import { Radios } from '../components/gallery-components';
 
 const MODALS = {
   SUCCESS: 'modal-correct-activity',

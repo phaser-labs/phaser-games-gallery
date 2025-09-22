@@ -1,4 +1,4 @@
-import { ArcanumArcher, CarQuestion, CityOfWisdom, CluesOfWisdom, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, GameReorganize, Home, RoadSay } from '@/pages';
+import { ArcanumArcher, CarQuestion, CityOfWisdom, CluesOfWisdom, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, GameReorganize, Home, RoadSay, TapRevealGame } from '@/pages';
 
 import type { PathType } from '../types/types';
 
@@ -58,4 +58,9 @@ export const paths: PathType[] = [
     path: '/game-reorganize',
     component: <GameReorganize />
   },
+  {
+    title: 'Juego de Revelar la imagen',
+    path: '/game-tap-reveal',
+    component: <TapRevealGame />
+  }
 ];

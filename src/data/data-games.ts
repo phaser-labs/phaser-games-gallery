@@ -55,4 +55,9 @@ export const dataGames: dataGameProps[] = [
         image: "assets/images/game-reorganize.webp",
         url: 'game-reorganize',
     },
+     {
+        name: 'Juego de Revelar la imagen',
+        image: "assets/images/game-tap-reveal.webp",
+        url: 'game-tap-reveal',
+    },
 ];
