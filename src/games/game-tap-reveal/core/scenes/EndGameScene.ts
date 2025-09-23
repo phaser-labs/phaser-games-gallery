@@ -17,7 +17,7 @@ export class EndGame extends Phaser.Scene {
       globalState.score <= 50
         ? `
         <div class="tapReveal__lost">
-          <section class="container">
+          <section class="tapReveal__container">
             <h2 aria-label = "perdiste">
             <span class="title">¡Perdiste!</span>
             <span class="title"> vuelve </span>

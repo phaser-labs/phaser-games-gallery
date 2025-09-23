@@ -1,5 +1,5 @@
 // variables globales
-import { GlobalOptions, Questions } from '../../../../types/AppTypes';
+import { GlobalOptions, Questions } from '../../../types/AppTypes';
 
 class GlobalState {
   private _globalOptions: GlobalOptions[] = [];
