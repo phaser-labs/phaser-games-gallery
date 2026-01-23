@@ -1,30 +1,68 @@
+import { Question } from "@/games/game-car-quiz/game/utils/types/type";
+
 // Datos de ejemplo para las preguntas
-export const dataQuestions = [
+export const dataQuestions: Question[] = [
   {
-    id: "npc-1", question: "¿Cuál es el resultado de 2 + 2?",
-    options: ["a. 3", "b. 6", "c. 4"],
-    correctIndex: 2,
+    question: "¿Cuál es la capital de Colombia?",
+    options: {
+      a: "Medellín",
+      b: "Bogotá",
+      c: "Cali"
+    },
+    correctAnswer: "b",
     backgroundImage: "assets/game-car-question/img/Scenes/calle.png"
   },
   {
-    id: "npc-2",
-    question: "¿Cuál es la capital de Francia?",
-    options: ["a. Berlín", "b. París", "c. Madrid"],
-    correctIndex: 1,
+    question: "¿Qué océanos bordean a Colombia?",
+    options: {
+      a: "Pacífico y Atlántico",
+      b: "Índico y Pacífico",
+    },
+    correctAnswer: "a",
     backgroundImage: "assets/game-car-question/img/Scenes/interior-casa.png"
   },
   {
-    id: "npc-3",
-    question: "¿De dónde es Shakira?",
-    options: ["a. San Petersburgo", "b. Bogotá", "c. Barranquilla"],
-    correctIndex: 2,
+    question: "¿Qué escritor colombiano ganó el Premio Nobel de Literatura?",
+    options: {
+      a: "Álvaro Mutis",
+      b: "Rafael Pombo",
+      c: "Gabriel García Márquez",
+      d: "José Eustasio Rivera"
+    },
+    correctAnswer: "c",
     backgroundImage: "assets/game-car-question/img/Scenes/local.png"
   },
   {
-    id: "npc-4",
-    question: "¿Cuál es la capital de Venezuela?",
-    options: ["a. Caracas", "b. Chile", "c. Carabobo"],
-    correctIndex: 0,
+    question: "¿Cuál es el ritmo musical típico de la costa Caribe colombiana?",
+    options: {
+      a: "Cumbia",
+      b: "Tango",
+      c: "Salsa",
+      d: "Merengue"
+    },
+    correctAnswer: "a",
+    backgroundImage: "assets/game-car-question/img/Scenes/parque.png"
+  },
+  {
+    question: "¿En qué departamento se encuentra la Ciudad Perdida?",
+    options: {
+      a: "Cundinamarca",
+      b: "Antioquia",
+      c: "Magdalena",
+      d: "Boyacá"
+    },
+    correctAnswer: "c",
+    backgroundImage: "assets/game-car-question/img/Scenes/local.png"
+  },
+  {
+    question: "¿Cuál es la bebida típica colombiana elaborada a base de maíz?",
+    options: {
+      a: "Chicha",
+      b: "Aguardiente",
+      c: "Masato",
+      d: "Café"
+    },
+    correctAnswer: "a",
     backgroundImage: "assets/game-car-question/img/Scenes/parque.png"
   }
 ];

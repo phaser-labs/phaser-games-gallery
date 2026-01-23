@@ -368,11 +368,11 @@
   background-color: #c9c9c9c9;
 }
 
-.game-arcanum-btn-open.hidden {
+.game-arcanum-btn-open.game-arcanum-hidden {
   display: none !important;
 }
 
-.game-arcanum-btn-open:not(.hidden) {
+.game-arcanum-btn-open:not(.game-arcanum-hidden) {
   display: flex !important;
 }
 
@@ -400,15 +400,15 @@
   }
 }
 
-.btnHidden {
+.game-arcanum-btn-hidden {
   animation: slideOutDown 0.4s forwards;
 }
 
-.lastText {
+.game-arcanum-last-text {
   position: relative;
 }
 
-.lastText::after {
+.game-arcanum-last-text::after {
   content: attr(data-last-chars);
   font-weight: bold;
   position: absolute;

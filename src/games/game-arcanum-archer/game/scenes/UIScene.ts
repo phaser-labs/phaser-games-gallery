@@ -38,7 +38,7 @@ export class UIScene extends Phaser.Scene {
             this.uiContainerElement = this.add.dom(10, 10).createFromHTML(uiHTML);
             this.uiContainerElement.setOrigin(0, 0); 
             this.uiContainerElement.setScrollFactor(0);
-            this.uiContainerElement.setDepth(10000);
+            this.uiContainerElement.setDepth(1000);
 
             // Ocultar la UI inicialmente
             this.uiContainerElement.setVisible(false);

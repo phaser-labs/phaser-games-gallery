@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Audio, Col, Row } from 'books-ui';
 
 import { BtnBack } from '@/components/btnBack';
-import FrogJumping from '@/games/game-jump-frog/FrogJumping';
+import FrogJumping, { GameResult } from '@/games/game-jump-frog/FrogJumping';
 import { ModalFeedback } from '@/shared/core/components';
 
 import 'books-ui/styles';
@@ -11,50 +11,62 @@ import { dataGameFrog } from '../data/data-game-frog';
 
 import '../styles/global.css';
 
-const MODALS = {
-  SUCCESS: 'modal-correct-activity',
-  WRONG: 'modal-wrong-activity'
+type FeedbackContent = {
+  title?: string;
+  description: string;
+};
+
+const feedbackQ1: { [key: string]: FeedbackContent } = {
+  '1-1': {
+    title: '¡Ups!',
+    description: 'Determinar el presupuesto no es el objetivo principal del análisis de actores clave.'
+  },
+  '1-2': {
+    title: '¡Correcto!',
+    description: 'Identificar a las partes interesadas es fundamental para el éxito del proyecto.'
+  },
+  '1-3': {
+    title: '¡Ups!',
+    description: 'Fijar los plazos de ejecución corresponde a la planificación del cronograma, no al análisis de actores.'
+  }
 };
 
 export const FrogJump = () => {
-  const [isOpen, setIsOpen] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState<'success' | 'wrong' | null>(null);
   const [currentQuestion, setcurrentQuestion] = useState(1);
-  // const [result, setResult] = useState<boolean | null>(null);
-  useEffect(() => {
-    const handleCurrentQuestion = (event: Event) => {
-      const customEvent = event as CustomEvent;
-      setcurrentQuestion(customEvent.detail);
-      // Puedes actualizar estados, puntaje, mostrar feedback, etc.
-    };
-    const handleCurrentResult = (event: Event) => {
-      const customEvent = event as CustomEvent;
-      handleOpenModal(customEvent.detail);
-      // setResult();
-    };
-    window.addEventListener('informationQuestion', handleCurrentQuestion);
-    window.addEventListener('informationResult', handleCurrentResult);
-
-    return () => {
-      window.removeEventListener('informationQuestion', handleCurrentQuestion);
-      window.removeEventListener('informationResult', handleCurrentResult);
-    };
-  });
-
-  // Controlamos los modales de la actividad.
-  /**
-   * Función que se encarga de validar
-   * el valor proporcionado por Selects.
-   * @param {object[]} result
-   */
-  const handleOpenModal = (result?: boolean) => {
-    setTimeout(() => {
-      const activityResult = result === true ? `SUCCESS` : result === false ? `WRONG` : null;
-      setIsOpen(MODALS[activityResult as keyof typeof MODALS]);
-    }, 3500);
-  };
+  const [currentResult, setCurrentResult] = useState<GameResult | null>(null);
 
   const closeModal = () => {
     setIsOpen(null);
+  };
+
+  const handleResult = useCallback((result: GameResult) => {
+    setCurrentResult(result);
+
+    setTimeout(() => {
+      setIsOpen(result.isCorrect ? 'success' : 'wrong');
+    }, 3500); // El delay es necesario por la animacion
+  }, []);
+
+  const getFeedbackContent = () => {
+    if (!currentResult) return { title: '', description: '' };
+
+    // Si es la primera pregunta (index 0)
+    if (currentResult.questionIndex === 0 && feedbackQ1[currentResult.selectedAnswer]) {
+      return feedbackQ1[currentResult.selectedAnswer];
+    }
+
+    // Feedback por defecto para el resto
+    return {
+      title: '',
+      description: currentResult.isCorrect
+        ? 'Has respondido correctamente.'
+        : 'Has respondido incorrectamente. Vuelve a intentarlo.'
+    };
+  };
+
+  const handleQuestionChange = (questionIndex: number) => {
+    setcurrentQuestion(questionIndex);
   };
 
   return (
@@ -98,17 +110,24 @@ export const FrogJump = () => {
               <Row justifyContent="center" alignItems="center">
                 <Col xs="12" className="u-flow">
                   <Audio key={currentQuestion} src={`assets/audios/aud_ova-26_sld-17_${currentQuestion}.mp3`} />
-                  <FrogJumping dataGameFrog={dataGameFrog}></FrogJumping>
+                  <FrogJumping 
+                    dataGameFrog={dataGameFrog} 
+                    onResult={handleResult}
+                    onQuestionChange={handleQuestionChange}
+                  />
                 </Col>
               </Row>
             </div>
 
-            <ModalFeedback type="success" isOpen={MODALS.SUCCESS === isOpen} onClose={closeModal} finalFocusRef="#main">
-              <p>Correcto!</p>
+            <ModalFeedback
+              type={isOpen === 'success' ? 'success' : 'wrong'}
+              isOpen={isOpen !== null}
+              onClose={closeModal}
+              finalFocusRef="#main">
+              <h3>{getFeedbackContent().title}</h3>
+              <p>{getFeedbackContent().description}</p>
             </ModalFeedback>
-            <ModalFeedback type="wrong" isOpen={MODALS.WRONG === isOpen} onClose={closeModal} finalFocusRef="#main">
-              <p>Incorrecto</p>
-            </ModalFeedback>
+
           </Col>
         </Row>
       </div>

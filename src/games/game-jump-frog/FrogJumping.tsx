@@ -1,10 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
+import Phaser from 'phaser';
 
-import PhaserGame from './core/main'; // Importa el juego
-import { globalState } from './core/utils/GlobalState'; // Importa el estado global
+import PhaserGame from './core/main';
+import { globalState } from './core/utils/GlobalState';
 
 import './frogJumping.css';
-interface DataGameFrog {
+
+export interface DataGameFrog {
   id: number;
   question: string;
   options: {
@@ -13,40 +16,80 @@ interface DataGameFrog {
     state: 'wrong' | 'success';
   }[];
 }
+
+export interface GameResult {
+  isCorrect: boolean;
+  selectedAnswer: string;
+  questionIndex: number;
+}
+
 interface FrogJumpingProps {
   dataGameFrog: DataGameFrog[];
+  onResult: (result: GameResult) => void;
+  onQuestionChange?: (questionIndex: number) => void;
 }
-/**
- * El componente GameCanvas sirve como contenedor para el juego de Phaser.
- * Inicializa la instancia del juego de Phaser y se asegura de limpiar correctamente al desmontar el componente.
- */
-const FrogJumping: React.FC<FrogJumpingProps> = ({ dataGameFrog }) => {
-  globalState.data = dataGameFrog;
-  // Referencia al contenedor div para el juego
+
+const FrogJumping: React.FC<FrogJumpingProps> = ({ dataGameFrog, onResult, onQuestionChange }) => {
   const gameContainer = useRef<HTMLDivElement>(null);
+  const gameEvents = useRef(new Phaser.Events.EventEmitter()).current;
+  const gameInstanceRef = useRef<PhaserGame | null>(null);
+  const onResultRef = useRef(onResult);
+  const onQuestionChangeRef = useRef(onQuestionChange);
 
   useEffect(() => {
-    // Verifica si el contenedor del juego está disponible
+    onResultRef.current = onResult;
+  }, [onResult]);
+
+  useEffect(() => {
+    onQuestionChangeRef.current = onQuestionChange;
+  }, [onQuestionChange]);
+
+  useEffect(() => {
+    if (dataGameFrog) {
+      globalState.data = dataGameFrog;
+    }
+  }, [dataGameFrog]);
+
+  useEffect(() => {
     if (!gameContainer.current) return;
 
-    // Crea una nueva instancia del juego de Phaser
-    const game = new PhaserGame(gameContainer.current);
+    const game = new PhaserGame({
+      container: gameContainer.current,
+      gameEvents: gameEvents
+    });
+    
+    gameInstanceRef.current = game;
 
-    // Función de limpieza para destruir la instancia del juego al desmontar el componente
+    const handleResult = (result: GameResult) => {
+      if (onResultRef.current) {
+        onResultRef.current(result);
+      }
+    };
+
+    const handleQuestionChange = (questionIndex: number) => {
+      if (onQuestionChangeRef.current) {
+        onQuestionChangeRef.current(questionIndex);
+      }
+    };
+
+    gameEvents.on('informationResult', handleResult);
+    gameEvents.on('informationQuestion', handleQuestionChange);
+
     return () => {
       game.destroy(true);
+      gameEvents.off('informationResult', handleResult);
+      gameEvents.off('informationQuestion', handleQuestionChange);
+      gameInstanceRef.current = null;
     };
   }, []);
 
-  // Renderiza el contenedor del juego
   return (
-    <>
-      <div
-        className="gameFrog__container"
-        aria-label="Juego de rana  educativa, navegue por el contenido, encontrara una pregunta  con sus posibles respuestas, seleccione la respuesta correcta usando las tecla enter.">
-        <div ref={gameContainer} className="gameFrog__game-container" />
-      </div>
-    </>
+    <div
+      className="gameFrog__container"
+      role="application"
+      aria-label="Juego de rana educativa. Responde las preguntas para avanzar.">
+      <div ref={gameContainer} className="gameFrog__game-container" />
+    </div>
   );
 };
 

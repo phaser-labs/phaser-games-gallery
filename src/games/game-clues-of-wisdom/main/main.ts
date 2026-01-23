@@ -34,11 +34,10 @@ export default class PhaserGame extends Phaser.Game {
         this.sound.volume = initialSetting.level;
     }   if (config.allSentenceChallengesData && config.allSentenceChallengesData.length > 0) {
       this.registry.set('allSentenceChallenges', config.allSentenceChallengesData);
-      console.log('PhaserGame: Datos de desafíos de frases recibidos:', config.allSentenceChallengesData);
+      this.registry.set('currentLevelIndex', 0); // Índice del nivel actual
       
       const firstChallenge = config.allSentenceChallengesData[0];
       this.registry.set('currentChallengeConfig', firstChallenge);
-      console.log('PhaserGame: Usando el primer desafío por defecto:', firstChallenge);
 
     } else {
       this.registry.remove('allSentenceChallenges'); // Limpiar si no hay datos 

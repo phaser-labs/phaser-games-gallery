@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
 
@@ -5,13 +6,14 @@ import { ThemeSelector } from "./components/ThemeSelector";
 import PhaserGame from "./main/main";
 import { globalState, loadQuestions } from "./utils/globalState";
 import { themeManager } from "./utils/themeManager";
-import { type SentenceType, WORLD_THEMES,type WorldType } from "./utils/types";
+import { type GameReorganizeResult,type SentenceType, WORLD_THEMES,type WorldType } from "./utils/types";
 
 import "./styles/GameReorganize.css";
 
 interface GameReorganizeProps {
   sentences: SentenceType[];
   gameId?: string;
+  onResult?: (result: GameReorganizeResult) => void;
 }
 
 // Se define un tipo para la acción pendiente después del modal de éxito
@@ -22,17 +24,18 @@ type NextAction =
 
 // Helper para la región ARIA Live
 const announce = (message: string) => {
-  const announcer = document.getElementById("game-announcer");
+  const announcer = document.getElementById("game-reorganize-game-announcer");
   if (announcer) {
     announcer.textContent = message;
   } else {
-    console.warn("Announcer element #game-announcer not found in DOM.");
+    console.warn("Announcer element #game-reorganize-game-announcer not found in DOM.");
   }
 };
 
 export const GameReorganizeTemplate = ({
   sentences: initialQuestions,
   gameId,
+  onResult,
 }: GameReorganizeProps) => {
   const gameContainer = useRef<HTMLDivElement>(null);
   const gameEvents = useRef(new Phaser.Events.EventEmitter()).current;
@@ -61,6 +64,21 @@ export const GameReorganizeTemplate = ({
       loadQuestions(initialQuestions);
     }
   }, [initialQuestions]);
+
+  // Listener para el resultado de la revisión
+  useEffect(() => {
+    const handleCheckResult = (data: GameReorganizeResult) => {
+      if (onResult) {
+        onResult(data);
+      }
+    };
+
+    gameEvents.on('check-result', handleCheckResult);
+
+    return () => {
+      gameEvents.off('check-result', handleCheckResult);
+    };
+  }, [gameEvents, onResult]);
 
   // Inicializar el theme manager
   useEffect(() => {
@@ -357,7 +375,7 @@ if(name) {
         id="game-reorganize-volume-button"
         aria-label={isMuted ? 'Activar sonido' : 'Desactivar sonido'}
         onClick={toggleMute}
-        className={`volume-button ${isMuted ? 'muted' : 'sound'}`}
+        className={`game-reorganize-volume-button ${isMuted ? 'muted' : 'sound'}`}
       /> )} 
       {/* Modal del titulo */}
         { showOverlay && handleChangeThemeForModal()}

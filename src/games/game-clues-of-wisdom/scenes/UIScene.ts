@@ -133,6 +133,71 @@ export class UIScene extends Phaser.Scene {
          .setScrollFactor(0)
          .setDepth(100);
     }, this);
+
+    // Mostrar mensaje introductorio al inicio
+    this.showIntroMessage();
+  }
+
+  // Método para mostrar mensaje introductorio
+  private showIntroMessage(): void {
+    const promptText = this.currentPromptText;
+    const centerX = this.cameras.main.width / 2;
+    const centerY = this.cameras.main.height / 2;
+
+    // Crear un rectángulo de fondo oscuro semi-transparente
+    const overlay = this.add.rectangle(
+      centerX,
+      centerY,
+      this.cameras.main.width,
+      this.cameras.main.height,
+      0x000000,
+      0.8
+    )
+    .setScrollFactor(0)
+    .setDepth(1000)
+    .setAlpha(0);
+
+    // Crear el texto del mensaje
+    const messageText = this.add.text(
+      centerX,
+      centerY,
+      promptText,
+      {
+        fontFamily: 'CluesOfWisdom',
+        fontSize: '36px',
+        color: '#ffffff',
+        fontStyle: 'bold',
+        align: 'center',
+        wordWrap: { width: this.cameras.main.width - 100 }
+      }
+    )
+    .setOrigin(0.5)
+    .setScrollFactor(0)
+    .setDepth(1001)
+    .setAlpha(0);
+
+    // Animación de aparición
+    this.tweens.add({
+      targets: [overlay, messageText],
+      alpha: 1,
+      duration: 500,
+      ease: 'Power2',
+      onComplete: () => {
+        // Después de 4 segundos, desvanecer
+        this.time.delayedCall(3000, () => {
+          this.tweens.add({
+            targets: [overlay, messageText],
+            alpha: 0,
+            duration: 800,
+            ease: 'Power2',
+            onComplete: () => {
+              overlay.destroy();
+              messageText.destroy();
+            }
+          });
+        });
+      }
+    });
   }
 
   private formatPromptText(_currentPromptText?: string, currentlyFoundWords?: WordData[]): string {
@@ -177,12 +242,37 @@ export class UIScene extends Phaser.Scene {
         playScene.events.off('wordCollected', undefined, this);
         playScene.events.off('sentenceComplete', undefined, this);
     }
+
+    // Destruir elementos de la UI
+    if (this.hudSprite) {
+      this.hudSprite.destroy();
+    }
+    if (this.promptTextDisplay) {
+      this.promptTextDisplay.destroy();
+    }
+    if (this.menuButtonDOMElement) {
+      this.menuButtonDOMElement.destroy();
+    }
+    if (this.feedbackTextDisplay) {
+      this.feedbackTextDisplay.destroy();
+    }
+
     console.log("UIScene shutdown");
   }
 
   destroy(): void {
-    this.promptTextDisplay?.destroy();
-    this.feedbackTextDisplay?.destroy();
+    if (this.hudSprite) {
+      this.hudSprite.destroy();
+    }
+    if (this.promptTextDisplay) {
+      this.promptTextDisplay.destroy();
+    }
+    if (this.menuButtonDOMElement) {
+      this.menuButtonDOMElement.destroy();
+    }
+    if (this.feedbackTextDisplay) {
+      this.feedbackTextDisplay.destroy();
+    }
     console.log("UIScene destroy");
   }
 }

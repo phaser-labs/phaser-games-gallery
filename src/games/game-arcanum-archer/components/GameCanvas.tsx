@@ -1,9 +1,10 @@
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import PhaserGame from "../game/main";
 import { loadDialogs, loadFeedbacks,loadQuestions } from "../game/utils/GlobalState"; 
 import { DialogCollection, FeedbackCollection,Question } from "../game/utils/types/type";
+import { GameResult } from "../game-arcanum";
 
 import "../game/utils/global.css"; 
 import "./feedbackStyles.css";
@@ -13,16 +14,11 @@ interface CanvasProps {
   data: Question[];
   feedbacks?: FeedbackCollection;
   id?: string;
+  onResult?: (result: GameResult) => void;
 }
-// Tipo para manejar el estado interno del feedback
-type FeedbackState = {
-  show: boolean;
-  type: 'correct' | 'incorrect';
-  message: string;
-  title: string;
-};
 
-export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id }) => {
+
+export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id, onResult }) => {
   // Ref para el div donde se montará el canvas de Phaser
   const gameContainer = useRef<HTMLDivElement>(null);
   // Generar un ID único para el contenedor del juego
@@ -30,12 +26,7 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
   // Ref para mantener la instancia del juego Phaser entre renders
   const phaserGameInstance = useRef<Phaser.Game | null>(null);
   // Estado de React para controlar la visibilidad y contenido del feedback
-  const [feedback, setFeedback] = useState<FeedbackState>({
-    show: false,
-    type: 'correct', 
-    message: '',     
-    title: '',       
-  });
+
 
   useEffect(() => {
     // Cargar diálogos
@@ -56,38 +47,14 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
         console.warn("Phaser game instance already exists. Skipping creation.");
         return;
     }
-    const game = new PhaserGame({ gameId: gameId });
+    const game = new PhaserGame({ gameId: gameId, onResult });
     phaserGameInstance.current = game;
 
     // Configuración del Listener de Eventos para Feedback
-    const handleFeedbackEvent = (data: { type: 'correct' | 'incorrect'; message: string }) => { 
-      // Actualizar el estado de React para mostrar el feedback
-      setFeedback({
-        show: true,
-        type: data.type,
-        title: data.type === 'correct' ? '¡Correcto!' : '¡Incorrecto!', 
-        message: data.message, 
-      });
 
-      // Configurar un temporizador para ocultar el feedback automáticamente
-      const hideTimeout = setTimeout(() => {
-        setFeedback(prev => ({ ...prev, show: false }));
-      }, 4000);
-      return () => clearTimeout(hideTimeout);
-    };
-
-    // Suscribirse al evento global 'show-feedback'
-    if (game && game.events) {
-        game.events.on('show-feedback', handleFeedbackEvent);
-    } else {
-         console.error("Phaser game instance or its event emitter is not available for listener setup.");
-    }
 
     return () => {
-      // Se eliminar el listener de eventos para evitar fugas de memoria
-      if (phaserGameInstance.current && phaserGameInstance.current.events) {
-          phaserGameInstance.current.events.off('show-feedback', handleFeedbackEvent);
-      }
+      
       // Liberar recursos
       if (phaserGameInstance.current) {
           phaserGameInstance.current.destroy(true); 
@@ -95,7 +62,7 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
       }
     };
 
-  }, [dialogs, data, feedbacks, gameId]);
+  }, [dialogs, data, feedbacks, gameId, onResult]);
 
   return (
     <>
@@ -112,12 +79,7 @@ export const GameCanvas: React.FC<CanvasProps> = ({ dialogs, data, feedbacks, id
       </div>
     </div>
 
-     <div
-     className={`feedback-container ${feedback.type} ${feedback.show ? 'visible' : ''}`}
-     aria-hidden={!feedback.show}>
-     <h3 className="feedback-title">{feedback.title}</h3>
-     <p className="feedback-message">{feedback.message}</p>
-   </div>
+    
    </>
   );
 };

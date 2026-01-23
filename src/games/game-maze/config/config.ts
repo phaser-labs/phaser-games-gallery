@@ -10,7 +10,7 @@ export const config: Phaser.Types.Core.GameConfig = {
   transparent: true,
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+    autoCenter: Phaser.Scale.CENTER_BOTH
   },
   dom: {
     createContainer: true

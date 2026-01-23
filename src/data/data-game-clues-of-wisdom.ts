@@ -8,7 +8,7 @@ La forma de jugar es armar toda la frase. Las palabras deben estar en el orden c
 El orden de las palabras en el Text sí importa.
 Por lo que ya tienen que estar en el orden correcto para que el juego funcione bien.
 
-Cada palabra dentro del array de words (tanto del modo completar frase como del modo armar frase) va a tener un orden por index.
+Cada palabra dentro del array de words (modo completar frase) va a tener un orden por index.
 */
 
 export const level1Data: LevelStructure[] = [{
@@ -23,26 +23,19 @@ export const level1Data: LevelStructure[] = [{
     { text: 'perro', isTarget: true },
     { text: 'perezoso.', isTarget: false }
   ],
-  promptText: 'El ____ marrón ____ sobre el ____ perezoso.',
-  feedback: {
-    sentenceCompleteAudio: 'sfx_level_complete',
-    sentenceCompleteText: '¡Frase completada!'
-  }
+  promptText: 'El ____ marrón ____ sobre el ____ perezoso.'
 },
   {
     id: "beach_message_bottle",
     words: [
         { text: "Una", isTarget: false },
-        { text: "botella", isTarget: false },
+        { text: "botella", isTarget: true },
         { text: "trajo", isTarget: false },
-        { text: "un", isTarget: false },
-        { text: "mensaje", isTarget: false },
-        { text: "secreto.", isTarget: false },
+        { text: "un", isTarget: true },
+        { text: "mensaje", isTarget: true },
+        { text: "secreto.", isTarget: true },
     ],
-    promptText: "Descifra el mensaje de la botella.",
-    feedback: {
-        sentenceCompleteText: "¡Mensaje revelado!"
-    }
+    promptText: "Descifra el mensaje de la botella."
   }
 ];
 

@@ -19,9 +19,9 @@ export class Game extends Phaser.Scene {
   lives: number = 3;
   livesImages: Phaser.GameObjects.Image[] = [];
   isMuted: boolean = false;
-  volumeButton!: Phaser.GameObjects.Image;
-  controlButton!: Phaser.GameObjects.Image;
-  preloadButton!: Phaser.GameObjects.Image;
+  volumeButton!: Phaser.GameObjects.DOMElement;
+  controlButton!: Phaser.GameObjects.DOMElement;
+  preloadButton!: Phaser.GameObjects.DOMElement;
   dpad!: Phaser.GameObjects.DOMElement;
   gameEvents: Phaser.Events.EventEmitter;
 
@@ -78,8 +78,30 @@ export class Game extends Phaser.Scene {
   }
 
   btnControl() {
-    this.controlButton = this.add.image(752, 50, 'control').setInteractive();
-    this.controlButton.on('pointerdown', () => {
+    this.controlButton = this.add.dom(752, 50).createFromHTML(`
+      <style>
+        .phaser-game-btn:focus {
+          outline: 3px solid #ffd840;
+          outline-offset: 2px;
+          border-radius: 4px;
+        }
+      </style>
+      <button 
+        class="phaser-game-btn"
+        style="
+          width: 32px; 
+          height: 32px; 
+          background: url('assets/game-maze/img/control.png') no-repeat center; 
+          background-size: contain; 
+          border: none; 
+          cursor: pointer;"
+        aria-label="Ver controles"
+        title="Controles"
+      ></button>
+    `);
+    
+    this.controlButton.addListener('click');
+    this.controlButton.on('click', () => {
       if (!this.dpad) {
         this.createDpad();
       } else {
@@ -89,8 +111,23 @@ export class Game extends Phaser.Scene {
   }
 
   btnPreload() {
-    this.preloadButton = this.add.image(688, 50, 'pregunta').setInteractive();
-    this.preloadButton.on('pointerdown', () => {
+    this.preloadButton = this.add.dom(688, 50).createFromHTML(`
+      <button 
+        class="phaser-game-btn"
+        style="
+          width: 32px; 
+          height: 32px; 
+          background: url('assets/game-maze/img/pregunta.png') no-repeat center; 
+          background-size: contain; 
+          border: none; 
+          cursor: pointer;"
+        aria-label="Ver pregunta"
+        title="Ver pregunta"
+      ></button>
+    `);
+    
+    this.preloadButton.addListener('click');
+    this.preloadButton.on('click', () => {
       this.dpad.destroy();
       this.cameras.main.fadeOut(1000, 0, 0, 0);
       this.time.delayedCall(1000, () => {
@@ -102,15 +139,40 @@ export class Game extends Phaser.Scene {
 
   btnVolume() {
     const isCurrentlyMuted = this.sound.mute;
-    const initialTexture = isCurrentlyMuted ? 'mute' : 'sound';
-    this.volumeButton = this.add.image(624, 50, initialTexture).setInteractive();
+    const initialTexture = isCurrentlyMuted ? 'assets/game-maze/img/volOff.png' : 'assets/game-maze/img/volOn.png';
+    const initialLabel = isCurrentlyMuted ? 'Activar sonido' : 'Silenciar sonido';
+
+    this.volumeButton = this.add.dom(624, 50).createFromHTML(`
+      <button 
+        id="vol-btn"
+        class="phaser-game-btn"
+        style="
+          width: 32px; 
+          height: 32px; 
+          background: url('${initialTexture}') no-repeat center; 
+          background-size: contain; 
+          border: none; 
+          cursor: pointer;"
+        aria-label="${initialLabel}"
+        title="Volumen"
+      ></button>
+    `);
+    
     this.isMuted = isCurrentlyMuted;
 
-    this.volumeButton.on('pointerdown', () => {
+    this.volumeButton.addListener('click');
+    this.volumeButton.on('click', () => {
       this.isMuted = !this.isMuted;
       this.sound.mute = this.isMuted;
-      const newTexture = this.isMuted ? 'mute' : 'sound';
-      this.volumeButton.setTexture(newTexture);
+      
+      const newTexture = this.isMuted ? 'assets/game-maze/img/volOff.png' : 'assets/game-maze/img/volOn.png';
+      const newLabel = this.isMuted ? 'Activar sonido' : 'Silenciar sonido';
+
+      const btnElement = this.volumeButton.getChildByID('vol-btn') as HTMLElement;
+      if (btnElement) {
+        btnElement.style.backgroundImage = `url('${newTexture}')`;
+        btnElement.setAttribute('aria-label', newLabel);
+      }
     });
   }
 
@@ -143,18 +205,27 @@ export class Game extends Phaser.Scene {
   setupInput() {
     if (this.input.keyboard) {
       this.cursors = this.input.keyboard.createCursorKeys();
+      // Agregar teclas WASD
+      this.input.keyboard.addKeys('W,A,S,D');
     }
   }
 
   handlePlayerMovement() {
     if (this.moving) return;
-    if (this.cursors.left.isDown) {
+
+    // Obtener las teclas WASD del input manager
+    const keyA = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    const keyS = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    const keyD = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    const keyW = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
+    if (this.cursors.left.isDown || keyA.isDown) {
       this.tryMove(-1, 0, 'left');
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || keyD.isDown) {
       this.tryMove(1, 0, 'right');
-    } else if (this.cursors.up.isDown) {
+    } else if (this.cursors.up.isDown || keyW.isDown) {
       this.tryMove(0, -1, 'up');
-    } else if (this.cursors.down.isDown) {
+    } else if (this.cursors.down.isDown || keyS.isDown) {
       this.tryMove(0, 1, 'down');
     } else {
       this.player.anims.play('turn', true);
@@ -212,7 +283,8 @@ export class Game extends Phaser.Scene {
   }
 
   collectLetter(letter: Phaser.Physics.Arcade.Sprite) {
-    const letterId = letter.getData('id');
+    const letterId = letter.getData('id') as string;
+    const selectedAnswer = letterId.toLowerCase();
 
     if (letterId === this.correctLetter) {
       this.moving = true;
@@ -221,13 +293,17 @@ export class Game extends Phaser.Scene {
       this.successSound.play(); // 🔄 MODIFICADO
       this.gameOver = true;
       // const success = this.add.dom(400, 300).createFromCache('success');
-      this.gameEvents.emit('feedback-modal', { type: 'success' });
+      this.gameEvents.emit('feedback-modal', { type: 'success', selectedAnswer });
       this.time.delayedCall(2000, () => {
         // success.destroy();
         this.music.pause();
         this.cameras.main.fadeOut(1000, 0, 0, 0);
         this.time.delayedCall(1000, () => {
           this.moving = false;
+          // Reiniciar vidas y música para el siguiente nivel/pregunta
+          this.lives = 3;
+          this.createLivesUI();
+          this.music.resume();
           this.gameEvents.emit('correctAnswer');
         });
       });
@@ -235,7 +311,7 @@ export class Game extends Phaser.Scene {
       this.wrongSound.play(); // 🔄 MODIFICADO
       this.removeLife();
       // const wrong = this.add.dom(400, 300).createFromCache('wrong');
-      this.gameEvents.emit('feedback-modal', { type: 'wrong' });
+      this.gameEvents.emit('feedback-modal', { type: 'wrong', selectedAnswer });
       // this.time.delayedCall(2000, () => {
       //   wrong.destroy();
       // });

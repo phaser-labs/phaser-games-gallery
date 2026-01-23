@@ -1,12 +1,29 @@
+import { useCallback, useState } from 'react';
 import { Col, Row } from 'books-ui';
 
 import { BtnBack } from '@/components/btnBack';
 import { level1Data } from '@/data/data-game-clues-of-wisdom';
-import { GameCluesOfWisdom } from '@/games/game-clues-of-wisdom/GameCluesOfWisdom';
+import { GameCluesOfWisdom } from '@/games/game-clues-of-wisdom/game-clues-of-wisdom';
+import { GameCluesOfWisdomResult } from '@/games/game-clues-of-wisdom/utils/types';
+import { ModalFeedback } from '@/shared/core/components';
 
 import '@styles/global.css';
 
 export const CluesOfWisdom = () => {
+const [isOpenModal, setIsOpenModal] = useState<true | false | null>(null);
+
+  const closeModal = () => {
+    setIsOpenModal(null);
+  };
+
+  const handleResult = useCallback((result: GameCluesOfWisdomResult) => {
+    console.log('🎉 Nivel completado:', result);
+    setIsOpenModal(true);
+    console.log('✅ Frase completa:', result.completedSentence);
+    console.log('📝 Palabras encontradas:', result.foundWords);
+    console.log('🎯 Total de palabras:', result.totalWords);
+  }, []);
+
   return (
     <>
       <div className="header">
@@ -48,10 +65,18 @@ export const CluesOfWisdom = () => {
         </div>
         <Row justifyContent="center" alignItems="center">
           <Col xs="11" mm="10" md="9" lg="6">
-            <GameCluesOfWisdom data={level1Data} gameId="game-ova" />
+            <GameCluesOfWisdom data={level1Data} gameId="game-ova" onResult={handleResult} />
           </Col>
         </Row>
       </div>
+
+      <ModalFeedback
+      type="success"
+      onClose={closeModal}
+      finalFocusRef="#main"
+      isOpen={isOpenModal === true}>
+        <p>Has completado la frase correctamente.</p>
+      </ModalFeedback>
     </>
   );
 };

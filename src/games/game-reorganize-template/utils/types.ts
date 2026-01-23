@@ -4,6 +4,15 @@ export interface SentenceType {
   id: string;
 }
 
+// Result type for callback when user checks answer
+export interface GameReorganizeResult {
+  isCorrect: boolean;
+  sentenceId: string;
+  sentenceIndex: number;
+  userAnswer: string;
+  correctAnswer: string;
+}
+
 // Interface para definir el mundo del juego
 export interface WorldType {
   id: number;

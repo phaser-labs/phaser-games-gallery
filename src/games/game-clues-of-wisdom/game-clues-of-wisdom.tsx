@@ -2,13 +2,14 @@
 import { useEffect, useRef } from 'react';
 
 import PhaserGame from './main/main';
-import { LevelStructure } from './utils/types';
+import { GameCluesOfWisdomResult, LevelStructure } from './utils/types';
 
 import './styles/gamePistas.css';
 
 interface GameCluesProps {
   data: LevelStructure[];
   gameId: string;
+  onResult?: (result: GameCluesOfWisdomResult) => void;
 }
 
 // Helper para la región ARIA Live
@@ -21,7 +22,7 @@ interface GameCluesProps {
   }
 }; */
 
-export const GameCluesOfWisdom = ({ data, gameId }: GameCluesProps) => {
+export const GameCluesOfWisdom = ({ data, gameId, onResult }: GameCluesProps) => {
   const gameContainer = useRef<HTMLDivElement>(null);
   const gameEvents = useRef(new Phaser.Events.EventEmitter()).current;
   const phaserGameInstanceRef = useRef<PhaserGame | null>(null); // Tipo PhaserGame
@@ -53,13 +54,23 @@ export const GameCluesOfWisdom = ({ data, gameId }: GameCluesProps) => {
     });
     phaserGameInstanceRef.current = game;
 
+    // Escuchar evento de nivel completado
+    const handleLevelComplete = (result: GameCluesOfWisdomResult) => {
+      if (onResult) {
+        onResult(result);
+      }
+    };
+
+    gameEvents.on('level-complete', handleLevelComplete);
+
     return () => {
+      gameEvents.off('level-complete', handleLevelComplete);
       if (phaserGameInstanceRef.current) {
         phaserGameInstanceRef.current.destroy(true);
         phaserGameInstanceRef.current = null;
       }
     };
-  }, [uniqueContainerId, gameEvents, data]);
+  }, [uniqueContainerId, gameEvents, data, onResult]);
 
   return (
     <div className="gamePistas_container">

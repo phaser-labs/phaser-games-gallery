@@ -1,12 +1,46 @@
+import { useCallback, useState } from 'react';
 import { Col, Row } from 'books-ui';
 
 import { BtnBack } from '@/components/btnBack';
 import { dataQuestions, dialogs, feedbackTexts } from '@/data/data-game-arcanum';
-import { GameArcanumArcher } from '@/games/game-arcanum-archer/GameArcanum';
+import { GameArcanumArcher, GameResult } from '@/games/game-arcanum-archer/game-arcanum';
+import { ModalFeedback } from '@/shared/core/components';
 
 import '@styles/global.css';
 
 export const ArcanumArcher = () => {
+  const [modalOpen, setModalOpen] = useState<'success' | 'wrong' | null>(null);
+  const [currentResult, setCurrentResult] = useState<GameResult | null>(null);
+
+  const closeModal = () => {
+    setModalOpen(null);
+  };
+
+  const handleResult = useCallback((result: GameResult) => {
+    console.log('Resultado del juego:', result);
+    setCurrentResult(result);
+   setTimeout(() => {
+      setModalOpen(result.isCorrect ? 'success' : 'wrong');
+    }, 800); // El delay es necesario por la animacion
+  }, []);
+
+  const getModalFeedbackContent = () => {
+    if (!currentResult) return { title: '', description: '' };
+
+    const levelKey = `level${currentResult.questionIndex + 1}` as keyof typeof feedbackTexts;
+    const levelFeedback = feedbackTexts[levelKey];
+    const defaultFeedback = feedbackTexts.default;
+
+    const message = currentResult.isCorrect
+      ? levelFeedback?.correct || defaultFeedback.correct
+      : levelFeedback?.incorrect || defaultFeedback.incorrect;
+
+    return {
+      title: currentResult.isCorrect ? '¡Correcto!' : '¡Incorrecto!',
+      description: message,
+    };
+  };
+
   return (
     <>
       <div className="header">
@@ -47,10 +81,26 @@ export const ArcanumArcher = () => {
                 </li>
               </ul>
             </div>
-            <GameArcanumArcher data={dataQuestions} dialogs={dialogs} id="1" feedbacks={feedbackTexts} />
+            <GameArcanumArcher
+              data={dataQuestions}
+              dialogs={dialogs}
+              id="1"
+              feedbacks={feedbackTexts}
+              onResult={handleResult}
+            />
           </Col>
         </Row>
       </div>
+
+      <ModalFeedback
+        type={currentResult?.isCorrect ? 'success' : 'wrong'}
+        onClose={closeModal}
+        finalFocusRef="#main"
+        isOpen={modalOpen !== null}
+      >
+        <h2>{getModalFeedbackContent().title}</h2>
+        <p>{getModalFeedbackContent().description}</p>
+      </ModalFeedback>
     </>
   );
 };

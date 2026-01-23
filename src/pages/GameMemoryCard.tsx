@@ -1,7 +1,7 @@
 import { Audio, Col, Row } from "books-ui";
 
 import { BtnBack } from "@/components/btnBack";
-import { GameMemory } from "@/games/game-memory-card/GameMemory";
+import { GameMemory } from "@/games/game-memory-card/game-memory";
 
 import "@styles/global.css";
 

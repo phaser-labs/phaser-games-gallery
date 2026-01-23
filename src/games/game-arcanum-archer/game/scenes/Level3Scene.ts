@@ -1,6 +1,7 @@
 
 import Phaser from 'phaser';
 
+import { GameResult } from '../../game-arcanum';
 import { globalState } from '../utils/GlobalState';
 
 import '../utils/global.css';
@@ -142,7 +143,7 @@ this.btnMusic(); // Botón de música
       <div id="level3-dialog-content" class="game-arcanum-dialog-content" role="dialog" aria-modal="true" aria-labelledby="level3-dialog-title" aria-describedby="dialog-text2">
       <img src="assets/game-arcanum-archer/images/Characters/0NqMwt.png" alt="Ilustración del Profesora Ether." class="game-arcanum-book-image1">
       <div class="game-arcanum-book-text">
-        <p id="dialog-text2" class="lastText"></p>
+        <p id="dialog-text2" class="game-arcanum-last-text"></p>
        </div>
         <div class="game-arcanum-book-text2" style="top: -30%;">
         <p id="level3-dialog-title">Profesora Ether</p>
@@ -156,7 +157,7 @@ this.btnMusic(); // Botón de música
 
     // Botón para abrir el diálogo
     this.openButton = this.add
-      .dom(300, 514)
+      .dom(400, 555)
       .createFromHTML(
         `
     <button id="open-dialog-button" class="game-arcanum-btn-open hidden" aria-label="Abrir diálogo del Profesora Ether.">
@@ -173,7 +174,7 @@ this.btnMusic(); // Botón de música
         if (this.isDialogActive) return; // Evitar abrir si ya está abierto
         this.currentPart = 0; // Reiniciar al texto inicial
         this.recreateDialog();
-        openButtonElement.classList.add('hidden'); // Ocultar el botón después de abrir
+        openButtonElement.classList.add('game-arcanum-hidden'); // Ocultar el botón después de abrir
       });
     } else {
       console.error('Open dialog button element not found');
@@ -414,7 +415,7 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
       if (firstActiveLogicalIndex === -1) {
         // No hay targets activos, permitir que Tab salga del canvas hacia otros elementos
         const openButton = this.openButton?.node?.querySelector('#open-dialog-button') as HTMLButtonElement;
-        if (openButton && !openButton.classList.contains('hidden')) {
+        if (openButton && !openButton.classList.contains('game-arcanum-hidden')) {
           openButton.focus();
         }
 
@@ -666,10 +667,12 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
       }
     });
 
+    // Actualizar textParts antes de mostrar (por si se reabrió el diálogo)
+    this.textParts = [...this.dialogsData];
     this.showTextPart(); // Mostrar texto
 
-    // Evento para el botón de mostrar más
-    this.showMoreButton.addEventListener('click', () => {
+    // Función handler para el botón de mostrar más (evitar listeners duplicados)
+    const showMoreHandler = () => {
       this.currentPart++;
       this.showTextPart();
       announce('Diálogo actualizado.'); // Anunciar cambio
@@ -681,12 +684,18 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
           closeButton.focus();
         }
       });
-    });
+    };
+
+    // Función handler para el botón de cerrar
+    const closeHandler = () => {
+      this.closeDialog();
+    };
+
+    // Evento para el botón de mostrar más (usar { once: false } para permitir múltiples clics)
+    this.showMoreButton.addEventListener('click', showMoreHandler);
 
     // Evento para el botón de cerrar
-    closeButton.addEventListener('click', () => {
-      this.closeDialog();
-    });
+    closeButton.addEventListener('click', closeHandler);
 
     // --- Trampa de foco para el diálogo ---
     dialogContentElement.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -735,14 +744,14 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
 
     // Animación de salida (si existe)
     if (dialogContainer) {
-      dialogContainer.classList.add('btnHidden'); // Asumiendo que esta clase anima la salida
+      dialogContainer.classList.add('game-arcanum-btn-hidden'); // Asumiendo que esta clase anima la salida
       // Esperar a que termine la animación antes de destruir y restaurar foco
       dialogContainer.addEventListener(
         'animationend',
         () => {
           this.destroyDialog(); // Destruir después de animar
           if (openButtonElement) {
-            openButtonElement.classList.remove('hidden'); // Mostrar botón de abrir
+            openButtonElement.classList.remove('game-arcanum-hidden'); // Mostrar botón de abrir
             openButtonElement.focus(); // Poner foco en el botón de abrir
           } else if (this.previouslyFocusedElement) {
             this.previouslyFocusedElement.focus(); // Restaurar foco previo
@@ -757,7 +766,7 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
       // Si no hay animación o contenedor, destruir y restaurar inmediatamente
       this.destroyDialog();
       if (openButtonElement) {
-        openButtonElement.classList.remove('hidden');
+        openButtonElement.classList.remove('game-arcanum-hidden');
         openButtonElement.focus();
       } else if (this.previouslyFocusedElement) {
         this.previouslyFocusedElement.focus();
@@ -789,7 +798,7 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
       // Asegúrate que el botón de abrir se oculte aquí también si createDialog no lo hace
       const openButtonElement = this.openButton?.node?.querySelector('#open-dialog-button') as HTMLButtonElement;
       if (openButtonElement) {
-        openButtonElement.classList.add('hidden');
+        openButtonElement.classList.add('game-arcanum-hidden');
       }
     }
   }
@@ -874,7 +883,7 @@ this.add.image(700, 35, "appleTarget").setScale(1.5);
         target.destroy();
       }
       this.refocusAfterTargetHit(hitLoopIndex);
-      this.time.delayedCall(500, () => this.scene.start('mapScene'));
+      this.time.delayedCall(300, () => this.scene.start('mapScene'));
       return;
     }
 
@@ -918,6 +927,21 @@ this.sound.play('getPotion', { volume: 0.01 }); // Sonido de acierto
 
       // Seleccionar Mensaje de Feedback Correcto
       feedbackMessage = levelFeedback?.correct || defaultFeedback?.correct || '¡Correcto!';
+
+      // --- Llamar al callback onResult si existe ---
+      const onResultCallback = this.registry.get('onResultCallback') as ((result: GameResult) => void) | undefined;
+      if (onResultCallback && level3Question) {
+        const correctAnswerLetter = level3Question.optionsIndex[level3Question.correctIndex];
+        
+        onResultCallback({
+          isCorrect: true,
+          questionIndex: 2, // Level 3 es el índice 2
+          selectedAnswer: optionLetter,
+          correctAnswer: correctAnswerLetter,
+          question: level3Question.question
+        });
+      }
+
       this.game.events.emit('show-feedback', { type: 'correct', message: feedbackMessage });
 
       // Marcar nivel como completado
@@ -990,16 +1014,25 @@ this.sound.play('getPotion', { volume: 0.01 }); // Sonido de acierto
 
       // 6. Emitir Feedback y Anuncio
       feedbackMessage = levelFeedback?.incorrect || defaultFeedback?.incorrect || '¡Incorrecto! Intenta de nuevo.';
+
+      // --- Llamar al callback onResult si existe ---
+      const onResultCallback = this.registry.get('onResultCallback') as ((result: GameResult) => void) | undefined;
+      if (onResultCallback && level3Question) {
+        const correctAnswerLetter = level3Question.optionsIndex[level3Question.correctIndex];
+        
+        onResultCallback({
+          isCorrect: false,
+          questionIndex: 2, // Level 3 es el índice 2
+          selectedAnswer: optionLetter,
+          correctAnswer: correctAnswerLetter,
+          question: level3Question.question
+        });
+      }
+
       this.game.events.emit('show-feedback', { type: 'incorrect', message: feedbackMessage });
 
-      let announceMsg = `Incorrecto`;
-      if (globalState.availableArrows > 0) {
-        globalState.availableArrows--;
-        announceMsg += ` Flecha perdida. Quedan ${globalState.availableArrows}.`;
-        this.game.events.emit('update-ui');
-      } else {
-        announceMsg += ` Ya no tenías más flechas.`;
-      }
+      // Anuncio (la flecha ya se decrementó en handleShootConsequences)
+      const announceMsg = `Incorrecto. Quedan ${globalState.availableArrows} flechas.`;
       announce(announceMsg);
 
       // 7. Reajustar foco (ignora el target caído porque está inactivo)
@@ -1315,15 +1348,8 @@ this.sound.play('getPotion', { volume: 0.01 }); // Sonido de acierto
     // Resetear carga
     this.chargeTime = 0;
 
-    // Comprobar si esta fue la última flecha DESPUÉS de disparar
-    if (globalState.availableArrows <= 0 && !this.isWarningActive) {
-      this.time.delayedCall(1000, () => {
-        // Verificar de nuevo por si acaso golpeó el target correcto en ese tiempo
-        if (globalState.availableArrows <= 0 && !this.isWarningActive && this.scene.isActive()) {
-          this.warnAnyArrow();
-        }
-      });
-    }
+    // NO verificar aquí si se acabaron las flechas, ya que podría acertar el objetivo correcto
+    // La verificación se hace solo cuando falla (en handleTargetHit cuando isCorrect=false)
   }
 
   update(_time: number, delta: number) {

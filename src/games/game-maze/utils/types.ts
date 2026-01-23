@@ -4,6 +4,14 @@ export interface Question {
   correctAnswer: 'a' | 'b' | 'c' | 'd';
 }
 
+export interface GameResult {
+  isCorrect: boolean;
+  questionIndex: number;
+  selectedAnswer?: string;
+  correctAnswer: string;
+  question: Question;
+}
+
 // const questions: Question[] = [
 //   {
 //     question: '¿Cuál de los siguientes es un ejemplo de un activo en contabilidad?',

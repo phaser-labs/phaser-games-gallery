@@ -6,11 +6,11 @@ import { getCurrentThemeName, getCurrentThemeSounds } from '../utils/themeManage
 import '../styles/GameReorganize.css';
 
 const announce = (message: string) => {
-  const announcer = document.getElementById('game-announcer');
+  const announcer = document.getElementById('game-reorganize-game-announcer');
   if (announcer) {
     announcer.textContent = message;
   } else {
-    console.warn('Announcer element #game-announcer not found in DOM.');
+    console.warn('Announcer element #game-reorganize-game-announcer not found in DOM.');
   }
 };
 export class InstructionScene extends Phaser.Scene {
@@ -79,53 +79,53 @@ export class InstructionScene extends Phaser.Scene {
     // Configuración de la escena
     this.dialogElement = this.add.dom(0, 0, 'div').setDepth(10).setOrigin(0, 0); 
     const dialogContainer = this.dialogElement.node as HTMLDivElement;
-    dialogContainer.classList.add('game-reorganize-container');
+    dialogContainer.classList.add('game-reorganize-instruction-container');
     dialogContainer.innerHTML = `
-      <div class="instruction-content" style="background-color: ${colorbgTheme()}">
-          <div class="game-logo" >
-            <span class="logo-icon">🎯</span>
-            <h1 class="game-title">Reorganiza Las Oraciones</h1>
+      <div class="game-reorganize-instruction-content" style="background-color: ${colorbgTheme()}">
+          <div class="game-reorganize-game-logo" >
+            <span class="game-reorganize-logo-icon">🎯</span>
+            <h1 class="game-reorganize-game-title">Reorganiza Las Oraciones</h1>
           </div>
         
-        <div class="instruction-steps" style="color: ${colortextTheme()}">
-          <div class="step-card" id="step-card" tabindex="0">
-            <div class="step-number" >1</div>
-            <div class="step-content">
+        <div class="game-reorganize-instruction-steps" style="color: ${colortextTheme()}">
+          <div class="game-reorganize-step-card" id="step-card-1" tabindex="0">
+            <div class="game-reorganize-step-number" >1</div>
+            <div class="game-reorganize-step-content">
               <h3>Observa las palabras</h3>
               <p>Las palabras aparecerán desordenadas en la parte inferior</p>
-              <div class="step-visual">📝</div>
+              <div class="game-reorganize-step-visual">📝</div>
             </div>
           </div>
           
-          <div class="step-card" id="step-card" tabindex="0">
-            <div class="step-number">2</div>
-            <div class="step-content">
+          <div class="game-reorganize-step-card" id="step-card-2" tabindex="0">
+            <div class="game-reorganize-step-number">2</div>
+            <div class="game-reorganize-step-content">
               <h3>Arrastra y organiza</h3>
               <p>Arrastra las palabras a la Zona de Respuesta en el orden correcto</p>
-              <div class="step-visual">🎯</div>
+              <div class="game-reorganize-step-visual">🎯</div>
             </div>
           </div>
           
-          <div class="step-card" id="step-card" tabindex="0">
-             <div class="step-number">3</div>
-             <div class="step-content">
+          <div class="game-reorganize-step-card" id="step-card-3" tabindex="0">
+             <div class="game-reorganize-step-number">3</div>
+             <div class="game-reorganize-step-content">
                <h3>Visualiza la oración</h3>
                <p>Presta atención a la Zona de Visualización puedes ver la oración que vas reorganizando</p>
-               <div class="step-visual">🔍</div>
+               <div class="game-reorganize-step-visual">🔍</div>
              </div>
            </div>
 
-             <div class="step-card" id="step-card" tabindex="0">
-             <div class="step-number">4</div>
-             <div class="step-content">
+             <div class="game-reorganize-step-card" id="step-card-4" tabindex="0">
+             <div class="game-reorganize-step-number">4</div>
+             <div class="game-reorganize-step-content">
                <h3>Verifica tu respuesta</h3>
                <p>Presiona el botón "Revisar" para comprobar si es correcto</p>
-               <div class="step-visual">✅</div>
+               <div class="game-reorganize-step-visual">✅</div>
              </div>
            </div>
         </div>
         
-        <div class="instruction-tips" style="color: ${colortextTheme()}">
+        <div class="game-reorganize-instruction-tips" style="color: ${colortextTheme()}">
           <h3>Consejos útiles:</h3>
           <ul>
             <li>Puedes reorganizar las palabras en la mesa de trabajo antes de llevarlas a la Zona de Respuesta</li>
@@ -135,10 +135,10 @@ export class InstructionScene extends Phaser.Scene {
           </ul>
         </div>
         
-        <div class="instruction-footer">
-          <button class="start-game-button" id="start-button">
-            <span class="button-icon">🚀</span>
-            <span class="button-text">¡Comenzar a Jugar!</span>
+        <div class="game-reorganize-instruction-footer">
+          <button class="game-reorganize-start-game-button" id="start-button">
+            <span class="game-reorganize-button-icon">🚀</span>
+            <span class="game-reorganize-button-text">¡Comenzar a Jugar!</span>
           </button>
         </div>
       </div>`;
@@ -155,7 +155,7 @@ export class InstructionScene extends Phaser.Scene {
     })
 
     // Agregar sonido hover a cada step-card
-    const stepCards = document.querySelectorAll('.step-card');
+    const stepCards = document.querySelectorAll('.game-reorganize-step-card');
     stepCards.forEach(card => {
       card.addEventListener('mouseenter', () => {
         this.playHoverSound();

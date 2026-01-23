@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Phaser from 'phaser';
 
 import PhaserGame from '../main/main';
@@ -62,9 +63,8 @@ export class MainScene extends Phaser.Scene {
     const phaserGameInstance = this.game as PhaserGame;
     if (phaserGameInstance && phaserGameInstance.gameEvents) {
       this.gameEvents = phaserGameInstance.gameEvents;
-const gameEvents = phaserGameInstance.gameEvents;
-gameEvents.emit('gameInit');
-      
+      const gameEvents = phaserGameInstance.gameEvents;
+      gameEvents.emit('gameInit');
     } else {
       console.error('MainScene Error: gameEvents no está disponible!');
       this.scene.start('PreloadScene');
@@ -99,23 +99,24 @@ gameEvents.emit('gameInit');
     this.setupInput(); // Input de mouse Y TECLADO
     this.setupCollisions();
 
-    this.gameEvents.on('showEndScene', this.handleShowEndScene, this);
     this.gameEvents.emit('phaserStartsGame');
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, this.shutdown, this);
     if (this.focusableLetterButtons.length > 0) {
       this.changeFocus(0);
     }
   }
-  private handleShowEndScene() {
-    this.scene.start('EndScene');
-  }
+
   // Función para crear los Objetivos
   private createTargets() {
     this.focusableLetterButtons = []; // Limpiar el arreglo de botones
     const options = Object.entries(this.currentQuestion.options);
     const numTargets = options.length;
     const screenWidth = this.cameras.main.width;
-    const margin = screenWidth * 0.15;
+    
+    // Si son 2 opciones, aumentamos el margen (25%) para que queden más centradas (en el 25% y 75% del ancho).
+    // Si son más, usamos el margen estándar del 15%.
+    const margin = numTargets === 2 ? screenWidth * 0.25 : screenWidth * 0.15;
+    
     const usableWidth = screenWidth - margin * 2;
     const spacing = numTargets > 1 ? usableWidth / (numTargets - 1) : 0;
 
@@ -130,10 +131,8 @@ gameEvents.emit('gameInit');
       target.setData('originalX', targetX);
 
       // --- Botón DOM para la letra ---
-      const letterButtonDomY = targetY - target.displayHeight / 2 - 35; 
-      const letterButtonDom = this.add
-        .dom(targetX - 15, letterButtonDomY, 'button')
-        .setOrigin(0.5, 0.5);
+      const letterButtonDomY = targetY - target.displayHeight / 2 - 35;
+      const letterButtonDom = this.add.dom(targetX - 15, letterButtonDomY, 'button').setOrigin(0.5, 0.5);
 
       const letterButtonNode = letterButtonDom.node as HTMLButtonElement;
       letterButtonNode.classList.add('game-arquery-option-letter');
@@ -160,45 +159,71 @@ gameEvents.emit('gameInit');
         .setScale(0.4)
         .setDepth(0);
 
-      // Texto para la opción
-      const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-        fontSize: '18px',
-        color: '#333333',
-        align: 'left',
-        fontStyle: 'bold',
-        wordWrap: { width: 180, useAdvancedWrap: true }
-      };
-
+      // Texto para la opción (Phaser Container + Máscara para scroll y z-index correcto)
       const textBackgroundWidth = 200;
       const textBackgroundHeight = 120;
       const textContainerY = targetY + target.displayHeight / 2 + textBackgroundHeight / 2 + 25;
+      
+      const boxX = targetX;
+      const boxY = textContainerY;
+      const boxTop = boxY - textBackgroundHeight / 2;
+      const boxBottom = boxY + textBackgroundHeight / 2;
+      const boxLeft = boxX - textBackgroundWidth / 2;
 
-      const backgroundRectX = targetX - textBackgroundWidth / 2;
-      const backgroundRectY = textContainerY - textBackgroundHeight / 2;
-      const borderRadius = 10;
+      console.log(boxBottom);
+      
 
-      const backgroundRect = this.add.graphics().setDepth(target.depth);
-      backgroundRect.fillStyle(0xf9f9dc);
-      backgroundRect.fillRoundedRect(
-        backgroundRectX,
-        backgroundRectY,
-        textBackgroundWidth,
-        textBackgroundHeight,
-        borderRadius
-      );
-      backgroundRect.lineStyle(3, 0xdb8c64, 1);
-      backgroundRect.strokeRoundedRect(
-        backgroundRectX,
-        backgroundRectY,
-        textBackgroundWidth,
-        textBackgroundHeight,
-        borderRadius
-      );
+      // 1. Fondo de la opción (Graphics)
+      const backgroundGraphics = this.add.graphics();
+      backgroundGraphics.fillStyle(0xf9f9dc);
+      backgroundGraphics.fillRoundedRect(boxLeft, boxTop, textBackgroundWidth, textBackgroundHeight, 10);
+      backgroundGraphics.lineStyle(3, 0xdb8c64);
+      backgroundGraphics.strokeRoundedRect(boxLeft, boxTop, textBackgroundWidth, textBackgroundHeight, 10);
+      backgroundGraphics.setDepth(target.depth + 1); // Depth 2
 
-      const phaserTextOption = this.add
-        .text(targetX, textContainerY - 5, textContent.toString(), textStyle)
-        .setOrigin(0.5, 0.5);
-      phaserTextOption.setDepth(target.depth + 1);
+      // 2. Texto
+      const padding = 10;
+      const wrapWidth = textBackgroundWidth - padding * 2;
+      
+      const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
+        fontFamily: 'Arial',
+        fontSize: '16px',
+        color: '#333333',
+        align: 'center',
+        fontStyle: 'bold',
+        wordWrap: { width: wrapWidth, useAdvancedWrap: true }
+      };
+
+      const optionText = this.add.text(boxX, boxTop + padding, textContent.toString(), textStyle);
+      optionText.setOrigin(0.5, 0); // Arriba-Centro
+      optionText.setDepth(target.depth + 1);
+      
+      // 3. Máscara
+      const maskGraphics = this.make.graphics();
+      maskGraphics.fillStyle(0xffffff);
+      maskGraphics.fillRect(boxLeft, boxTop + 2, textBackgroundWidth, textBackgroundHeight - 4); // Pequeño margen
+      const geometryMask = maskGraphics.createGeometryMask();
+      optionText.setMask(geometryMask);
+
+      // 4. Lógica de centrado vs scroll
+      const textHeight = optionText.height; // Altura calculada del texto
+      const availHeight = textBackgroundHeight - padding * 2;
+
+      if (textHeight <= availHeight) {
+        // Si cabe, centrar verticalmente
+        optionText.setY(boxY - textHeight / 2);
+      } else {
+        // Si no cabe, habilitar scroll
+        // Zona interactiva para capturar el scroll
+        const scrollZone = this.add.zone(boxX, boxY, textBackgroundWidth, textBackgroundHeight).setInteractive();
+        scrollZone.setDepth(target.depth + 2); // Encima para capturar eventos
+        
+        // Guardamos referencias en la zona
+        scrollZone.setData('isScrollZone', true);
+        scrollZone.setData('targetText', optionText);
+        scrollZone.setData('minY', boxTop + padding - (textHeight - availHeight)); // Límite inferior de Y
+        scrollZone.setData('maxY', boxTop + padding); // Límite superior de Y (posición inicial)
+      }
     });
   }
 
@@ -248,6 +273,23 @@ gameEvents.emit('gameInit');
     this.input.keyboard?.on('keydown-ENTER', () => {
       if (this.keyboardNavigationActive && this.currentFocusIndex !== -1) {
         this.fireArrow();
+      }
+    });
+
+    // --- SCROLL MOUSE WHEEL ---
+    this.input.on('wheel', (_pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[], _deltaX: number, deltaY: number, _deltaZ: number) => {
+      if (gameObjects && gameObjects.length > 0) {
+        gameObjects.forEach((obj) => {
+          if (obj.getData('isScrollZone')) {
+            const text = obj.getData('targetText') as Phaser.GameObjects.Text;
+            const minY = obj.getData('minY');
+            const maxY = obj.getData('maxY');
+
+            // Mover texto (velocidad ajustable con el 0.5)
+            const newY = text.y - deltaY * 0.5;
+            text.y = Phaser.Math.Clamp(newY, minY, maxY);
+          }
+        });
       }
     });
   }
@@ -335,10 +377,7 @@ gameEvents.emit('gameInit');
     if (hitOptionKey === this.correctLetter) {
       this.sound.play('correct', { volume: 0.5 });
       if (this.gameEvents) {
-        this.gameEvents.emit('feedback-modal', { type: 'success' });
-        this.time.delayedCall(300, () => {
-          if (this.gameEvents) this.gameEvents.emit('correctAnswer');
-        });
+        this.gameEvents.emit('feedback-modal', { type: 'success', selectedAnswer: hitOptionKey });
       }
       this.tweens.add({
         targets: targetSprite,
@@ -351,7 +390,7 @@ gameEvents.emit('gameInit');
     } else {
       this.sound.play('incorrect', { volume: 0.2 });
       if (this.gameEvents) {
-        this.gameEvents.emit('feedback-modal', { type: 'wrong' });
+        this.gameEvents.emit('feedback-modal', { type: 'wrong', selectedAnswer: hitOptionKey });
       }
       this.cameras.main.shake(100, 0.005);
       this.tweens.add({
@@ -384,6 +423,7 @@ gameEvents.emit('gameInit');
     });
 
     this.questionsContainer = this.add.dom(0, 8, 'div').setOrigin(0.5, 0).setDepth(20);
+    
     this.questionsContainer.node.classList.add('game-arquery-questions-container');
 
     const currentQuestion = globalState.questions[this.currentQuestionIndex];
@@ -391,7 +431,7 @@ gameEvents.emit('gameInit');
     if (currentQuestion) {
       const questionHTML = `
         <div class="game-arquery-questions-content">
-          <p class="question-text">${currentQuestion.question}</p>
+          <p class="gameArquery_question-text">${currentQuestion.question}</p>
         </div>
       `;
 
@@ -416,9 +456,6 @@ gameEvents.emit('gameInit');
     });
   }
   private shutdown() {
-    if (this.gameEvents) {
-      this.gameEvents.off('showEndScene', this.handleShowEndScene, this);
-    }
     this.input.off('pointermove');
     this.input.off('pointerdown');
     // Limpiar listeners de teclado globales de Phaser

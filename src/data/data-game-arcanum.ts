@@ -124,6 +124,7 @@ export const feedbackTexts = {
     correct: "¡Elocuencia pura! Bhirman está impresionado.",
     incorrect: "Un intento interesante, pero no el correcto para Bhirman.",
   },
+  
   default: { // Mensajes a usar si no hay específicos del nivel
     correct: "¡Correcto!",
     incorrect: "¡Incorrecto! Intenta de nuevo.",

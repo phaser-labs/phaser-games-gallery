@@ -5,6 +5,7 @@ import { PiranhaPlantEnemy } from '../gameObjects/PiranhaPlant';
 import { Player } from '../gameObjects/Player';
 import { SlugEnemy } from '../gameObjects/Slug';
 import { TreasureChest, WORD_FOUND_EVENT } from '../gameObjects/TreasureChest';
+import PhaserGame from '../main/main';
 import { globalState } from '../utils/globalState';
 import { LevelStructure, WordData } from '../utils/types';
 
@@ -50,52 +51,78 @@ export class PlayScene extends Phaser.Scene {
     super('Play');
   }
 
-  init(data: { levelId?: string }): void {
-    console.log('[PlayScene] Init - Data recibida:', data);
+  init(data: { levelId?: string; levelIndex?: number }): void {
 
     const allChallenges = this.registry.get('allSentenceChallenges') as LevelStructure[] | undefined;
     let currentChallenge: LevelStructure | undefined;
+    let currentLevelIndex = this.registry.get('currentLevelIndex') as number | undefined ?? 0;
 
-    if (data.levelId && allChallenges) {
-      // Si se pasó un levelId específico, intentar encontrarlo
+    // Si se pasó un levelIndex específico, usarlo
+    if (data.levelIndex !== undefined && allChallenges && allChallenges[data.levelIndex]) {
+      currentLevelIndex = data.levelIndex;
+      currentChallenge = allChallenges[data.levelIndex];
+      this.registry.set('currentLevelIndex', currentLevelIndex);
+    }
+    // Si se pasó un levelId específico, intentar encontrarlo
+    else if (data.levelId && allChallenges) {
       currentChallenge = allChallenges.find((challenge) => challenge.id === data.levelId);
       if (currentChallenge) {
         console.log(`[PlayScene] Desafío encontrado por ID '${data.levelId}':`, currentChallenge);
       } else {
         console.warn(
-          `[PlayScene] No se encontró desafío con ID '${data.levelId}'. Usando el primer desafío por defecto.`
+          `[PlayScene] No se encontró desafío con ID '${data.levelId}'. Usando el nivel actual del registro.`
         );
       }
     }
 
-    // Si no se encontró por ID o no se pasó un ID, usar el desafío actual del registro
-    if (!currentChallenge) {
-      currentChallenge = this.registry.get('currentChallengeConfig') as LevelStructure | undefined;
-      if (currentChallenge) {
-        console.log('[PlayScene] Usando currentChallengeConfig del registro:', currentChallenge);
-      }
+    // Si no se encontró por ID o índice, usar el nivel actual del registro
+    if (!currentChallenge && allChallenges) {
+      currentChallenge = allChallenges[currentLevelIndex];
+    
     }
     if (currentChallenge) {
       this.levelData = currentChallenge;
     } else {
       console.error('¡ERROR CRÍTICO! No se pudieron cargar los datos del nivel para PlayScene.');
-      // Podrías cargar un nivel por defecto o detener la escena.
+      // cargar un nivel por defecto
       this.levelData = {
         id: 'fallback_level',
         words: [{ text: 'Error', isTarget: true }],
-        promptText: 'Error al cargar nivel.',
-        feedback: { sentenceCompleteText: 'Oops!' }
+        promptText: 'Error al cargar nivel.'
       };
     }
 
     // Limpiar y preparar para el nivel actual
     this.targetWordsInLevel = this.levelData.words.filter((word) => word.isTarget);
     this.foundWords.clear();
-
-    console.log('[PlayScene] Datos de Nivel Finales:', this.levelData);
-    console.log('[PlayScene] Palabras Objetivo del Nivel:', this.targetWordsInLevel);
   }
   create(): void {
+    // Mostrar número de nivel si no es el primero
+    const currentLevelIndex = this.registry.get('currentLevelIndex') as number ?? 0;
+    if (currentLevelIndex > 0) {
+      this.time.delayedCall(800, () => {
+        const levelText = this.add
+          .text(this.cameras.main.width / 2, this.cameras.main.height / 2 - 80, `Nivel ${currentLevelIndex + 1}`, {
+            fontFamily: 'CluesOfWisdom',
+            fontSize: '40px',
+            color: '#ffd840',
+            stroke: '#000000',
+            strokeThickness: 6
+          })
+          .setOrigin(0.5)
+          .setDepth(2000)
+          .setScrollFactor(0);
+    
+        // Fade out del texto después de 3 segundos
+        this.tweens.add({
+          targets: levelText,
+          alpha: 0,
+          duration: 1000,
+          delay: 3000,
+          onComplete: () => levelText.destroy()
+        });
+      });
+    }
     this.cameras.main.setBackgroundColor(0x000000);
     this.map = this.make.tilemap({ key: 'map' });
     const tilesetImage = this.map.addTilesetImage('tileset', 'mi_tileset');
@@ -203,7 +230,7 @@ export class PlayScene extends Phaser.Scene {
         carrot.setOrigin(0.5, 0.5).setScale(1);
         carrot.play('carrot_spin');
         if (carrot.body) {
-          (carrot.body as Phaser.Physics.Arcade.Body).setSize(carrot.width * 0.6, carrot.height * 0.6); // Collider más ajustado
+          (carrot.body as Phaser.Physics.Arcade.Body).setSize(carrot.width * 0.6, carrot.height * 0.6);
           (carrot.body as Phaser.Physics.Arcade.Body).setOffset(carrot.width * 0.2, carrot.height * 0.2);
         } else {
           console.warn('Zanahoria creada sin cuerpo físico:', carrot);
@@ -350,9 +377,9 @@ export class PlayScene extends Phaser.Scene {
   };
 
   private handleGoToMenu(): void {
-        console.log("[PlayScene] Recibido evento 'goToMenu' desde UIScene.");
     
         this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.scene.stop('UIScene'); // Detener UIScene
         this.scene.stop(); // Detener PlayScene
         this.scene.start('menuScene');
     }
@@ -360,10 +387,6 @@ export class PlayScene extends Phaser.Scene {
   private handleWordFound(wordData: WordData, chestEmitter: TreasureChest): void {
     if (!this.foundWords.has(wordData.text)) {
       this.foundWords.set(wordData.text, wordData);
-      console.log(
-        `[PlayScene] Palabra "${wordData.text}" encontrada. Total: ${this.foundWords.size}/${this.targetWordsInLevel.length}`
-      );
-
       console.log(`[PlayScene] chestEmitter: ${chestEmitter}`);
 
       // Notificar a UIScene para que actualice el prompt
@@ -376,11 +399,59 @@ export class PlayScene extends Phaser.Scene {
   }
 
   private allTargetWordsFound(): void {
-    this.scene.get('UIScene')?.events.emit('sentenceComplete', this.levelData.feedback);
+    // Crear la frase completa
+    const completedSentence = this.levelData.words.map(word => word.text).join(' ');
+    const foundWordsArray = Array.from(this.foundWords.keys());
+
+    // Obtener información de niveles
+    const allChallenges = this.registry.get('allSentenceChallenges') as LevelStructure[] | undefined;
+    const currentLevelIndex = this.registry.get('currentLevelIndex') as number ?? 0;
+    const nextLevelIndex = currentLevelIndex + 1;
+    const hasNextLevel = allChallenges && nextLevelIndex < allChallenges.length;
+
+
+    // Emitir evento SIEMPRE que se complete un nivel
+    const phaserGameInstance = this.game as PhaserGame;
+    if (phaserGameInstance && phaserGameInstance.gameEvents) {
+      phaserGameInstance.gameEvents.emit('level-complete', {
+        isCorrect: true,
+        levelId: this.levelData.id,
+        completedSentence,
+        foundWords: foundWordsArray,
+        totalWords: this.targetWordsInLevel.length
+      });
+    }
+
     this.cameras.main.fadeOut(1000, 0, 0, 0);
 
     this.cameras.main.once('camerafadeoutcomplete', () => {
-      this.scene.start('endScene', { result: 'win' });
+      if (hasNextLevel) {
+        // Hay más niveles, continuar al siguiente
+        this.registry.set('currentLevelIndex', nextLevelIndex);
+        this.registry.set('currentChallengeConfig', allChallenges![nextLevelIndex]);
+        
+        // Detener UIScene primero
+        this.scene.stop('UIScene');
+        
+        // Hacer fade in de la cámara antes de reiniciar
+        this.cameras.main.fadeIn(500, 0, 0, 0);
+        
+        // Reiniciar PlayScene con el nuevo nivel
+        this.scene.restart({ levelIndex: nextLevelIndex });
+        
+        // Iniciar UIScene después de un pequeño delay para asegurar que PlayScene esté listo
+        this.time.delayedCall(100, () => {
+          this.scene.launch('UIScene', {
+            promptText: allChallenges![nextLevelIndex].promptText,
+            targetWordsCount: allChallenges![nextLevelIndex].words.filter(w => w.isTarget).length,
+            levelId: allChallenges![nextLevelIndex].id,
+            allWordsForLevel: allChallenges![nextLevelIndex].words
+          });
+        });
+      } else {
+        // No hay más niveles, mostrar pantalla de victoria
+        this.scene.start('endScene', { result: 'win' });
+      }
     });
   }
 
@@ -461,7 +532,5 @@ export class PlayScene extends Phaser.Scene {
         if (uiScene) {
             uiScene.events.off('goToMenu', this.handleGoToMenu, this);
         }
-        console.log("[PlayScene] Shutdown");
-        // Aquí también podrías detener la música si es específica de esta escena.
     }
 }

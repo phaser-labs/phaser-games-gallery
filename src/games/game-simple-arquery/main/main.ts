@@ -41,16 +41,15 @@ export default class PhaserGame extends Phaser.Game {
     this.gameEvents.on('loadNextQuestion', (data: { questionIndex: number }) => {
       // Detener la MainScene actual si está activa para limpiarla antes de iniciar la nueva
       if (this.scene.isActive('MainScene')) {
-        console.log('PhaserGame: Deteniendo MainScene activa.');
         this.scene.stop('MainScene');
       }
 
-      // Iniciar la InstructionScene (que luego iniciará MainScene)
-      this.scene.start('InstructionScene', { questionIndex: data.questionIndex });
+      // Ir directamente a MainScene con la nueva pregunta (sin pasar por InstructionScene)
+      this.scene.start('MainScene', { questionIndex: data.questionIndex });
     });
 
     // Escuchar el evento para mostrar la pantalla final (emitido por React)
-    this.gameEvents.on('showEndScene', () => {
+     this.gameEvents.on('showEndScene', () => {
       if (this.scene.isActive('MainScene')) this.scene.stop('MainScene');
       if (this.scene.isActive('InstructionScene')) this.scene.stop('InstructionScene');
       this.scene.start('EndScene');

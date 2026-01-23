@@ -263,10 +263,17 @@ export class Main extends Phaser.Scene {
             }
           });
         }
-        const eventInformationResult = new CustomEvent('informationResult', {
-          detail: resultado
-        });
-        window.dispatchEvent(eventInformationResult);
+        
+        // Usar el emitter del registro en lugar de window
+        const gameEvents = this.registry.get('gameEvents');
+        if (gameEvents) {
+          gameEvents.emit('informationResult', {
+            isCorrect: resultado,
+            selectedAnswer: dataId,
+            questionIndex: this.currentIndex
+          });
+        }
+
         this.time.delayedCall(4000, () => {
           if (vidas === 0) {
             globalState.vidas = vidas;
@@ -317,10 +324,11 @@ export class Main extends Phaser.Scene {
         });
       });
     });
-    const eventInformationQuestion = new CustomEvent('informationQuestion', {
-      detail: globalState.data[this.currentIndex].id
-    });
-    window.dispatchEvent(eventInformationQuestion);
+    const gameEvents = this.registry.get('gameEvents');
+    if (gameEvents) {
+      gameEvents.emit('informationQuestion', globalState.data[this.currentIndex].id);
+    }
+    
     globalState.vidas = vidas;
   }
   private resetearHojas() {

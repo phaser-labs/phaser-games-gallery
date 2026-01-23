@@ -13,7 +13,12 @@ export class Menu extends Phaser.Scene {
   constructor() {
     super('menuScene');
   }
-  init() {}
+  init() {
+    // Asegurarse de detener todas las escenas del juego al entrar al menu
+    this.scene.stop('Play');
+    this.scene.stop('UIScene');
+    this.scene.stop('endScene');
+  }
 
   create() {
     const gameWidth = this.scale.width;

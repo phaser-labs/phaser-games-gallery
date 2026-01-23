@@ -23,11 +23,6 @@ export interface LevelStructure {
   // Opcional: Texto de ayuda o pista que se muestra al jugador.
   // Ej: "Encuentra las palabras para completar: El ____ veloz ____ sobre la ____."
   promptText?: string;
-  feedback?: {
-    // Cuando se completa TODA la frase.
-    sentenceCompleteAudio?: string;
-    sentenceCompleteText?: string;
-  };
 }
 
 
@@ -52,3 +47,14 @@ export interface LevelStructure {
 }];
  * 
  */
+
+/**
+ * Interfaz para el resultado cuando se completa el nivel
+ */
+export interface GameCluesOfWisdomResult {
+  isCorrect: boolean;          // Siempre true porque el juego se completa al encontrar todas las palabras
+  levelId: string | number;    // ID del nivel completado
+  completedSentence: string;   // La frase completa armada
+  foundWords: string[];        // Array con las palabras encontradas
+  totalWords: number;          // Total de palabras objetivo en el nivel
+}

@@ -35,6 +35,10 @@ export class EndGame extends Phaser.Scene {
     backMenu.setInteractive();
 
     backMenu.once('pointerdown', () => {
+      // Detener todas las escenas activas antes de volver al menú
+      this.scene.stop('Play');
+      this.scene.stop('UIScene');
+      this.scene.stop('endScene');
       this.scene.start('menuScene');
     });
   }
