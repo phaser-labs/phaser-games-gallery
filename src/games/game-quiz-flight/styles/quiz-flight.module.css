@@ -1,0 +1,9 @@
+.quiz-flight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas:focus-visible {
+    outline: none;
+}
