@@ -11,3 +11,4 @@ export { CityOfWisdom } from '@/pages/CityOfWisdom';
 export { GameReorganize } from '@/pages/GameReorganize';
 export { TapRevealGame } from '@/pages/TapReveal';
 export { WhackAQuestion } from '@/pages/GameWhackAQuestion';
+export { GameQuizFlight } from '@/pages/QuizFlight';
