@@ -23,7 +23,7 @@
   position: relative;
 }
 
-.game-arcanum-container :is(h1, p, h2, span, div, button) {
+.game-arcanum-container > :is(h1, p, h2, span, div, button) {
   cursor: url(assets/game-arcanum-archer/images/Controls/cursorHand_grey.png), auto;
 }
 
@@ -482,18 +482,18 @@
 }
 
 /* Estilo de Foco para el Canvas del Juego */
-canvas:focus-visible {
+.game-arcanum-container > canvas:focus-visible {
   outline: 3px solid #005fcc;
   outline-offset: 2px;
 }
 
 /* Asegurar que el cursor por defecto sea visible cuando el canvas tiene foco */
-canvas:focus-visible {
+.game-arcanum-container > canvas:focus-visible {
   cursor: default;
 }
 
 /*Restaurar cursor personalizado solo en hover si no hay foco de teclado */
-canvas:not(:focus-visible):hover {
+.game-arcanum-container > canvas:not(:focus-visible):hover {
   cursor: url(assets/game-arcanum-archer/images/Controls/cursorHand_grey.png), auto;
 }
 .game-arcanum-container :is(h1, p, h2, span, div, button):not(:focus-visible):hover {
