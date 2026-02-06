@@ -10,3 +10,4 @@ export { CluesOfWisdom } from '@/pages/CluesOfWisdom';
 export { CityOfWisdom } from '@/pages/CityOfWisdom';
 export { GameReorganize } from '@/pages/GameReorganize';
 export { TapRevealGame } from '@/pages/TapReveal';
+export { WhackAQuestion } from '@/pages/GameWhackAQuestion';
