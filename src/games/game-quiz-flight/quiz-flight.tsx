@@ -4,6 +4,8 @@ import { Options } from './types/types';
 import { EventBus, GAME_EVENTS } from './event-bus';
 import StartGame from './main';
 
+import css from './styles/quiz-flight.module.css';
+
 export interface IRefQuizFlight {
   game: Phaser.Game | null;
   scene: Phaser.Scene | null;
@@ -23,7 +25,7 @@ export const QuizFlight = forwardRef<IRefQuizFlight, IProps>(function PhaserGame
 
   useLayoutEffect(() => {
     if (game.current === null) {
-      game.current = StartGame('game-container');
+      game.current = StartGame('game-quiz-flight');
 
       game.current.registry.set('questions', options);
 
@@ -75,5 +77,9 @@ export const QuizFlight = forwardRef<IRefQuizFlight, IProps>(function PhaserGame
     };
   }, [onResult]);
 
-  return <div id="game-container"></div>;
+  return (
+    <div className={css['quiz-flight']}>
+      <div id="game-quiz-flight"></div>
+    </div>
+  );
 });

@@ -56,8 +56,8 @@ export class Game extends Scene {
     botonHTML.tabIndex = 0;
     botonHTML.id = 'sound-button';
     botonHTML.style.position = 'absolute';
-    botonHTML.style.left = '290px';
-    botonHTML.style.top = '590px';
+    botonHTML.style.left = '-150px';
+    botonHTML.style.top = '600px';
     botonHTML.style.padding = '10px';
     botonHTML.style.border = 'none';
     botonHTML.style.background = 'transparent';
@@ -72,10 +72,10 @@ export class Game extends Scene {
 
     botonHTML.appendChild(imgHTML);
 
-    const gameContainer = document.getElementById('game-container');
+    const gameContainer = document.getElementById('game-quiz-flight');
 
     if (!gameContainer) {
-      console.error('game-container not found');
+      console.error('game-quiz-flight not found');
       return;
     }
 
@@ -115,7 +115,7 @@ export class Game extends Scene {
 
     try {
       this.airplane = this.physics.add
-        .image(100, height / 2, 'airplane')
+        .image(200, height / 2, 'airplane')
         .setScale(0.3)
         .setDepth(10)
         .setVisible(true);
@@ -162,7 +162,7 @@ export class Game extends Scene {
     const scorePanelWidth = width - 40;
     const scorePanelHeight = 46;
     const scorePanelX = 20;
-    const scorePanelY = height - scorePanelHeight - 30;
+    const scorePanelY = height - scorePanelHeight - 10;
 
     const scoreShadow = this.add.graphics();
     scoreShadow.fillStyle(0x4fa3d1, 0.25);
@@ -237,7 +237,7 @@ export class Game extends Scene {
   private createScoreText() {
     const { height } = this.scale;
     const scorePanelHeight = 46;
-    const scorePanelY = height - scorePanelHeight - 30;
+    const scorePanelY = height - scorePanelHeight - 10;
 
     // Crear elemento HTML para el puntaje
     const scoreElement = document.createElement('div');
@@ -275,7 +275,7 @@ export class Game extends Scene {
   private createLivesText() {
     const { width, height } = this.scale;
     const scorePanelHeight = 46;
-    const scorePanelY = height - scorePanelHeight - 30;
+    const scorePanelY = height - scorePanelHeight - 10;
 
     // Crear elemento HTML para las vidas
     const livesElement = document.createElement('div');
@@ -310,7 +310,7 @@ export class Game extends Scene {
 
     const speed = 300;
     const minY = 140;
-    const maxY = this.scale.height - 140;
+    const maxY = this.scale.height - 110;
 
     if (this.cursors.up?.isDown) {
       this.airplane.setVelocityY(-speed);
