@@ -29,7 +29,7 @@ export class Preloader extends Scene {
     this.load.audio('incorrect', './audios/incorrect.mp3', { volume: 0.5, loop: true });
   }
   create() {
-    const newFontFace = new FontFace('Bangers', 'url(../assets/quiz-flight/fonts/Bangers.ttf)');
+    const newFontFace = new FontFace('Bangers', 'url(assets/quiz-flight/fonts/Bangers.ttf)');
     document.fonts.add(newFontFace);
     newFontFace.load().then(() => {
       this.scene.start('MainMenu');
