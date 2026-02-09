@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-
+import '../../styles/game-whack.module.css';
 
 // Helper para la región ARIA Live
 /* const announce = (message: string) => {
@@ -12,7 +12,7 @@ import Phaser from 'phaser';
   }
 }; */
 export class Menu extends Phaser.Scene {
-  //private backgroundImg!: Phaser.GameObjects.Image;
+  private backgroundImg!: Phaser.GameObjects.Image;
 
   isMuted: boolean = false;
   volumeButton!: Phaser.GameObjects.Image;
@@ -25,8 +25,8 @@ export class Menu extends Phaser.Scene {
   create() {
     this.game.canvas.setAttribute('tabindex', '0');
     this.cameras.main.setBackgroundColor('#41a9ff');
-/*     this.backgroundImg = this.add.image(0, 0, 'background');
-    this.backgroundImg.setOrigin(0, 0).setScale(1); */
+    this.backgroundImg = this.add.image(-100, 0, 'background-1');
+    this.backgroundImg.setOrigin(0, 0).setScale(0.8);
 
 /*     const musicKey = 'backgroundMusic';
     if (!this.sound.get(musicKey)?.isPlaying) {
@@ -39,13 +39,9 @@ export class Menu extends Phaser.Scene {
     }  */
 
     // Título del juego
-    this.add.text(this.scale.width / 2, 100, '¡Atrapa la Respuesta!', {
-      fontSize: '48px',
-      color: '#ffffff',
-      fontStyle: 'bold',
-      stroke: '#000000',
-      strokeThickness: 6
-    }).setOrigin(0.5);
+   const containerTitle = this.add.dom(160, 100, 'div', null, '').setDepth(0);
+    const titleGameContainer = containerTitle.node as HTMLDivElement;
+    titleGameContainer.classList.add('game-whack-a-title-container');
 
     // Botón de inicio
     const startButton = this.add.rectangle(

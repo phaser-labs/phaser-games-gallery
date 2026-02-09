@@ -18,8 +18,6 @@ export class Preload extends Phaser.Scene {
   }
 
   create() {
-    // Transición directa al juego (saltando el menú por ahora)
-    // Si quieres usar el menú, cambia 'gameScene' por 'menuScene'
     this.scene.start('menuScene');
   }
 
@@ -29,6 +27,8 @@ export class Preload extends Phaser.Scene {
     this.load.image('clouds_medium', 'assets/game-whack-a-question/images/backgrounds/background_clouds_medium.png');
     this.load.image('clouds_small', 'assets/game-whack-a-question/images/backgrounds/background_clouds_small.png');
     
+    this.load.image('background-1', 'assets/game-whack-a-question/images/bg_f_1.webp');
+
   }
 
   private loadSpritesheets() {}
