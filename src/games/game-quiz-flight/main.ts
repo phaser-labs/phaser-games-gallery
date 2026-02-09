@@ -5,8 +5,8 @@ import { Boot, Game as MainGame, GameOver, Instructions, MainMenu, Preloader } f
 const config: Phaser.Types.Core.GameConfig = {
   type: AUTO,
   width: 1024,
-  height: 768,
-  parent: 'game-container',
+  height: 724,
+  parent: 'game-quiz-flight',
   backgroundColor: '#028af8',
   dom: {
     createContainer: true

@@ -3,13 +3,13 @@ export * from './footer';
 export * from './header';
 export * from './layout';
 export * from './cover-title';
-export * from './image';
-export * from './video';
+// export * from './image';
+// export * from './video';
 export * from './loader';
 export * from './button';
 export * from './panel';
 export * from './modal';
 export * from './a11y-overlay';
-export * from './gif';
+// export * from './gif';
 export * from './page-title';
 export * from './accordion'
