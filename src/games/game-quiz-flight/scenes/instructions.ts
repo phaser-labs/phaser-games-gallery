@@ -250,8 +250,8 @@ export class Instructions extends Scene {
     optionsContainer.style.scrollbarColor = '#ffcc00 transparent';
 
     const backgrounds = ['background', 'background-2', 'background-3'];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let selectedIndex = 0;
+    console.log(selectedIndex);
 
     backgrounds.forEach((key, index) => {
       const img = document.createElement('img');
