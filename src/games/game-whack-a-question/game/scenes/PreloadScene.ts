@@ -22,16 +22,26 @@ export class Preload extends Phaser.Scene {
   }
 
   private loadImages() {
+    this.load.image('background-1', 'assets/game-whack-a-question/images/nature_5/1.png');
+    
+    this.load.image('bg-layer-1', 'assets/game-whack-a-question/images/nature_5/2.png');
+    this.load.image('bg-layer-2', 'assets/game-whack-a-question/images/nature_5/3.png');
+    this.load.image('bg-layer-3', 'assets/game-whack-a-question/images/nature_5/4.png');
+
+    this.load.image('container-title', 'assets/game-whack-a-question/images/whackBG.webp');
+    this.load.image('start-button', 'assets/game-whack-a-question/images/cartel-inicio.webp');
+    
     this.load.image('background_sky', 'assets/game-whack-a-question/images/backgrounds/background_sky.png');
     
     this.load.image('clouds_medium', 'assets/game-whack-a-question/images/backgrounds/background_clouds_medium.png');
     this.load.image('clouds_small', 'assets/game-whack-a-question/images/backgrounds/background_clouds_small.png');
-    
-    this.load.image('background-1', 'assets/game-whack-a-question/images/bg_f_1.webp');
-
   }
 
-  private loadSpritesheets() {}
+  private loadSpritesheets() {
+    this.load.spritesheet('mole', 'assets/game-whack-a-question/sprites/mole.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('hole', 'assets/game-whack-a-question/sprites/hole.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('hurt-mole', 'assets/game-whack-a-question/sprites/hurt-mole.png', { frameWidth: 64, frameHeight: 64 });
+  }
   
   private loadAudio() {}
   private createProgressBar() {

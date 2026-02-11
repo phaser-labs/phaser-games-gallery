@@ -1,0 +1,57 @@
+@font-face {
+  font-family: 'MaidenOrange';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/game-whack-a-question/fonts/MaidenOrange-Regular.ttf');
+}
+
+.game-whack-a-question_container {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+}
+
+.game-whack-a-question_canvas {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Menu */
+.game-whack-title {
+  font-size: 5rem;
+  margin: 0;
+  color: #d80000;
+  font-family: 'MaidenOrange';
+  text-shadow:
+    3px 3px 0 #080808,
+    -1px -1px 0 #080808,
+    1px -1px 0 #080808,
+    -1px 1px 0 #080808,
+    1px 1px 0 #080808;
+}
+
+.game-whack-btn-play {
+  font-size: 1.8rem;
+  padding: 0px 10px;
+  letter-spacing: 2px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'MaidenOrange';
+  font-weight: normal;
+  color: #ffb148;
+  text-shadow:
+    2px 2px 0 #080808,
+    -1px -1px 0 #080808,
+    1px -1px 0 #080808,
+    -1px 1px 0 #080808,
+    1px 1px 0 #080808;
+}
+
+.game-whack-btn-play:focus-visible {
+    outline-offset: -3px;
+    outline-color: #d80000;
+    border-radius: 8px;
+}

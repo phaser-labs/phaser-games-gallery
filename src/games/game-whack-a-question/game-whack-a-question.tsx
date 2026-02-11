@@ -4,7 +4,7 @@ import Phaser from "phaser";
 
 import PhaserGame from "./game/main";
 
-import './styles/game-whack.module.css';
+import './styles/game-whack.css';
 
 export interface WhackQuestion {
   question: string;
