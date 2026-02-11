@@ -69,5 +69,10 @@ export const dataGames: dataGameProps[] = [
         name: 'Quiz Flight',
         image: "assets/images/quiz-flight.webp",
         url: 'quiz-flight',
+    },
+    {
+        name: 'El Templo de Conocimiento',
+        image: "assets/images/temple-of.webp",
+        url: 'temple-of-knowledge',
     }
 ];
