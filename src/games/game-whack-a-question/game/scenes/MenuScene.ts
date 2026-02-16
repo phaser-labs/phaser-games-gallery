@@ -1,24 +1,16 @@
 import Phaser from 'phaser';
 
+import { AudioManager } from '../../utils/AudioManager';
+
 import '../../styles/game-whack.css';
 
-// Helper para la región ARIA Live
-/* const announce = (message: string) => {
-  const announcer = document.getElementById('game-announcer');
-  if (announcer) {
-    announcer.textContent = message;
-  } else {
-    console.warn('Announcer element #game-announcer not found in DOM.');
-  }
-}; */
 export class Menu extends Phaser.Scene {
   private backgroundImg!: Phaser.GameObjects.Image;
   bgLayer1!: Phaser.GameObjects.TileSprite;
   bgLayer2!: Phaser.GameObjects.TileSprite;
   bgLayer3!: Phaser.GameObjects.TileSprite;
 
-  isMuted: boolean = false;
-  volumeButton!: Phaser.GameObjects.Image;
+  private audioManager?: AudioManager;
 
   // Propiedades para el parallax interactivo
   private mouseX: number = 0;
@@ -40,15 +32,18 @@ export class Menu extends Phaser.Scene {
     this.bgLayer1 = this.add.tileSprite(0, 0, width, height, 'bg-layer-1').setOrigin(0, 0).setDepth(-1).setScale(1.7);
     this.bgLayer2 = this.add.tileSprite(0, 10, width, height, 'bg-layer-2').setOrigin(0, 0).setDepth(0).setScale(1.7);
     this.bgLayer3 = this.add.tileSprite(0, 30, width, height, 'bg-layer-3').setOrigin(0, 0).setDepth(1).setScale(1.7);
-    /*     const musicKey = 'backgroundMusic';
-    if (!this.sound.get(musicKey)?.isPlaying) {
-    
-        const music = this.sound.add(musicKey, {
-            loop: true,
-            volume: 0.1
-        });
-        music.play();
-    }  */
+
+    // Inicializar AudioManager
+    this.audioManager = new AudioManager(this, {
+      musicKey: 'bg_music-normal',
+      x: width - 30,
+      y: 40,
+      depth: 50,
+      volume: 0.002
+    });
+
+    // Guardar referencia global para otras escenas
+    this.registry.set('audioManager', this.audioManager);
 
     // Título del juego
     this.add.image(width / 2, height / 4, 'container-title').setOrigin(0.5);
@@ -65,7 +60,10 @@ export class Menu extends Phaser.Scene {
     const buttonElement = btnPlay.node as HTMLButtonElement;
     buttonElement.classList.add('game-whack-btn-play');
 
+
     buttonElement.addEventListener('click', () => {
+      this.audioManager?.play('clic_sound', { volume: 0.3 });
+      //this.sound.stopAll();
       this.scene.start('gameScene');
     });
 

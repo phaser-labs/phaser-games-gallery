@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 
-import { WhackQuestion } from "../game-whack-a-question";
+import { WhackQuestion } from "../types/types";
 
 import { config } from "./config/gameConfig";
-import { Main, Menu, Preload } from "./scenes";
+import { EndGame,Main, Menu, Preload } from "./scenes";
 
 interface PhaserGameProps {
   gameId: string;
@@ -17,11 +17,11 @@ export default class PhaserGame extends Phaser.Game {
     super({
       ...config, // 📌 Se usa la configuración definida en `gameConfig.ts`
       parent: gameId, // Se monta en un div de React
-      scene: [Preload, Menu, Main],
+      scene: [Preload, Menu, Main, EndGame],
     });
 
     // Almacenar datos en el registry para que las escenas puedan acceder
     this.registry.set('gameEvents', gameEvents);
     this.registry.set('questionsData', data);
   }
-}
+  }

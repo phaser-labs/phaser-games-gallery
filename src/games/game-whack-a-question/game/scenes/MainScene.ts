@@ -1,38 +1,38 @@
 import Phaser from 'phaser';
 
-import { WhackQuestion } from '../../game-whack-a-question';
+import { WhackQuestion } from '../../types/types';
+import { AudioManager } from '../../utils/AudioManager';
+import { Mole } from '../gameObjects/Mole';
 
-/**
- * Interfaz mejorada usando Containers para agrupar elementos
- * Inspirado en el código de referencia con mejoras adicionales
- */
-interface MoleContainer {
-  container: Phaser.GameObjects.Container;
-  hole: Phaser.GameObjects.Sprite;
-  moleBody: Phaser.GameObjects.Sprite;
-  hurtMole: Phaser.GameObjects.Sprite;
-  text: Phaser.GameObjects.Text;
-  isActive: boolean;
-  isVisible: boolean; // Si el mole está arriba o abajo
-  hasAnswer: boolean; // Si este mole tiene una opción de respuesta
-  correctAnswer: boolean;
-  answerIndex: number;
-  initialY: number;
-  hiddenY: number;
-  popTimer?: Phaser.Time.TimerEvent; // Timer para aparecer/desaparecer
-}
+// Teclas válidas para activar el modo teclado
+const KEYBOARD_NAVIGATION_KEYS = [
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+  'w',
+  'W',
+  'a',
+  'A',
+  's',
+  'S',
+  'd',
+  'D'
+] as const;
+
+type NavigationKey = (typeof KEYBOARD_NAVIGATION_KEYS)[number];
 
 export class Main extends Phaser.Scene {
   private questions: WhackQuestion[] = [];
   private gameEvents!: Phaser.Events.EventEmitter;
   private currentQuestionIndex: number = 0;
-  private moles: MoleContainer[] = [];
-  private questionText!: Phaser.GameObjects.Text;
-  private timerText!: Phaser.GameObjects.Text;
-  private livesText!: Phaser.GameObjects.Text;
+  private moles: Mole[] = [];
+  private questionTextElement!: HTMLElement;
+  private timerTextElement!: HTMLElement;
+  private livesTextElement!: HTMLElement;
+  private questionBg!: HTMLElement;
   private timeLeft: number = 25; // 25 segundos por pregunta
   private timerEvent?: Phaser.Time.TimerEvent;
-  private feedbackText!: Phaser.GameObjects.Text;
   private isAnswering: boolean = false;
   private lives: number = 3; // Sistema de vidas
   private speedMultiplier: number = 1.0; // Multiplicador de velocidad (aumenta con el tiempo)
@@ -46,6 +46,27 @@ export class Main extends Phaser.Scene {
   cloudsSmall!: Phaser.GameObjects.TileSprite;
   private readonly MAP_SCALE = 0.84; // Escala del mapa
 
+  private focusedMoleIndex: number = 0; // Índice del topo actual para el teclado
+  private isKeyboardModeActive: boolean = false;
+
+  private GuiElement?: Phaser.GameObjects.DOMElement;
+
+  // Botón de pausa
+  private pauseButton!: Phaser.GameObjects.DOMElement;
+  private pauseButtonElement!: HTMLButtonElement;
+  private pauseOverlay!: HTMLElement;
+  private isPaused: boolean = false;
+
+  // AudioManager
+  private audioManager?: AudioManager;
+
+  // Modal de feedback
+  private feedbackModal!: HTMLElement;
+  private feedbackTitle!: HTMLElement;
+  private feedbackMessage!: HTMLElement;
+  private countdownElement!: HTMLElement;
+  private countdownNumber!: HTMLElement;
+
   constructor() {
     super('gameScene');
   }
@@ -56,6 +77,15 @@ export class Main extends Phaser.Scene {
     this.gameEvents = this.registry.get('gameEvents');
     this.currentQuestionIndex = 0;
     this.lives = 3; // Inicializar vidas
+
+    // Limpiar estado anterior
+    this.moles = [];
+    this.focusedMoleIndex = 0;
+    this.isKeyboardModeActive = false;
+    this.isAnswering = false;
+    this.speedMultiplier = 1.0;
+    this.timeLeft = 25;
+    this.isPaused = false;
 
     if (this.questions.length === 0) {
       console.error('No hay preguntas disponibles');
@@ -217,66 +247,260 @@ export class Main extends Phaser.Scene {
       console.error('❌ No se encontró la capa SpawnTopos');
     }
 
-    this.moles.forEach((m) => m.hole.setDepth(1));
-    // Los contenedores de los topos en depth 2
-    this.moles.forEach((m) => m.container.setDepth(2));
-
     // --- GUI
 
-    // Texto de pregunta
-    this.questionText = this.add
-      .text(width / 2, 80, '', {
-        fontSize: '20px',
-        color: '#ffffff',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 3,
-        align: 'center',
-        wordWrap: { width: width - 100 }
-      })
-      .setOrigin(0.5);
+    this.GuiElement = this.add.dom(0, 0, 'div').setOrigin(0, 0).setDepth(3); // Contenedor para elementos GUI
+    const guiContainer = this.GuiElement.node as HTMLDivElement;
+    guiContainer.classList.add('game-whack_gui-container');
+    guiContainer.innerHTML = `
 
-    // Timer
-    this.timerText = this.add
-      .text(width - 20, 20, '25', {
-        fontSize: '24px',
-        color: '#ffff00',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 3
-      })
-      .setOrigin(1, 0);
+    <div class="game-whack_gui-title">
+      <span class="game-whack_gui-text-top">VIDA</span>
+      <div class="game-whack_gui-contain--text">
+        <span id="lives-text" class="game-whack_gui--text">003</span>
+      </div>
+    </div>
+    
+    <div class="game-whack_question-container">
+      <div class="game-whack_question-background">
+        <p id="question-text" class="game-whack_question-text"></p>
+      </div>
+    </div>
+    
+    <div class="game-whack_gui-title">
+    <span class="game-whack_gui-text-top">TIEMPO</span>
+    <div class="game-whack_gui-contain--text">
+    <span id="timer-text" class="game-whack_gui--text">025</span>
+    </div>
+    
+    </div>
 
-    // Vidas
-    this.livesText = this.add
-      .text(20, 20, '❤️ x 3', {
-        fontSize: '24px',
-        color: '#ff0000',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 3
-      })
-      .setOrigin(0, 0);
+    `;
 
-    // Texto de feedback (oculto inicialmente)
-    this.feedbackText = this.add
-      .text(width / 2, height / 2, '', {
-        fontSize: '48px',
-        color: '#ffffff',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 6
-      })
-      .setOrigin(0.5)
-      .setVisible(false);
+    // Referencias a elementos del DOM
+    this.questionTextElement = guiContainer.querySelector('#question-text') as HTMLElement;
+    this.timerTextElement = guiContainer.querySelector('#timer-text') as HTMLElement;
+    this.livesTextElement = guiContainer.querySelector('#lives-text') as HTMLElement;
+
+    this.questionBg = guiContainer.querySelector('.game-whack_question-background') as HTMLElement;
+    this.questionBg.addEventListener('wheel', (e) => e.stopPropagation(), { passive: true });
+
+    // Crear modal de feedback
+    const feedbackModalHTML = `
+      <div id="feedback-modal" class="game-whack_feedback-modal">
+        <div class="game-whack_feedback-content">
+          <h2 id="feedback-title" class="game-whack_feedback-title"></h2>
+          <p id="feedback-message" class="game-whack_feedback-message"></p>
+        </div>
+      </div>
+      
+      <div id="countdown" class="game-whack_countdown">
+        <div id="countdown-number" class="game-whack_countdown-number"></div>
+      </div>
+    `;
+
+    guiContainer.insertAdjacentHTML('beforeend', feedbackModalHTML);
+
+    this.feedbackModal = guiContainer.querySelector('#feedback-modal') as HTMLElement;
+    this.feedbackTitle = guiContainer.querySelector('#feedback-title') as HTMLElement;
+    this.feedbackMessage = guiContainer.querySelector('#feedback-message') as HTMLElement;
+    this.countdownElement = guiContainer.querySelector('#countdown') as HTMLElement;
+    this.countdownNumber = guiContainer.querySelector('#countdown-number') as HTMLElement;
 
     // Crear agujeros y topos usando Containers
     this.createMoles();
+
+    // === BOTÓN DE PAUSA ===
+    this.createPauseButton();
+
+    // === AUDIO MANAGER ===
+    // Recuperar o crear AudioManager
+    this.audioManager = this.registry.get('audioManager') as AudioManager;
+    if (this.audioManager) {
+      this.audioManager.attachScene(this);
+      // Crear el botón visual en esta escena
+      this.audioManager.createButtonInScene(this, width - 30, 40, 100);
+    }
+
+    // === CONFIGURACIÓN DE TECLADO ===
+    this.setupKeyboardNavigation();
 
     // Cargar primera pregunta
     this.loadQuestion();
   }
 
+  private createPauseButton() {
+    const { width } = this.scale;
+
+    // Botón de pausa (esquina superior derecha, un poco más a la izquierda del botón de audio)
+    const label = 'Pausar juego';
+
+    this.pauseButton = this.add.dom(width - 32, 120).setDepth(100).createFromHTML(`
+      <button
+        type="button"
+        aria-label="${label}"
+        title="${label}"
+        class="game-whack_pause-button playing"
+      >
+      </button>
+    `);
+
+    const root = this.pauseButton.node as HTMLElement;
+    const btn = root.querySelector('button');
+    if (!btn) throw new Error('Pause button not found');
+
+    this.pauseButtonElement = btn as HTMLButtonElement;
+
+    this.pauseButtonElement.addEventListener('click', () => this.togglePause());
+    this.pauseButtonElement.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault();
+        this.togglePause();
+      }
+    });
+
+    // Efectos hover
+    this.pauseButtonElement.addEventListener('mouseenter', () => {
+      this.pauseButtonElement.style.transform = 'scale(1.1)';
+    });
+
+    this.pauseButtonElement.addEventListener('mouseleave', () => {
+      this.pauseButtonElement.style.transform = 'scale(1)';
+    });
+
+    // Overlay de pausa HTML (inicialmente invisible)
+    const guiContainer = this.GuiElement?.node as HTMLDivElement;
+    const pauseOverlayHTML = `
+      <div id="pause-overlay" class="game-whack_pause-overlay" style="display: none;">
+      <p class="game-whack_pause-instruction">Juego pausado</p>
+      <p class="game-whack_pause-instruction">Haz clic para reanudar</p>
+      </div>
+    `;
+    guiContainer.insertAdjacentHTML('beforeend', pauseOverlayHTML);
+    this.pauseOverlay = guiContainer.querySelector('#pause-overlay') as HTMLElement;
+
+    // Click en overlay para reanudar
+    this.pauseOverlay.addEventListener('click', () => {
+      if (this.isPaused) {
+        this.togglePause();
+      }
+    });
+  }
+
+  private togglePause() {
+    this.isPaused = !this.isPaused;
+
+    if (this.isPaused) {
+      // PAUSAR
+       this.audioManager?.play('pause_sound', { volume: 0.01 });
+      this.pauseButtonElement.className = 'game-whack_pause-button paused';
+      this.pauseButtonElement.setAttribute('aria-label', 'Reanudar juego');
+      this.pauseButtonElement.setAttribute('title', 'Reanudar juego');
+      this.pauseOverlay.style.display = 'flex';
+
+      // Pausar la escena (detiene tweens, animaciones, timers)
+      this.scene.pause();
+    } else {
+      // REANUDAR
+        this.audioManager?.play('pause_sound', { volume: 0.01 });
+      this.pauseButtonElement.className = 'game-whack_pause-button playing';
+      this.pauseButtonElement.setAttribute('aria-label', 'Pausar juego');
+      this.pauseButtonElement.setAttribute('title', 'Pausar juego');
+      this.pauseOverlay.style.display = 'none';
+
+      // Reanudar la escena
+      this.scene.resume();
+    }
+  }
+
+  private setupKeyboardNavigation() {
+    // Escuchar cualquier tecla de navegación para ACTIVAR el modo teclado
+    this.input.keyboard?.on('keydown', (event: KeyboardEvent) => {
+      const isNavigationKey = KEYBOARD_NAVIGATION_KEYS.includes(event.key as NavigationKey);
+
+      if (isNavigationKey && !this.isKeyboardModeActive) {
+        this.isKeyboardModeActive = true;
+        this.refreshVisualFocus(); // Encender el brillo
+      }
+    });
+
+    // Configurar los movimientos (flechas y WASD)
+    this.input.keyboard?.on('keydown-LEFT', () => this.moveFocus(-1));
+    this.input.keyboard?.on('keydown-RIGHT', () => this.moveFocus(1));
+    this.input.keyboard?.on('keydown-UP', () => this.moveFocus(-4));
+    this.input.keyboard?.on('keydown-DOWN', () => this.moveFocus(4));
+    this.input.keyboard?.on('keydown-A', () => this.moveFocus(-1));
+    this.input.keyboard?.on('keydown-D', () => this.moveFocus(1));
+    this.input.keyboard?.on('keydown-W', () => this.moveFocus(-4));
+    this.input.keyboard?.on('keydown-S', () => this.moveFocus(4));
+
+    // Acción de golpe (Space y Enter)
+    this.input.keyboard?.on('keydown-SPACE', () => {
+      if (this.isKeyboardModeActive && !this.isAnswering) {
+        this.moles[this.focusedMoleIndex].triggerWhack();
+      }
+    });
+
+    this.input.keyboard?.on('keydown-ENTER', () => {
+      if (this.isKeyboardModeActive && !this.isAnswering) {
+        this.moles[this.focusedMoleIndex].triggerWhack();
+      }
+    });
+
+    // Pausa con tecla ESC
+    this.input.keyboard?.on('keydown-ESC', () => {
+      this.togglePause();
+    });
+
+    // DESACTIVAR modo teclado si se usa el mouse
+    this.input.on('pointerdown', () => {
+      this.disableKeyboardMode();
+    });
+
+    // Opcional: Desactivar si el mouse se mueve mucho
+    this.input.on('pointermove', () => {
+      // Solo lo desactivamos si estaba activo para no saturar procesos
+      if (this.isKeyboardModeActive) {
+        this.disableKeyboardMode();
+      }
+    });
+  }
+
+  private moveFocus(delta: number) {
+    if (this.isAnswering) return;
+
+    // Si el modo teclado no estaba activo, lo activamos pero no movemos el índice la primera vez
+    if (!this.isKeyboardModeActive) {
+      this.isKeyboardModeActive = true;
+      this.refreshVisualFocus();
+      return;
+    }
+
+    // Cambiar índice
+    this.focusedMoleIndex += delta;
+    if (this.focusedMoleIndex < 0) this.focusedMoleIndex = 0;
+    if (this.focusedMoleIndex >= this.moles.length) this.focusedMoleIndex = this.moles.length - 1;
+
+    this.refreshVisualFocus();
+  }
+
+  /**
+   * Apaga todos los brillos y marca el modo teclado como inactivo
+   */
+  private disableKeyboardMode() {
+    this.isKeyboardModeActive = false;
+    this.moles.forEach((m) => m.setFocus(false));
+  }
+
+  /**
+   * Refresca qué topo debe brillar, pero solo si el modo teclado está activo
+   */
+  private refreshVisualFocus() {
+    this.moles.forEach((mole, index) => {
+      const shouldGlow = this.isKeyboardModeActive && index === this.focusedMoleIndex;
+      mole.setFocus(shouldGlow);
+    });
+  }
   private createMoles() {
     if (this.spawnPoints.length === 0) return;
 
@@ -289,61 +513,24 @@ export class Main extends Phaser.Scene {
       const posX = (spawnPoint.x || 0) * this.MAP_SCALE;
       const posY = (spawnPoint.y || 0) * this.MAP_SCALE;
 
-      // El container permanece fijo en la posición del spawn
-      const container = this.add.container(posX, posY);
-
-      // Crear el sprite del agujero - inicia en frame 9 (vacío)
-      const hole = this.add
-        .sprite(posX, posY + 1, 'hole', 9)
-        .setScale(1.5)
-        .setDepth(3); // Entre la tierra y el topo
-
-      // Crear el sprite del topo normal (64x64) - inicia en frame 9 (escondido)
-      const moleBody = this.add.sprite(0, 0, 'mole', 9).setScale(1.5);
-
-      // Crear el sprite del topo herido (inicialmente invisible)
-      const hurtMole = this.add.sprite(0, 0, 'hurt-mole', 8).setScale(1.5).setVisible(false);
-
-      // Texto encima del topo (inicialmente oculto)
-      const text = this.add
-        .text(0, -10, '', {
-          fontSize: `${14 * this.MAP_SCALE}px`,
-          color: '#ffffff',
-          stroke: '#000000',
-          strokeThickness: 3,
-          align: 'center',
-          fontStyle: 'bold',
-          wordWrap: { width: 60 * this.MAP_SCALE }
-        })
-        .setOrigin(0.5)
-        .setVisible(false); // Inicialmente oculto
-
-      container.add([moleBody, hurtMole, text]);
-      container.setDepth(2); // Arriba del agujero, abajo de los árboles
-
-      // Interactividad (zona de click del sprite)
-      moleBody.setInteractive();
-      moleBody.on('pointerdown', () => this.onMoleClicked(index));
-
-      // También hacer interactivo el hurtMole
-      hurtMole.setInteractive();
-      hurtMole.on('pointerdown', () => this.onMoleClicked(index));
-
-      this.moles.push({
-        container,
-        hole,
-        moleBody,
-        hurtMole,
-        text,
-        isActive: false,
-        isVisible: false,
-        hasAnswer: false,
-        correctAnswer: false,
-        answerIndex: index,
-        initialY: posY,
-        hiddenY: posY
+      // Crear instancia de Mole
+      const mole = new Mole(this, {
+        x: posX,
+        y: posY,
+        scale: 1.5,
+        holeDepth: 3,
+        containerDepth: 2
       });
+
+      // Configurar callback de click
+      mole.setOnClickCallback((clickedMole) => this.onMoleClicked(clickedMole));
+
+      this.moles.push(mole);
     }
+    // Inicializar el foco visual en el primer topo después de crearlos
+    this.time.delayedCall(100, () => {
+      if (this.moles[0]) this.moles[0].setFocus(true);
+    });
   }
 
   private loadQuestion() {
@@ -356,12 +543,17 @@ export class Main extends Phaser.Scene {
     const question = this.questions[this.currentQuestionIndex];
 
     // Actualizar texto de pregunta
-    this.questionText.setText(question.question);
+    this.questionTextElement.textContent = question.question;
+
+    this.moles.forEach((m, i) => m.setFocus(i === this.focusedMoleIndex));
+    this.refreshVisualFocus();
 
     // Reiniciar estados
     this.timeLeft = 25;
     this.speedMultiplier = 1.0; // Reiniciar velocidad
-    this.timerText.setText(`${this.timeLeft}`).setColor('#ffff00');
+    this.timerTextElement.textContent = this.formatTime(this.timeLeft);
+    this.timerTextElement.style.color = '#fff000';
+    this.timerTextElement.style.textShadow = '2px 2px 0 #885a00, 4px 4px 0 #441f00';
     this.isAnswering = false;
 
     // Detener timer anterior si existe
@@ -381,7 +573,7 @@ export class Main extends Phaser.Scene {
     this.stopAllMoleTimers();
 
     // Mostrar topos con las opciones después de un pequeño delay
-    this.time.delayedCall(300, () => {
+    this.time.delayedCall(200, () => {
       this.showMoles(question);
       // Iniciar comportamiento dinámico de moles
       this.startDynamicMoleBehavior();
@@ -393,21 +585,7 @@ export class Main extends Phaser.Scene {
 
     // Resetear todos los moles
     this.moles.forEach((mole) => {
-      mole.hasAnswer = false;
-      mole.isActive = true; // Todos están activos para el comportamiento dinámico
-      mole.correctAnswer = false;
-      mole.text.setText('');
-      mole.text.setVisible(false); // Ocultar el texto inicialmente
-      mole.moleBody.clearTint();
-
-      // Asegurar que el mole normal esté visible y el herido oculto
-      mole.moleBody.setVisible(true);
-      mole.hurtMole.setVisible(false);
-
-      // Forzar que todos estén escondidos
-      mole.isVisible = false;
-      mole.moleBody.play('mole-idle-down');
-      mole.hole.play('hole-idle-down');
+      mole.reset();
     });
 
     // Seleccionar índices aleatorios para las opciones de respuesta
@@ -421,9 +599,7 @@ export class Main extends Phaser.Scene {
     selectedIndices.forEach((moleIndex, arrayPosition) => {
       const optionIndex = optionIndices[arrayPosition];
       const mole = this.moles[moleIndex];
-      mole.hasAnswer = true;
-      mole.correctAnswer = optionIndex === question.correctAnswer;
-      mole.text.setText(question.options[optionIndex]);
+      mole.setAnswer(question.options[optionIndex], optionIndex === question.correctAnswer, optionIndex);
     });
   }
 
@@ -475,23 +651,7 @@ export class Main extends Phaser.Scene {
     const mole = this.moles[moleIndex];
     if (!mole || mole.isVisible) return;
 
-    // Asegurar que se muestra el mole normal, no el herido
-    mole.moleBody.setVisible(true);
-    mole.hurtMole.setVisible(false);
-
-    mole.isVisible = true;
-    mole.moleBody.play('mole-up');
-    mole.hole.play('hole-up');
-
-    // Mostrar el texto si el mole tiene una respuesta
-    if (mole.hasAnswer && mole.text.text) {
-      mole.text.setVisible(true);
-    }
-
-    mole.moleBody.once('animationcomplete', () => {
-      mole.moleBody.play('mole-idle-up');
-      mole.hole.play('hole-idle-up');
-
+    mole.popUp(() => {
       // Programar para que baje después de un tiempo
       const baseStayUpTime = mole.hasAnswer
         ? Phaser.Math.Between(1500, 3000) // Moles con respuesta permanecen más tiempo
@@ -511,17 +671,7 @@ export class Main extends Phaser.Scene {
     const mole = this.moles[moleIndex];
     if (!mole || !mole.isVisible) return;
 
-    mole.isVisible = false;
-    mole.moleBody.play('mole-down');
-    mole.hole.play('hole-down');
-
-    // Ocultar el texto cuando el mole baja
-    mole.text.setVisible(false);
-
-    mole.moleBody.once('animationcomplete', () => {
-      mole.moleBody.play('mole-idle-down');
-      mole.hole.play('hole-idle-down');
-
+    mole.popDown(() => {
       // Programar siguiente aparición
       this.scheduleMolePop(moleIndex);
     });
@@ -529,54 +679,44 @@ export class Main extends Phaser.Scene {
 
   private stopAllMoleTimers() {
     this.moles.forEach((mole) => {
-      if (mole.popTimer) {
-        mole.popTimer.destroy();
-        mole.popTimer = undefined;
-      }
+      mole.clearPopTimer();
     });
   }
 
-  private onMoleClicked(index: number) {
+  private onMoleClicked(mole: Mole) {
     if (this.isAnswering) return;
-
-    const mole = this.moles[index];
     if (!mole.isActive || !mole.isVisible) return;
 
     // Determinar si es distractor o respuesta
     const isDistractor = !mole.hasAnswer;
 
-    // ===== ANIMACIÓN COMÚN PARA TODOS LOS MOLES =====
-    // Reemplazar mole normal por mole herido
-    mole.moleBody.setVisible(false);
-    mole.hurtMole.setVisible(true);
-    mole.hurtMole.setFrame(0);
-    
-    // Ocultar el texto inmediatamente
-    mole.text.setVisible(false);
-    
-    // Animar el mole herido bajando
-    mole.hurtMole.play('mole-hurt');
-    mole.hole.play('hole-down');
-
     // LÓGICA ESPECÍFICA SEGÚN TIPO DE MOLE
     if (isDistractor) {
       // DISTRACTOR: Solo penalización de tiempo, no detener el juego
       this.timeLeft = Math.max(this.timeLeft - 2, 0);
-      this.timerText.setText(`${this.timeLeft}`);
-      
-      // Cuando termine la animación, restaurar y continuar
-      mole.hurtMole.once('animationcomplete', () => {
-        mole.hurtMole.setVisible(false);
-        mole.moleBody.setVisible(true);
-        mole.moleBody.play('mole-idle-down');
-        mole.hole.play('hole-idle-down');
-        mole.isVisible = false;
+      this.timerTextElement.textContent = this.formatTime(this.timeLeft);
+      this.updateTimerColor();
+
+      // Detener el timer del mole antes de golpearlo
+      mole.clearPopTimer();
+
+      // Animar el golpe y programar siguiente aparición después
+      mole.hit(() => {
+        // Después de la animación de golpe, programar siguiente aparición
+        const moleIndex = this.moles.indexOf(mole);
+        if (moleIndex !== -1) {
+          this.scheduleMolePop(moleIndex);
+        }
       });
-      
+
       return; // No bloquear el juego
     }
 
-    // RESPUESTA (correcta o incorrecta): Pausar el juego
+    // ===== RESPUESTA (correcta o incorrecta) =====
+    // Animar el golpe
+    mole.hit();
+
+    // Pausar el juego
     this.isAnswering = true;
 
     // Detener todos los timers de moles
@@ -593,53 +733,57 @@ export class Main extends Phaser.Scene {
     // Mostrar feedback visual de texto
     this.showFeedback(isCorrect);
 
-    // Cuando termine la animación del mole herido
-    mole.hurtMole.once('animationcomplete', () => {
-      mole.hurtMole.setVisible(false);
-      mole.moleBody.setVisible(true);
-      mole.moleBody.play('mole-idle-down');
-      mole.hole.play('hole-idle-down');
-      mole.isVisible = false;
-    });
-
     // Lógica diferente según si es correcta o incorrecta
     if (isCorrect) {
+      // Reproducir sonido de correcto
+      this.audioManager?.play('success_sound', { volume: 0.03 });
       // RESPUESTA CORRECTA: Avanzar a siguiente pregunta
-      this.time.delayedCall(1200, () => {
+      this.time.delayedCall(2000, () => {
+        // Ocultar modal de feedback
+        this.hideFeedback();
+
         this.gameEvents.emit('question-answered', {
           isCorrect: true,
           questionIndex: this.currentQuestionIndex,
-          selectedAnswer: mole.text.text,
+          selectedAnswer: mole.getAnswerText(),
           correctAnswer: question.options[question.correctAnswer],
           question: question.question
         });
 
-        // Ocultar feedback y topos antes de siguiente pregunta
-        this.feedbackText.setVisible(false);
+        // Ocultar topos antes de siguiente pregunta
         this.hideMoles();
       });
     } else {
+      // Reproducir sonido de incorrecto
+      this.audioManager?.play('wrong_sound', { volume: 0.03 });
+
       // RESPUESTA INCORRECTA: Restar vida y continuar
       this.lives--;
       this.updateLivesDisplay();
 
-      this.time.delayedCall(1000, () => {
+      this.time.delayedCall(2000, () => {
+        // Ocultar modal de feedback
+        this.hideFeedback();
+
         this.gameEvents.emit('question-answered', {
           isCorrect: false,
           questionIndex: this.currentQuestionIndex,
-          selectedAnswer: mole.text.text,
+          selectedAnswer: mole.getAnswerText(),
           correctAnswer: question.options[question.correctAnswer],
           question: question.question
         });
-
-        this.feedbackText.setVisible(false);
 
         // Verificar si se acabaron las vidas
         if (this.lives <= 0) {
           this.gameOver();
         } else {
-          // Continuar en la misma pregunta
-          this.resumeCurrentQuestion();
+          // Conteo regresivo antes de retomar el juego
+          this.time.delayedCall(300, () => {
+            this.showCountdown(() => {
+              // Continuar en la misma pregunta
+              this.resumeCurrentQuestion();
+            });
+          });
         }
       });
     }
@@ -652,36 +796,22 @@ export class Main extends Phaser.Scene {
     // Animar todos los topos bajando
     const hidePromises = this.moles.map((mole, i) => {
       return new Promise<void>((resolve) => {
-        // Solo animar los que están visibles
-        if (mole.isVisible) {
+        // Si el mole está siendo golpeado, esperar a que termine su animación
+        if (mole.isBeingHit) {
+          // El mole ya se está escondiendo con la animación de hit, solo marcar como inactivo
+          mole.isActive = false;
+          resolve();
+        } else if (mole.isVisible) {
+          // Solo animar los que están visibles y no están siendo golpeados
           this.time.delayedCall(i * 30, () => {
-            // Si está mostrando el mole herido, ya habrá bajado
-            if (mole.hurtMole.visible) {
+            mole.popDown(() => {
+              mole.isActive = false;
               resolve();
-            } else {
-              mole.moleBody.play('mole-down');
-              mole.hole.play('hole-down');
-
-              // Ocultar el texto inmediatamente cuando empieza a bajar
-              mole.text.setVisible(false);
-
-              mole.moleBody.once('animationcomplete', () => {
-                mole.isActive = false;
-                mole.isVisible = false;
-                mole.moleBody.play('mole-idle-down');
-                mole.hole.play('hole-idle-down');
-                mole.moleBody.setVisible(true);
-                mole.hurtMole.setVisible(false);
-                resolve();
-              });
-            }
+            });
           });
         } else {
           mole.isActive = false;
-          mole.isVisible = false;
-          mole.text.setVisible(false);
-          mole.moleBody.setVisible(true);
-          mole.hurtMole.setVisible(false);
+          mole.forceDown();
           resolve();
         }
       });
@@ -697,23 +827,70 @@ export class Main extends Phaser.Scene {
   }
 
   private showFeedback(isCorrect: boolean) {
-    this.feedbackText
-      .setText(isCorrect ? '¡Bien!' : '¡Mal!')
-      .setColor(isCorrect ? '#00ff00' : '#ff0000')
-      .setVisible(true);
+    // Configurar el contenido del modal
+    this.feedbackTitle.textContent = isCorrect ? '¡BIEN!' : '¡MAL!';
+    this.feedbackTitle.className = isCorrect
+      ? 'game-whack_feedback-title correct'
+      : 'game-whack_feedback-title incorrect';
 
-    // Animación de feedback
-    this.tweens.add({
-      targets: this.feedbackText,
-      scale: { from: 0.5, to: 1.2 },
-      duration: 300,
-      yoyo: true
-    });
+    this.feedbackMessage.textContent = isCorrect ? '¡Respuesta correcta!' : '¡Respuesta incorrecta!';
+
+    // Mostrar el modal con animación
+    this.feedbackModal.classList.add('show');
+
+    // Reproducir sonido (si existe)
+    if (isCorrect && this.sound.get('correct')) {
+      this.sound.play('correct', { volume: 0.5 });
+    } else if (!isCorrect && this.sound.get('wrong')) {
+      this.sound.play('wrong', { volume: 0.5 });
+    }
+  }
+
+  private hideFeedback() {
+    // Remover la clase 'show' y agregar 'hide' para la animación de salida
+    this.feedbackModal.classList.remove('show');
+    this.feedbackModal.classList.add('hide');
+
+    // Después de que termine la animación, remover la clase 'hide'
+    setTimeout(() => {
+      this.feedbackModal.classList.remove('hide');
+    }, 600); // 600ms coincide con la duración de la animación swingUp
+  }
+
+  private showCountdown(callback: () => void) {
+    let count = 3;
+
+    const showNumber = () => {
+      if (count > 0) {
+        this.countdownNumber.textContent = count.toString();
+        this.countdownElement.classList.add('show');
+
+        // Reproducir sonido de tick (si existe)
+        if (this.sound.get('tick')) {
+          this.sound.play('tick', { volume: 0.3 });
+        }
+
+        // Remover clase después de la animación
+        this.time.delayedCall(900, () => {
+          this.countdownElement.classList.remove('show');
+        });
+
+        count--;
+        this.time.delayedCall(1000, showNumber);
+      } else {
+        // Terminó el conteo, ejecutar callback
+        this.time.delayedCall(200, callback);
+      }
+    };
+
+    showNumber();
   }
 
   private updateTimer() {
     this.timeLeft--;
-    this.timerText.setText(`${this.timeLeft}`);
+    // Asegurar que no sea negativo
+    this.timeLeft = Math.max(0, this.timeLeft);
+    this.timerTextElement.textContent = this.formatTime(this.timeLeft);
 
     // Calcular multiplicador de velocidad basado en tiempo restante
     // A menos tiempo, más velocidad (valores entre 1.0 y 2.5)
@@ -729,24 +906,8 @@ export class Main extends Phaser.Scene {
       this.speedMultiplier = 2.5;
     }
 
-    // MEJORA: Cambiar color del timer cuando queda poco tiempo
-    if (this.timeLeft <= 10) {
-      this.timerText.setColor('#ffa500'); // Naranja a partir de 10 segundos
-    }
-
-    if (this.timeLeft <= 5) {
-      this.timerText.setColor('#ff0000'); // Rojo en los últimos 5
-
-      // Efecto de parpadeo en los últimos 3 segundos
-      if (this.timeLeft <= 3) {
-        this.tweens.add({
-          targets: this.timerText,
-          alpha: 0.3,
-          duration: 200,
-          yoyo: true
-        });
-      }
-    }
+    // Actualizar color del timer
+    this.updateTimerColor();
 
     if (this.timeLeft <= 0) {
       // Se acabó el tiempo, considerar como respuesta incorrecta
@@ -769,7 +930,10 @@ export class Main extends Phaser.Scene {
         this.showFeedback(false);
 
         // Emitir resultado (timeout = incorrecto)
-        this.time.delayedCall(1000, () => {
+        this.time.delayedCall(2000, () => {
+          // Ocultar modal de feedback
+          this.hideFeedback();
+
           this.gameEvents.emit('question-answered', {
             isCorrect: false,
             questionIndex: this.currentQuestionIndex,
@@ -778,14 +942,17 @@ export class Main extends Phaser.Scene {
             question: question.question
           });
 
-          this.feedbackText.setVisible(false);
-
           // Verificar si se acabaron las vidas
           if (this.lives <= 0) {
             this.gameOver();
           } else {
-            // Continuar en la misma pregunta
-            this.resumeCurrentQuestion();
+            // Conteo regresivo antes de retomar el juego
+            this.time.delayedCall(300, () => {
+              this.showCountdown(() => {
+                // Continuar en la misma pregunta
+                this.resumeCurrentQuestion();
+              });
+            });
           }
         });
       }
@@ -793,16 +960,34 @@ export class Main extends Phaser.Scene {
   }
 
   private updateLivesDisplay() {
-    this.livesText.setText(`❤️ x ${this.lives}`);
+    this.livesTextElement.textContent = this.formatLives(this.lives);
 
-    // Animación de parpadeo al perder vida
-    this.tweens.add({
-      targets: this.livesText,
-      alpha: 0.3,
-      duration: 100,
-      yoyo: true,
-      repeat: 2
-    });
+    // Animación de parpadeo al perder vida usando CSS
+    this.livesTextElement.style.animation = 'none';
+    setTimeout(() => {
+      this.livesTextElement.style.animation = 'blink 0.1s 3';
+    }, 10);
+  }
+
+  private formatLives(lives: number): string {
+    return lives.toString().padStart(3, '0');
+  }
+
+  private formatTime(time: number): string {
+    return time.toString().padStart(3, '0');
+  }
+
+  private updateTimerColor() {
+    if (this.timeLeft <= 5) {
+      this.timerTextElement.style.color = '#ff0000';
+      this.timerTextElement.style.textShadow = '2px 2px 0 #660000, 4px 4px 0 #330000';
+    } else if (this.timeLeft <= 10) {
+      this.timerTextElement.style.color = '#ffa500';
+      this.timerTextElement.style.textShadow = '2px 2px 0 #885a00, 4px 4px 0 #441f00';
+    } else {
+      this.timerTextElement.style.color = '#fff000';
+      this.timerTextElement.style.textShadow = '2px 2px 0 #885a00, 4px 4px 0 #441f00';
+    }
   }
 
   private resumeCurrentQuestion() {
@@ -810,29 +995,11 @@ export class Main extends Phaser.Scene {
     const hidePromises = this.moles.map((mole) => {
       return new Promise<void>((resolve) => {
         if (mole.isVisible) {
-          // Asegurar que se usa el sprite correcto
-          if (mole.hurtMole.visible) {
-            // Si está mostrando el mole herido, dejarlo terminar su animación
+          mole.popDown(() => {
             resolve();
-          } else {
-            mole.moleBody.play('mole-down');
-            mole.hole.play('hole-down');
-            mole.text.setVisible(false);
-
-            mole.moleBody.once('animationcomplete', () => {
-              mole.isVisible = false;
-              mole.moleBody.play('mole-idle-down');
-              mole.hole.play('hole-idle-down');
-              mole.moleBody.clearTint();
-              mole.moleBody.setVisible(true);
-              mole.hurtMole.setVisible(false);
-              resolve();
-            });
-          }
+          });
         } else {
-          mole.moleBody.clearTint();
-          mole.moleBody.setVisible(true);
-          mole.hurtMole.setVisible(false);
+          mole.forceDown();
           resolve();
         }
       });
@@ -846,17 +1013,11 @@ export class Main extends Phaser.Scene {
       if (this.timeLeft <= 0) {
         this.timeLeft = 25;
         this.speedMultiplier = 1.0;
-        this.timerText.setText(`${this.timeLeft}`).setColor('#ffff00');
-      } else {
-        // Mantener el tiempo actual y solo actualizar el color según el tiempo
-        if (this.timeLeft >= 11) {
-          this.timerText.setColor('#ffff00');
-        } else if (this.timeLeft >= 6) {
-          this.timerText.setColor('#ffa500');
-        } else {
-          this.timerText.setColor('#ff0000');
-        }
+        this.timerTextElement.textContent = this.formatTime(this.timeLeft);
       }
+
+      // Actualizar color del timer
+      this.updateTimerColor();
 
       // Reanudar el timer
       if (this.timerEvent) {
@@ -870,12 +1031,17 @@ export class Main extends Phaser.Scene {
         loop: true
       });
 
+      // Solo refrescar el foco visual si el modo teclado está activo
+      if (this.isKeyboardModeActive) {
+        this.refreshVisualFocus();
+      }
+
       // Reasignar opciones a diferentes topos aleatoriamente
       const question = this.questions[this.currentQuestionIndex];
       this.showMoles(question);
 
       // Reiniciar comportamiento dinámico de moles después de un delay
-      this.time.delayedCall(300, () => {
+      this.time.delayedCall(200, () => {
         this.startDynamicMoleBehavior();
       });
     });
@@ -890,30 +1056,19 @@ export class Main extends Phaser.Scene {
 
     // Ocultar todos los moles
     this.moles.forEach((mole) => {
-      mole.isVisible = false;
-      mole.moleBody.setVisible(true);
-      mole.hurtMole.setVisible(false);
-      mole.moleBody.play('mole-idle-down');
-      mole.hole.play('hole-idle-down');
-      mole.text.setVisible(false);
+      mole.forceDown();
     });
-
-    // Mostrar mensaje de Game Over
-    this.add
-      .text(this.scale.width / 2, this.scale.height / 2, '¡Game Over!\nSin Vidas', {
-        fontSize: '48px',
-        color: '#ff0000',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 6,
-        align: 'center'
-      })
-      .setOrigin(0.5);
 
     // Emitir evento de fin de juego
     this.gameEvents.emit('game-over', {
       reason: 'no-lives',
       questionsAnswered: this.currentQuestionIndex
+    });
+
+    // Ir a la escena de fin con parámetro de derrota
+    this.time.delayedCall(1000, () => {
+      this.sound.stopAll();
+      this.scene.start('endGameScene', { won: false });
     });
   }
 
@@ -924,17 +1079,16 @@ export class Main extends Phaser.Scene {
     }
     this.stopAllMoleTimers();
 
-    // Mostrar mensaje de fin exitoso
-    this.add
-      .text(this.scale.width / 2, this.scale.height / 2, '¡Felicidades!', {
-        fontSize: '48px',
-        color: '#00ff00',
-        fontStyle: 'bold',
-        stroke: '#000000',
-        strokeThickness: 6,
-        align: 'center'
-      })
-      .setOrigin(0.5);
+    // Emitir evento de victoria
+    this.gameEvents.emit('game-completed', {
+      questionsAnswered: this.currentQuestionIndex
+    });
+
+    // Ir a la escena de fin con parámetro de victoria
+    this.time.delayedCall(1000, () => {
+      this.sound.stopAll();
+      this.scene.start('endGameScene', { won: true });
+    });
   }
 
   update(): void {

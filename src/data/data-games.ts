@@ -62,7 +62,7 @@ export const dataGames: dataGameProps[] = [
     },
     {
         name: 'Whack A Question',
-        image: "assets/images/en-construccion.webp",
+        image: "assets/images/whack-a-question.webp",
         url: 'whack-a-question',
     },
     {

@@ -1,30 +1,12 @@
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef} from "react";
 import Phaser from "phaser";
 
 import PhaserGame from "./game/main";
+import { GameResult, GameWhackAQuestionProps } from "./types/types";
 
 import './styles/game-whack.css';
 
-export interface WhackQuestion {
-  question: string;
-  options: string[]; // Array de opciones
-  correctAnswer: number; // Índice de la respuesta correcta (0-based)
-}
 
-export interface GameResult {
-  isCorrect: boolean;
-  questionIndex: number;
-  selectedAnswer: string;
-  correctAnswer: string;
-  question: string;
-}
-
-interface GameWhackAQuestionProps {
-  data: WhackQuestion[];
-  onResult?: (result: GameResult) => void;
-  gameId?: string;
-}
 
 export const GameWhackAQuestion: React.FC<GameWhackAQuestionProps> = ({ data, onResult, gameId = 'default' }) => {
   // Ref para el div donde se montará el canvas de Phaser
@@ -37,6 +19,7 @@ export const GameWhackAQuestion: React.FC<GameWhackAQuestionProps> = ({ data, on
   const gameEvents = useRef(new Phaser.Events.EventEmitter()).current;
   // Refs para evitar problemas de closure
   const onResultRef = useRef(onResult);
+
 
   useEffect(() => {
     onResultRef.current = onResult;
@@ -51,7 +34,7 @@ export const GameWhackAQuestion: React.FC<GameWhackAQuestionProps> = ({ data, on
     const game = new PhaserGame({ 
       gameId: containerId, 
       gameEvents,
-      data 
+      data
     });
     phaserGameInstance.current = game;
 
@@ -89,6 +72,16 @@ export const GameWhackAQuestion: React.FC<GameWhackAQuestionProps> = ({ data, on
     };
   }, [containerId, gameEvents, data]);
 
+
+  // handler para cambiar al sonido o mute
+ /*     const toggleMute = useCallback(() => {
+      setIsMuted(prev => {
+        const newState = !prev;
+        gameEvents.emit('toggleMute', newState);
+        return newState;
+      });
+    }, [gameEvents]); */
+
   return (
     <div className="game-whack-a-question_container">
       {/* Div oculto para anuncios ARIA Live */}
@@ -107,6 +100,14 @@ export const GameWhackAQuestion: React.FC<GameWhackAQuestionProps> = ({ data, on
           border: 0
         }}
       />
+
+     {/*  <button
+        id="game-reorganize-volume-button"
+        aria-label={isMuted ? 'Activar sonido' : 'Desactivar sonido'}
+        onClick={toggleMute}
+        className={`game-reorganize-volume-button ${isMuted ? 'muted' : 'sound'}`}
+      /> */}
+      
 
       <div ref={gameContainer} id={containerId} className="game-whack-a-question_canvas" />
     </div>
