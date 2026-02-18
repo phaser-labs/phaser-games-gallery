@@ -31,21 +31,25 @@ export const TempleOfKnowledgePage = () => {
             <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
               <h2 className=" u-fs-400">Descripción del juego:</h2>
               <p>
-                     Responde preguntas para derrotar enemigos. Cada pregunta tiene opciones y se valida si la respuesta fue
-            correcta.
+                En "El Templo de Conocimiento", los jugadores se embarcan en una aventura educativa para resolver acertijos y responder preguntas relacionadas con diversas áreas del conocimiento. El objetivo es avanzar a través de diferentes niveles del templo, cada uno representado por un monstruo que se derrotará solamente con la respuesta correcta.
               </p>
               <p className="u-fs-300 u-font-bold">Características:</p>
               <ul className="u-flow list_star">
-                <li>
-                  <p>
-                    <strong>Preguntas dinámicas:</strong>  puedes pasar cualquier lista de preguntas por props maximo 4 opciones y minimo 2 opciones.
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <strong>Callback de resultados:</strong> recibes un <code>GameResult</code> en cada respuesta.
-                  </p>
-                </li>
+             <li>
+              <p>
+                <strong>Preguntas:</strong> Se podrá realizar multiples preguntas.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Respuestas:</strong> Se pueden tener 4, 3 o 2 opciones de respuestas.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Personalización:</strong> Se puede escoger entre diferentes diseños de mundos, cada uno con su propio estilo visual.
+              </p>
+            </li>
               </ul>
             </div>
             

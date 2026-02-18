@@ -211,7 +211,7 @@ export class MainMenu extends Scene {
           <div class="${css['overlay-character']}">
             <img
               class="${css['overlay-character-img']}"
-              src="/assets/game-attack/images/characters/guardian.png"
+              src="assets/game-attack/images/characters/guardian.png"
               alt="Guardiana Arcana"
             />
           </div>
