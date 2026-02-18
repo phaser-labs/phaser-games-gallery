@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import { AudioManager } from '../../utils/AudioManager';
+
 export interface MoleConfig {
   x: number;
   y: number;
@@ -31,9 +33,15 @@ export class Mole extends Phaser.GameObjects.Container {
 
   // Callback para cuando se hace clic en el mole
   private onClickCallback?: (mole: Mole) => void;
+  
+  // AudioManager global
+  private audioManager?: AudioManager;
 
   constructor(scene: Phaser.Scene, config: MoleConfig) {
     super(scene, config.x, config.y);
+
+    // Obtener AudioManager del registry global
+    this.audioManager = scene.registry.get('audioManager') as AudioManager;
 
     // Añadir el container a la escena
     scene.add.existing(this);
@@ -185,13 +193,12 @@ export class Mole extends Phaser.GameObjects.Container {
     this.isBeingHit = true; // Marcar que está siendo golpeado
     
     // Reproducir sonido de golpe
-    this.scene.sound.play('hurt_sound', { volume: 0.03 });
-    
+    this.audioManager?.play('hurt_sound', { volume: 0.01 });
     // Desactivar el glow de selección
     this.setFocus(false);
     
-    // Reemplazar mole normal por mole herido
-    this.moleBody.setVisible(false);
+      // Reemplazar mole normal por mole herido
+      this.moleBody.setVisible(false);
     this.hurtMole.setVisible(true);
     this.hurtMole.setFrame(0);
 

@@ -18,7 +18,11 @@ export class Preload extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start('menuScene');
+    // Fade out antes de cambiar a la siguiente escena
+    this.cameras.main.fadeOut(200, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start('menuScene');
+    });
   }
 
   private loadImages() {
@@ -38,11 +42,11 @@ export class Preload extends Phaser.Scene {
 
     this.load.image('cartel-pregunta', 'assets/game-whack-a-question/images/cartel-pregunta.png');
 
-      this.load.image('pause_overlay', 'assets/game-whack-a-question/images/pause_overlay.png');
-      this.load.image('play_overlay', 'assets/game-whack-a-question/images/pause_instruction.png');
+    this.load.image('pause_overlay', 'assets/game-whack-a-question/images/pause_overlay.png');
+    this.load.image('play_overlay', 'assets/game-whack-a-question/images/pause_instruction.png');
 
-      this.load.image('sound-off', 'assets/game-whack-a-question/images/Speaker-Crossed.png');
-      this.load.image('sound-on', 'assets/game-whack-a-question/images/Speaker-0.png');
+    this.load.image('sound-off', 'assets/game-whack-a-question/images/Speaker-Crossed.png');
+    this.load.image('sound-on', 'assets/game-whack-a-question/images/Speaker-0.png');
   }
 
   private loadSpritesheets() {
@@ -52,13 +56,21 @@ export class Preload extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 64
     });
+    this.load.spritesheet('hammer-hit', 'assets/game-whack-a-question/sprites/cursor-maze.png', {
+      frameWidth: 70,
+      frameHeight: 70
+    });
+    this.load.spritesheet('hammer-swing', 'assets/game-whack-a-question/sprites/animation-maze.png', {
+      frameWidth: 320,
+      frameHeight: 180
+    });
   }
 
   private loadAudio() {
     this.load.audio('clic_sound', 'assets/game-whack-a-question/music/fx/Click.wav');
     this.load.audio('pause_sound', 'assets/game-whack-a-question/music/fx/Pause.wav');
 
-    // Música de fondo para diferentes themes 
+    // Música de fondo para diferentes themes
     this.load.audio('bg_music-normal', 'assets/game-whack-a-question/music/ambience/normal-game.mp3'); //default
     this.load.audio('bg_music-beach', 'assets/game-whack-a-question/music/ambience/beach-game.mp3');
     this.load.audio('bg_music-moon', 'assets/game-whack-a-question/music/ambience/moon-game.mp3');
@@ -67,6 +79,8 @@ export class Preload extends Phaser.Scene {
 
     this.load.audio('wrong_sound', 'assets/game-whack-a-question/music/fx/wrong.wav');
     this.load.audio('success_sound', 'assets/game-whack-a-question/music/fx/success.mp3');
+
+    this.load.audio('tick', 'assets/game-whack-a-question/music/fx/Select 1.wav');
 
     this.load.audio('win_sound', 'assets/game-whack-a-question/music/fx/win-scene.mp3');
     this.load.audio('lose_sound', 'assets/game-whack-a-question/music/fx/game-over-scene.mp3');

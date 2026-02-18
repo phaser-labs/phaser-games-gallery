@@ -150,6 +150,7 @@
     -1px 1px 0 #080808,
     1px 1px 0 #080808;
   animation: blink 3s infinite;
+  user-select: none;
 }
 
 .game-whack-btn-play {
@@ -232,6 +233,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  user-select: none;
   justify-content: center;
 }
 
@@ -279,7 +281,7 @@
 /* Texto de respuesta en los topos */
 .mole-answer-text {
   font-family: 'MaidenOrange';
-  font-size: 1.4rem;
+  font-size: 1rem;
   color: #0f0806;
   text-align: center;
   margin: 0;
@@ -290,9 +292,10 @@
   box-shadow: 0 2px 8px rgb(132 84 61);
   width: 100px;
   height: 35px;
-  word-wrap: break-word;
-  line-height: 1.2;
   pointer-events: none !important;
+  user-select: none;
+  overflow: hidden; 
+  /* overflow-y: scroll; */
 }
 
 @keyframes blink {
@@ -379,6 +382,7 @@
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000;
+  user-select: none;
 }
 
 .game-whack_feedback-title.correct {
@@ -397,6 +401,7 @@
   color: #fff;
   margin: 0;
   text-shadow: 2px 2px 0 #000;
+  user-select: none;
 }
 
 /* Contador regresivo */
@@ -407,6 +412,7 @@
   transform: translate(-50%, -50%);
   z-index: 99;
   display: none;
+  user-select: none;
 }
 
 .game-whack_countdown.show {
@@ -417,6 +423,8 @@
 .game-whack_countdown-number {
   font-family: 'MaidenOrange';
   font-size: 15rem;
+  user-select: none;
+cursor: none;
   color: #ffb148;
   text-shadow:
     5px 5px 0 #000,
@@ -553,6 +561,7 @@
 
 .game-whack_pause-instruction:first-child {
   margin-top: 50px;
+  user-select: none;
 }
 
 /* EndGame Scene */
@@ -575,6 +584,7 @@
   align-items: center;
   gap: 20px;
   pointer-events: all;
+  user-select: none;
 }
 
 .game-whack_endgame-title {
@@ -639,3 +649,103 @@
 .game-whack_endgame-button:active {
   transform: scale(0.95);
 }
+
+/* Modal de Instrucciones */
+.game-whack_instructions-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2c1810 0%, #4a2511 50%, #2c1810 100%);
+  align-items: center;
+  overflow: hidden;
+  padding: 3rem;
+  will-change: transform;
+}
+
+.game-whack_instructions-content {
+  max-width: 800px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 8px solid #8b4513d9;
+  border-radius: 10px;
+      padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-whack_instructions-content::-webkit-scrollbar {
+  display: none;
+}
+
+.game-whack_instructions-title {
+font-family: 'MaidenOrange';
+    font-size: 3rem;
+    color: #ffd700;
+    text-align: center;
+    margin: 0;
+  text-shadow:
+   2px 4px 0 #4a2511,
+    0 0 20px rgba(255, 215, 0, 0.5);
+  animation: blink 2s ease-in-out infinite alternate;
+}
+
+.game-whack_instructions-list {
+font-family: 'MaidenOrange';
+    font-size: 1.5rem;
+    color: #fff;
+    line-height: 1rem;
+    margin: 0 auto;
+    padding: 1rem 3rem;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.game-whack_instructions-list li {
+margin-bottom: 1.4rem;
+    padding-left: 0.5rem;
+    position: relative;
+    list-style: none;
+}
+
+.game-whack_instructions-list li::before {
+  content: '➡︎';
+  position: absolute;
+  left: -1.5rem;
+}
+
+.game-whack_instructions-start-button {
+  font-family: 'MaidenOrange';
+  font-size: 2rem;
+  color: #0f0806;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00ff00 0%, #00cc00 50%, #00ff00 100%);
+  border: 6px solid #006600;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0 auto;
+  box-shadow:
+    0 8px 15px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.game-whack_instructions-start-button:hover {
+  transform: scale(1);
+}
+
+.game-whack_instructions-start-button:focus-visible {
+  outline: 3px solid #ffd700;
+  outline-offset: 5px;
+}
+
+.game-whack_instructions-start-button:active {
+  transform: scale(0.9);
+}
+

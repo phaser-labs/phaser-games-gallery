@@ -67,6 +67,9 @@ export class Main extends Phaser.Scene {
   private countdownElement!: HTMLElement;
   private countdownNumber!: HTMLElement;
 
+  // Cursor personalizado del martillo
+  private hammerCursor!: Phaser.GameObjects.Sprite;
+
   constructor() {
     super('gameScene');
   }
@@ -93,6 +96,15 @@ export class Main extends Phaser.Scene {
   }
 
   private createAnimations() {
+    // ANIMACIONES EXTRAS
+    if (!this.anims.exists('hammer-hit-anim')) {
+      this.anims.create({
+        key: 'hammer-hit-anim',
+        frames: this.anims.generateFrameNumbers('hammer-hit', { start: 0, end: 3 }),
+        frameRate: 15,
+        repeat: 0
+      });
+    }
     // === ANIMACIONES DEL MOLE ===
     // Animación de subir el topo (frame 9 escondido -> frame 0 visible)
     if (!this.anims.exists('mole-up')) {
@@ -185,6 +197,9 @@ export class Main extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
+
+    // Fade in al iniciar la escena
+    this.cameras.main.fadeIn(100, 0, 0, 0);
 
     // --- FONDO CON PARALLAX ---
     // Fondo de cielo estático
@@ -325,8 +340,50 @@ export class Main extends Phaser.Scene {
     // === CONFIGURACIÓN DE TECLADO ===
     this.setupKeyboardNavigation();
 
+    // === CURSOR PERSONALIZADO ===
+    // Ocultar el cursor predeterminado
+    this.input.setDefaultCursor('none');
+
+    // Crear sprite del martillo que seguirá al cursor
+    this.hammerCursor = this.add
+      .sprite(0, 0, 'hammer-hit', 0)
+      .setDepth(1000) // Por encima de todo
+      .setOrigin(0.2, 0.1) // Ajustar origen para que el punto de golpe esté en la punta
+      .setScale(1.5); // Ajustar tamaño si es necesario
+
+    // Reproducir animación al hacer clic
+    this.input.on('pointerdown', () => {
+      // Solo reproducir si no está ya reproduciendo
+      if (!this.hammerCursor.anims.isPlaying) {
+        this.hammerCursor.play('hammer-hit-anim');
+
+        // Cuando termine, volver al frame 0
+        this.hammerCursor.once('animationcomplete', () => {
+          this.hammerCursor.setFrame(0);
+        });
+      }
+    });
+
     // Cargar primera pregunta
     this.loadQuestion();
+  }
+
+  shutdown() {
+    // Restaurar el cursor cuando la escena se detiene
+    this.restoreCursor();
+  }
+
+  /**
+   * Restaura el cursor predeterminado y limpia el sprite del martillo
+   */
+  private restoreCursor() {
+    // Restaurar el cursor CSS por defecto
+    this.input.setDefaultCursor('default');
+
+    // Limpiar el sprite del martillo si existe
+    if (this.hammerCursor) {
+      this.hammerCursor.destroy();
+    }
   }
 
   private createPauseButton() {
@@ -392,7 +449,7 @@ export class Main extends Phaser.Scene {
 
     if (this.isPaused) {
       // PAUSAR
-       this.audioManager?.play('pause_sound', { volume: 0.01 });
+      this.audioManager?.play('pause_sound', { volume: 0.01 });
       this.pauseButtonElement.className = 'game-whack_pause-button paused';
       this.pauseButtonElement.setAttribute('aria-label', 'Reanudar juego');
       this.pauseButtonElement.setAttribute('title', 'Reanudar juego');
@@ -402,7 +459,7 @@ export class Main extends Phaser.Scene {
       this.scene.pause();
     } else {
       // REANUDAR
-        this.audioManager?.play('pause_sound', { volume: 0.01 });
+      this.audioManager?.play('pause_sound', { volume: 0.01 });
       this.pauseButtonElement.className = 'game-whack_pause-button playing';
       this.pauseButtonElement.setAttribute('aria-label', 'Pausar juego');
       this.pauseButtonElement.setAttribute('title', 'Pausar juego');
@@ -735,8 +792,7 @@ export class Main extends Phaser.Scene {
 
     // Lógica diferente según si es correcta o incorrecta
     if (isCorrect) {
-      // Reproducir sonido de correcto
-      this.audioManager?.play('success_sound', { volume: 0.03 });
+      
       // RESPUESTA CORRECTA: Avanzar a siguiente pregunta
       this.time.delayedCall(2000, () => {
         // Ocultar modal de feedback
@@ -754,8 +810,6 @@ export class Main extends Phaser.Scene {
         this.hideMoles();
       });
     } else {
-      // Reproducir sonido de incorrecto
-      this.audioManager?.play('wrong_sound', { volume: 0.03 });
 
       // RESPUESTA INCORRECTA: Restar vida y continuar
       this.lives--;
@@ -838,11 +892,11 @@ export class Main extends Phaser.Scene {
     // Mostrar el modal con animación
     this.feedbackModal.classList.add('show');
 
-    // Reproducir sonido (si existe)
-    if (isCorrect && this.sound.get('correct')) {
-      this.sound.play('correct', { volume: 0.5 });
-    } else if (!isCorrect && this.sound.get('wrong')) {
-      this.sound.play('wrong', { volume: 0.5 });
+    // Reproducir sonido usando AudioManager para respetar el estado de mute
+    if (isCorrect) {
+      this.audioManager?.play('success_sound', { volume: 0.5 });
+    } else {
+      this.audioManager?.play('wrong_sound', { volume: 0.5 });
     }
   }
 
@@ -854,7 +908,7 @@ export class Main extends Phaser.Scene {
     // Después de que termine la animación, remover la clase 'hide'
     setTimeout(() => {
       this.feedbackModal.classList.remove('hide');
-    }, 600); // 600ms coincide con la duración de la animación swingUp
+    }, 600); 
   }
 
   private showCountdown(callback: () => void) {
@@ -866,10 +920,9 @@ export class Main extends Phaser.Scene {
         this.countdownElement.classList.add('show');
 
         // Reproducir sonido de tick (si existe)
-        if (this.sound.get('tick')) {
-          this.sound.play('tick', { volume: 0.3 });
-        }
-
+        
+          this.audioManager?.play('tick', { volume: 0.5 });
+      
         // Remover clase después de la animación
         this.time.delayedCall(900, () => {
           this.countdownElement.classList.remove('show');
@@ -1068,7 +1121,20 @@ export class Main extends Phaser.Scene {
     // Ir a la escena de fin con parámetro de derrota
     this.time.delayedCall(1000, () => {
       this.sound.stopAll();
-      this.scene.start('endGameScene', { won: false });
+      // Restaurar el cursor antes de cambiar de escena
+      this.restoreCursor();
+      // Ocultar elementos DOM antes del fade
+      if (this.GuiElement) {
+        this.GuiElement.setAlpha(0);
+      }
+      if (this.pauseButton) {
+        this.pauseButton.setAlpha(0);
+      }
+      // Fade out antes de cambiar de escena
+      this.cameras.main.fadeOut(200, 0, 0, 0);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.scene.start('endGameScene', { won: false });
+      });
     });
   }
 
@@ -1087,7 +1153,20 @@ export class Main extends Phaser.Scene {
     // Ir a la escena de fin con parámetro de victoria
     this.time.delayedCall(1000, () => {
       this.sound.stopAll();
-      this.scene.start('endGameScene', { won: true });
+      // Restaurar el cursor antes de cambiar de escena
+      this.restoreCursor();
+      // Ocultar elementos DOM antes del fade
+      if (this.GuiElement) {
+        this.GuiElement.setAlpha(0);
+      }
+      if (this.pauseButton) {
+        this.pauseButton.setAlpha(0);
+      }
+      // Fade out antes de cambiar de escena
+      this.cameras.main.fadeOut(200, 0, 0, 0);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.scene.start('endGameScene', { won: true });
+      });
     });
   }
 
@@ -1099,6 +1178,11 @@ export class Main extends Phaser.Scene {
     }
     if (this.cloudsSmall) {
       this.cloudsSmall.tilePositionX += 0.08; // Nubes pequeñas más rápidas
+    }
+
+    // Actualizar posición del cursor del martillo para que siga al puntero
+    if (this.hammerCursor && this.input.activePointer) {
+      this.hammerCursor.setPosition(this.input.activePointer.x, this.input.activePointer.y);
     }
   }
 }

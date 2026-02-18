@@ -2,7 +2,7 @@ import { AudioManager } from '../../utils/AudioManager';
 
 export class EndGame extends Phaser.Scene {
   // Capas de nubes para el efecto parallax
-  private backgroudSky!: Phaser.GameObjects.Image;
+  backgroudSky!: Phaser.GameObjects.Image;
   private cloudsMedium!: Phaser.GameObjects.TileSprite;
   private cloudsSmall!: Phaser.GameObjects.TileSprite;
   private map!: Phaser.Tilemaps.Tilemap;
@@ -23,6 +23,12 @@ export class EndGame extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
+
+    // Fade in al iniciar la escena
+    this.cameras.main.fadeIn(100, 0, 0, 0);
+
+    // Asegurar que el cursor sea normal en la pantalla de fin de juego
+    this.input.setDefaultCursor('default');
 
     // --- FONDO CON PARALLAX ---
     // Fondo de cielo estático
@@ -109,7 +115,15 @@ export class EndGame extends Phaser.Scene {
     restartButton.addEventListener('click', () => {
       // Detener todos los sonidos de esta escena antes de cambiar
       this.sound.stopAll();
-      this.scene.start(targetScene);
+      // Ocultar elementos DOM antes del fade
+      if (this.GuiElement) {
+        this.GuiElement.setAlpha(0);
+      }
+      // Fade out antes de cambiar de escena
+      this.cameras.main.fadeOut(200, 0, 0, 0);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.scene.start(targetScene);
+      });
     });
   }
 
