@@ -56,8 +56,15 @@ export class EndGame extends Phaser.Scene {
     // --- MAPA TILEMAP ---
     this.map = this.make.tilemap({ key: 'mapa_bosque' });
 
-    const tilesetGround = this.map.addTilesetImage('Topdown RPG 32x32 - Ground Tileset 1.2', 'tiles_ground');
-    const tilesetTrees = this.map.addTilesetImage('Topdown RPG 32x32 - Trees 1.2', 'tiles_trees');
+    // Obtener los nombres de los tilesets desde el JSON del mapa (dinámico según el tema)
+    const tilesetGround = this.map.addTilesetImage(
+      this.map.tilesets[0].name,
+      'tiles_ground'
+    );
+    const tilesetTrees = this.map.addTilesetImage(
+      this.map.tilesets[1].name,
+      'tiles_trees'
+    );
 
     if (!tilesetGround || !tilesetTrees) {
       console.error('No se encontraron los tilesets');

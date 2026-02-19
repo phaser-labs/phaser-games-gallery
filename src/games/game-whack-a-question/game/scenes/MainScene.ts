@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { WhackQuestion } from '../../types/types';
-import { AudioManager } from '../../utils/AudioManager';
+import { AudioManager } from '../../utils';
 import { Mole } from '../gameObjects/Mole';
 
 // Teclas válidas para activar el modo teclado
@@ -105,12 +105,17 @@ export class Main extends Phaser.Scene {
         repeat: 0
       });
     }
+    
     // === ANIMACIONES DEL MOLE ===
+    const moleKey = 'mole';
+    const hurtMoleKey = 'hurt-mole';
+    const holeKey = 'hole';
+
     // Animación de subir el topo (frame 9 escondido -> frame 0 visible)
     if (!this.anims.exists('mole-up')) {
       this.anims.create({
         key: 'mole-up',
-        frames: this.anims.generateFrameNumbers('mole', { start: 9, end: 0 }),
+        frames: this.anims.generateFrameNumbers(moleKey, { start: 9, end: 0 }),
         frameRate: 20,
         repeat: 0
       });
@@ -120,7 +125,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('mole-down')) {
       this.anims.create({
         key: 'mole-down',
-        frames: this.anims.generateFrameNumbers('mole', { start: 0, end: 9 }),
+        frames: this.anims.generateFrameNumbers(moleKey, { start: 0, end: 9 }),
         frameRate: 20,
         repeat: 0
       });
@@ -130,7 +135,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('mole-idle-up')) {
       this.anims.create({
         key: 'mole-idle-up',
-        frames: [{ key: 'mole', frame: 0 }],
+        frames: [{ key: moleKey, frame: 0 }],
         frameRate: 1
       });
     }
@@ -139,7 +144,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('mole-idle-down')) {
       this.anims.create({
         key: 'mole-idle-down',
-        frames: [{ key: 'mole', frame: 9 }],
+        frames: [{ key: moleKey, frame: 9 }],
         frameRate: 1
       });
     }
@@ -149,7 +154,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('mole-hurt')) {
       this.anims.create({
         key: 'mole-hurt',
-        frames: this.anims.generateFrameNumbers('hurt-mole', { start: 0, end: 8 }),
+        frames: this.anims.generateFrameNumbers(hurtMoleKey, { start: 0, end: 8 }),
         frameRate: 13,
         repeat: 0
       });
@@ -160,7 +165,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('hole-up')) {
       this.anims.create({
         key: 'hole-up',
-        frames: this.anims.generateFrameNumbers('hole', { start: 9, end: 0 }),
+        frames: this.anims.generateFrameNumbers(holeKey, { start: 9, end: 0 }),
         frameRate: 20,
         repeat: 0
       });
@@ -170,7 +175,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('hole-down')) {
       this.anims.create({
         key: 'hole-down',
-        frames: this.anims.generateFrameNumbers('hole', { start: 0, end: 9 }),
+        frames: this.anims.generateFrameNumbers(holeKey, { start: 0, end: 9 }),
         frameRate: 20,
         repeat: 0
       });
@@ -180,7 +185,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('hole-idle-up')) {
       this.anims.create({
         key: 'hole-idle-up',
-        frames: [{ key: 'hole', frame: 0 }],
+        frames: [{ key: holeKey, frame: 0 }],
         frameRate: 1
       });
     }
@@ -189,7 +194,7 @@ export class Main extends Phaser.Scene {
     if (!this.anims.exists('hole-idle-down')) {
       this.anims.create({
         key: 'hole-idle-down',
-        frames: [{ key: 'hole', frame: 9 }],
+        frames: [{ key: holeKey, frame: 9 }],
         frameRate: 1
       });
     }
@@ -197,6 +202,11 @@ export class Main extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
+
+    // Escuchar cambios de tema
+    if (this.gameEvents) {
+      this.gameEvents.on('themeChanged', this.handleThemeChange, this);
+    }
 
     // Fade in al iniciar la escena
     this.cameras.main.fadeIn(100, 0, 0, 0);
@@ -231,8 +241,15 @@ export class Main extends Phaser.Scene {
 
     this.map = this.make.tilemap({ key: 'mapa_bosque' });
 
-    const tilesetGround = this.map.addTilesetImage('Topdown RPG 32x32 - Ground Tileset 1.2', 'tiles_ground');
-    const tilesetTrees = this.map.addTilesetImage('Topdown RPG 32x32 - Trees 1.2', 'tiles_trees');
+    // Obtenemos los nombres de los tilesets desde el JSON del mapa
+    const tilesetGround = this.map.addTilesetImage(
+      this.map.tilesets[0].name,
+      'tiles_ground'
+    );
+    const tilesetTrees = this.map.addTilesetImage(
+      this.map.tilesets[1].name,
+      'tiles_trees'
+    );
 
     if (!tilesetGround || !tilesetTrees) {
       console.error('No se encontraron los tilesets');
@@ -249,7 +266,7 @@ export class Main extends Phaser.Scene {
 
     tierraLayer?.setDepth(0); // El pasto al fondo
     // La capa de Objetos (árboles) en depth 3 para que tapen a los topos si están atrás
-    objetosLayer?.setDepth(3);
+    objetosLayer?.setDepth(2);
 
     // --- LOGICA DE OBJETOS (SPAWN TOPOS)
 
@@ -366,11 +383,6 @@ export class Main extends Phaser.Scene {
 
     // Cargar primera pregunta
     this.loadQuestion();
-  }
-
-  shutdown() {
-    // Restaurar el cursor cuando la escena se detiene
-    this.restoreCursor();
   }
 
   /**
@@ -570,13 +582,16 @@ export class Main extends Phaser.Scene {
       const posX = (spawnPoint.x || 0) * this.MAP_SCALE;
       const posY = (spawnPoint.y || 0) * this.MAP_SCALE;
 
-      // Crear instancia de Mole
+      // Crear instancia de Mole con keys del tema actual
       const mole = new Mole(this, {
         x: posX,
         y: posY,
         scale: 1.5,
         holeDepth: 3,
-        containerDepth: 2
+        containerDepth: 2,
+        moleKey: 'mole',
+        holeKey: 'hole',
+        hurtMoleKey: 'hurt-mole'
       });
 
       // Configurar callback de click
@@ -1184,5 +1199,34 @@ export class Main extends Phaser.Scene {
     if (this.hammerCursor && this.input.activePointer) {
       this.hammerCursor.setPosition(this.input.activePointer.x, this.input.activePointer.y);
     }
+  }
+
+  private handleThemeChange(): void {
+    // Pausar el juego si está en progreso
+    if (this.timerEvent) {
+      this.timerEvent.destroy();
+    }
+
+    // Reiniciar la escena del menú para cargar el nuevo tema
+    // La música se detendrá automáticamente al reiniciar la escena
+    this.scene.start('menuScene');
+  }
+
+  shutdown(): void {
+    // Restaurar el cursor cuando la escena se detiene
+    this.restoreCursor();
+
+    // Limpiar listeners
+    if (this.gameEvents) {
+      this.gameEvents.off('themeChanged', this.handleThemeChange, this);
+    }
+
+    // Limpiar timers
+    if (this.timerEvent) {
+      this.timerEvent.destroy();
+    }
+
+    this.molePopTimers.forEach(timer => timer.destroy());
+    this.molePopTimers = [];
   }
 }

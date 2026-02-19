@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import Phaser from 'phaser';
 
-import { AudioManager } from '../../utils/AudioManager';
+import { AudioManager, themeManager } from '../../utils';
 
 import '../../styles/game-whack.css';
 
@@ -12,6 +12,7 @@ export class Menu extends Phaser.Scene {
   bgLayer3!: Phaser.GameObjects.TileSprite;
 
   private audioManager?: AudioManager;
+  private gameEvents?: Phaser.Events.EventEmitter;
 
   // Sprite para la animación del martillo
   private hammerSwingSprite!: Phaser.GameObjects.Sprite;
@@ -20,9 +21,6 @@ export class Menu extends Phaser.Scene {
   private instructionsModalElement!: Phaser.GameObjects.DOMElement;
   private instructionsModal!: HTMLElement;
 
-  // Propiedades para el parallax interactivo
-  private mouseX: number = 0;
-  private mouseY: number = 0;
   constructor() {
     super('menuScene');
   }
@@ -31,6 +29,14 @@ export class Menu extends Phaser.Scene {
 
   create() {
     const { width, height } = this.scale;
+
+    // Obtener gameEvents del registry
+    this.gameEvents = this.registry.get('gameEvents');
+
+    // Escuchar cambios de tema
+    if (this.gameEvents) {
+      this.gameEvents.on('themeChanged', this.handleThemeChange, this);
+    }
 
     // Fade in al iniciar la escena
     this.cameras.main.fadeIn(600, 0, 0, 0);
@@ -47,9 +53,12 @@ export class Menu extends Phaser.Scene {
     this.bgLayer2 = this.add.tileSprite(0, 10, width, height, 'bg-layer-2').setOrigin(0, 0).setDepth(0).setScale(1.7);
     this.bgLayer3 = this.add.tileSprite(0, 30, width, height, 'bg-layer-3').setOrigin(0, 0).setDepth(1).setScale(1.7);
 
-    // Inicializar AudioManager
+    // Inicializar AudioManager con la música del tema actual
+    const currentTheme = themeManager.getCurrentTheme();
+    const ambienceMusicKey = currentTheme.assets.ambiencesSounds[0]?.name || 'bg_music-normal';
+
     this.audioManager = new AudioManager(this, {
-      musicKey: 'bg_music-normal',
+      musicKey: ambienceMusicKey,
       x: width - 30,
       y: 40,
       depth: 50,
@@ -116,18 +125,7 @@ export class Menu extends Phaser.Scene {
       });
     });
 
-    
-   
 
-    // Inicializar posición del mouse en el centro
-    this.mouseX = width / 2;
-    this.mouseY = height / 2;
-
-    // Escuchar movimiento del mouse
-    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.mouseX = pointer.x;
-      this.mouseY = pointer.y;
-    });
   }
 
   private createInstructionsModal() {
@@ -221,20 +219,21 @@ export class Menu extends Phaser.Scene {
     }
   }
 
-  update(): void {
-    const { width, height } = this.scale;
+  private handleThemeChange(): void {
+    // Reiniciar la escena del menú para cargar los assets del nuevo tema
+    // La música se detendrá automáticamente al reiniciar la escena
+    this.scene.restart();
+  }
 
+  update(): void {
     // Parallax automático
     this.bgLayer1.tilePositionX += 0.1;
+  }
 
-    // Parallax interactivo con el mouse
-    const offsetX = (this.mouseX - width / 2) / (width / 2);
-    const offsetY = (this.mouseY - height / 2) / (height / 2);
-
-    // Aplicar desplazamiento a las capas con diferente intensidad
-    this.bgLayer2.tilePositionX = -offsetX * 1;
-    this.bgLayer2.tilePositionY = -offsetY * 0.2;
-    this.bgLayer3.tilePositionX = -offsetX * 1.5;
-    this.bgLayer3.tilePositionY = -offsetY * 0.2;
+  shutdown(): void {
+    // Limpiar listeners
+    if (this.gameEvents) {
+      this.gameEvents.off('themeChanged', this.handleThemeChange, this);
+    }
   }
 }

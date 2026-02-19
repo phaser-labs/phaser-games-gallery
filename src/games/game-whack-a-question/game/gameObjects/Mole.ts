@@ -8,6 +8,10 @@ export interface MoleConfig {
   scale: number;
   holeDepth: number;
   containerDepth: number;
+  // Keys de sprites del tema actual
+  moleKey?: string;
+  holeKey?: string;
+  hurtMoleKey?: string;
 }
 
 export class Mole extends Phaser.GameObjects.Container {
@@ -46,17 +50,22 @@ export class Mole extends Phaser.GameObjects.Container {
     // Añadir el container a la escena
     scene.add.existing(this);
 
+    // Usar las keys del tema o fallback a las antiguas
+    const holeKey = config.holeKey || 'hole';
+    const moleKey = config.moleKey || 'mole';
+    const hurtMoleKey = config.hurtMoleKey || 'hurt-mole';
+
     // Crear el sprite del agujero - inicia en vacio
     this.hole = scene.add
-      .sprite(config.x, config.y + 1, 'hole', 9)
+      .sprite(config.x, config.y + 1, holeKey, 9)
       .setScale(config.scale)
       .setDepth(config.holeDepth);
 
     // Crea el sprite del topo normal - inicia en escondido
-    this.moleBody = scene.add.sprite(0, 0, 'mole', 9).setScale(config.scale);
+    this.moleBody = scene.add.sprite(0, 0, moleKey, 9).setScale(config.scale).setDepth(30);
 
     // Crea el sprite del topo herido (inicialmente invisible)
-    this.hurtMole = scene.add.sprite(0, 0, 'hurt-mole', 8).setScale(config.scale).setVisible(false);
+    this.hurtMole = scene.add.sprite(0, 0, hurtMoleKey, 8).setScale(config.scale).setVisible(false);
 
     // Texto encima del topo como elemento HTML (inicialmente oculto)
     this.answerText = scene.add

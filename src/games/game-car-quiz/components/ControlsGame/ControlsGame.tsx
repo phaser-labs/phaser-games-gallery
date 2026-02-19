@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
+
 import { eventBus } from "../../game/eventBus";
+
 import css from './ControlsGame.module.css';
 
 interface Controls {

@@ -11,6 +11,20 @@
   src: url('assets/game-whack-a-question/fonts/Jersey10-Regular.ttf');
 }
 
+/* Variables CSS para temas - Se aplican dinámicamente desde theme-manager */
+:root {
+  --theme-primary: #e0a44c;
+  --theme-secondary: #84543d;
+  --theme-bg-button: linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%);
+  --theme-text-button: #0f0806;
+  --theme-gradient-modal-feedbacks: linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%);
+  --theme-border-modal-feedbacks: 6px solid #4a2511;
+  --theme-gradient-modal-instructions: linear-gradient(135deg, #2c1810 0%, #4a2511 50%, #2c1810 100%);
+  --theme-border-modal-instruction-content: 8px solid #8b4513d9;
+}
+
+/* Contenedor del selector de temas */
+
 .game-whack-a-question_container {
   position: relative;
   width: 100%;
@@ -282,20 +296,20 @@
 .mole-answer-text {
   font-family: 'MaidenOrange';
   font-size: 1rem;
-  color: #0f0806;
+  color: var(--theme-text-button);
   text-align: center;
   margin: 0;
   padding: 2px 6px;
-  background: rgb(224 164 76);
+  background: var(--theme-primary);
   border-radius: 8px;
-  border: 2px solid #84543d;
-  box-shadow: 0 2px 8px rgb(132 84 61);
-  width: 100px;
+  border: 2px solid var(--theme-secondary);
+  box-shadow: 0 2px 8px var(--theme-secondary);
+  min-width: 100px;
   height: 35px;
+  max-width: 120px;
   pointer-events: none !important;
   user-select: none;
-  overflow: hidden; 
-  /* overflow-y: scroll; */
+  overflow: hidden;
 }
 
 @keyframes blink {
@@ -330,8 +344,8 @@
 }
 
 .game-whack_feedback-content {
-  background: linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%);
-  border: 6px solid #4a2511;
+  background: var(--theme-gradient-modal-feedbacks);
+  border: var(--theme-border-modal-feedbacks);
   border-radius: 10px;
   padding: 30px 50px;
   box-shadow:
@@ -424,7 +438,7 @@
   font-family: 'MaidenOrange';
   font-size: 15rem;
   user-select: none;
-cursor: none;
+  cursor: none;
   color: #ffb148;
   text-shadow:
     5px 5px 0 #000,
@@ -612,19 +626,19 @@ cursor: none;
 .game-whack_endgame-subtext {
   font-family: 'MaidenOrange';
   font-size: 2rem;
-  color: #0f0806;
+  color: var(--theme-text-button);
   margin: 0;
-  text-shadow: 1px 2px 0 #a46c39;
+  text-shadow: 1px 2px 0 var(--theme-secondary);
 }
 
 .game-whack_endgame-button {
   font-family: 'MaidenOrange';
   font-size: 3rem;
-  color: #0f0806;
+  color: var(--theme-text-button);
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%);
-  border: 6px solid #4a2511;
+  background: var(--theme-bg-button);
+  border: var(--theme-border-modal-feedbacks);
   border-radius: 10px;
   padding: 6px 16px;
   box-shadow:
@@ -657,7 +671,7 @@ cursor: none;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #2c1810 0%, #4a2511 50%, #2c1810 100%);
+  background: var(--theme-gradient-modal-instructions);
   align-items: center;
   overflow: hidden;
   padding: 3rem;
@@ -668,14 +682,16 @@ cursor: none;
   max-width: 800px;
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
-  border: 8px solid #8b4513d9;
+  border: var(--theme-border-modal-instruction-content);
   border-radius: 10px;
-      padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(255, 255, 255, 0.2);
-    overflow-y: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  padding: 2rem;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .game-whack_instructions-content::-webkit-scrollbar {
@@ -683,32 +699,32 @@ cursor: none;
 }
 
 .game-whack_instructions-title {
-font-family: 'MaidenOrange';
-    font-size: 3rem;
-    color: #ffd700;
-    text-align: center;
-    margin: 0;
+  font-family: 'MaidenOrange';
+  font-size: 3rem;
+  color: #ffd700;
+  text-align: center;
+  margin: 0;
   text-shadow:
-   2px 4px 0 #4a2511,
+    2px 4px 0 #4a2511,
     0 0 20px rgba(255, 215, 0, 0.5);
   animation: blink 2s ease-in-out infinite alternate;
 }
 
 .game-whack_instructions-list {
-font-family: 'MaidenOrange';
-    font-size: 1.5rem;
-    color: #fff;
-    line-height: 1rem;
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+  font-family: 'MaidenOrange';
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 1rem;
+  margin: 0 auto;
+  padding: 1rem 3rem;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
 }
 
 .game-whack_instructions-list li {
-margin-bottom: 1.4rem;
-    padding-left: 0.5rem;
-    position: relative;
-    list-style: none;
+  margin-bottom: 1.4rem;
+  padding-left: 0.5rem;
+  position: relative;
+  list-style: none;
 }
 
 .game-whack_instructions-list li::before {
@@ -748,4 +764,3 @@ margin-bottom: 1.4rem;
 .game-whack_instructions-start-button:active {
   transform: scale(0.9);
 }
-
