@@ -63,9 +63,9 @@ export class Game extends Scene {
     this.createToggleSound();
 
     //audios
-    this.audios['reveal-card'] = this.sound.add('reveal-card').setVolume(0.02);
-    this.audios['correct'] = this.sound.add('correct').setVolume(0.02);
-    this.audios['incorrect'] = this.sound.add('incorrect').setVolume(0.02);
+    this.audios['reveal-card'] = this.sound.add('reveal-card').setVolume(0.05);
+    this.audios['correct'] = this.sound.add('correct').setVolume(0.05);
+    this.audios['incorrect'] = this.sound.add('incorrect').setVolume(0.05);
 
     EventBus.emit('current-scene-ready', this);
   }
