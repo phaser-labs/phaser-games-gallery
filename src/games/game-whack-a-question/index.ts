@@ -7,5 +7,24 @@
 // Componente principal
 export { GameWhackAQuestion } from './game-whack-a-question';
 
+// Componentes adicionales
+export { ThemeSelector } from './components';
+
 // Tipos e interfaces
-export type { GameResult, WhackQuestion } from './game-whack-a-question';
+export type { GameResult, WhackQuestion, ThemeType } from './types/types';
+
+// Utilidades de tema
+export { 
+  themeManager, 
+  getThemeImages, 
+  getThemeSpritesheets, 
+  getThemeTileMap, 
+  getThemeAmbienceSounds,
+  getCurrentThemeColors,
+  getCurrentThemeName,
+  getImageByName,
+  getSpritesheetByName
+} from './utils';
+
+// Estado global
+export { globalState, loadQuestions, setTheme } from './utils/global-state';

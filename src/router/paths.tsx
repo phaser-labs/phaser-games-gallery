@@ -1,4 +1,21 @@
-import { ArcanumArcher, CarQuestion, CityOfWisdom, CluesOfWisdom, FrogJump, GameArquerySimple, GameMazeQuestion, GameMemoryCard, GameQuizFlight, GameReorganize, Home, RoadSay, TapRevealGame, WhackAQuestion } from '@/pages';
+import {
+  ArcanumArcher,
+  CarQuestion,
+  CityOfWisdom,
+  CluesOfWisdom,
+  FrogJump,
+  GameArquerySimple,
+  GameMazeQuestion,
+  GameMemoryCard,
+  GameQuizFlight,
+  GameReorganize,
+  Home,
+  MisteryModeGame,
+  RoadSay,
+  TapRevealGame,
+  TempleOfKnowledgePage,
+  WhackAQuestion
+} from '@/pages';
 
 import type { PathType } from '../types/types';
 
@@ -72,5 +89,15 @@ export const paths: PathType[] = [
     title: 'Quiz Flight',
     path: '/quiz-flight',
     component: <GameQuizFlight />
+  },
+  {
+    title: 'Juego de Ataque (Preguntas)',
+    path: '/temple-of-knowledge',
+    component: <TempleOfKnowledgePage />
+  },
+  {
+    title: 'Game mistery mode',
+    path: '/game-mistery-mode',
+    component: <MisteryModeGame />
   }
 ];

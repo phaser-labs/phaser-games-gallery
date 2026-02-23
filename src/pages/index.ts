@@ -12,3 +12,5 @@ export { GameReorganize } from '@/pages/GameReorganize';
 export { TapRevealGame } from '@/pages/TapReveal';
 export { WhackAQuestion } from '@/pages/GameWhackAQuestion';
 export { GameQuizFlight } from '@/pages/QuizFlight';
+export { TempleOfKnowledgePage } from '@/pages/TempleOfKnowledge';
+export { MisteryModeGame } from '@/pages/GameMisteryMode';

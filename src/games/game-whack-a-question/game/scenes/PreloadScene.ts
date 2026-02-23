@@ -1,39 +1,36 @@
 import Phaser from 'phaser';
 
+import { preloadCommonAssets, preloadThemeAssets, preloadThemeMusic } from '../../utils/game-assets';
+import { themeManager } from '../../utils/theme-manager';
+
 export class Preload extends Phaser.Scene {
   constructor() {
     super('preloadScene');
   }
 
   preload() {
-    this.load.image('tiles_ground', 'assets/game-whack-a-question/tiles/Topdown RPG 32x32 - Ground Tileset 1.2.PNG');
-    this.load.image('tiles_trees', 'assets/game-whack-a-question/tiles/Topdown RPG 32x32 - Trees 1.2.PNG');
-
-    this.load.tilemapTiledJSON('mapa_bosque', 'assets/game-whack-a-question/tiles/normalMapWhackAQuestion.json');
-
     this.createProgressBar();
-    this.loadImages();
-    this.loadSpritesheets();
-    this.loadAudio();
+
+    // Obtener el tema actual
+    const currentTheme = themeManager.getCurrentTheme();
+
+    // Cargar assets comunes (que no dependen del tema)
+    preloadCommonAssets(this);
+
+    // Cargar assets específicos del tema
+    preloadThemeAssets(this, currentTheme);
+
+    // Cargar música del tema
+    preloadThemeMusic(this, currentTheme);
   }
 
   create() {
-    // Transición directa al juego (saltando el menú por ahora)
-    // Si quieres usar el menú, cambia 'gameScene' por 'menuScene'
-    this.scene.start('menuScene');
+    // Fade out antes de cambiar a la siguiente escena
+    this.cameras.main.fadeOut(200, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start('menuScene');
+    });
   }
-
-  private loadImages() {
-    this.load.image('background_sky', 'assets/game-whack-a-question/images/backgrounds/background_sky.png');
-    
-    this.load.image('clouds_medium', 'assets/game-whack-a-question/images/backgrounds/background_clouds_medium.png');
-    this.load.image('clouds_small', 'assets/game-whack-a-question/images/backgrounds/background_clouds_small.png');
-    
-  }
-
-  private loadSpritesheets() {}
-  
-  private loadAudio() {}
   private createProgressBar() {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
