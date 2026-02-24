@@ -40,7 +40,7 @@ export function preloadCommonAssets(scene: Phaser.Scene) {
   scene.load.setPath(basePath);
 
   // Imágenes comunes (NO incluye las capas del menú, están en el tema)
-  scene.load.image('container-title', 'images/whackBG.webp');
+  scene.load.image('container-title', 'images/whackBG.png');
   scene.load.image('start-button', 'images/cartel-inicio.webp');
   scene.load.image('pause_overlay', 'images/pause_overlay.png');
   scene.load.image('play_overlay', 'images/pause_instruction.png');

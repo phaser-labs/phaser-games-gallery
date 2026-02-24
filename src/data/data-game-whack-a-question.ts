@@ -11,10 +11,5 @@ import { WhackQuestion } from '../games/game-whack-a-question/types/types';
       question: '¿Cuánto es 2 + 2?',
       options: ['3', '4', '5', '6'],
       correctAnswer: 1
-    },
-    {
-      question: '¿Qué se celebra el 7 de Agosto en Colombia?',
-      options: ['a. Día de la Independencia de Estados Unidos', 'b. Día del Amor y la Amistad', 'c. Día de la Batalla de Boyacá', 'd. Día de la Tierra'],
-      correctAnswer: 2
     }
 ];

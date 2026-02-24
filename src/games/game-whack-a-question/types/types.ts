@@ -67,7 +67,7 @@ export const WORLD_THEMES: ThemeType[] = [
       textButton: '#0f0806', // texto del boton como volver a jugar
       gradientModalFeedbacks: 'linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%)',
       borderModalFeedbacks: '6px solid #4a2511',
-      gradientModalInstructions: 'linear-gradient(135deg, #2c1810 0%, #4a2511 50%, #2c1810 100%)',
+      gradientModalInstructions: 'linear-gradient(135deg, #452316 0%, #5c2d15 50%, #2c1810 100%)',
       borderModalInstructionContent: '8px solid #8b4513d9'
     },
     assets: {
@@ -140,21 +140,21 @@ export const WORLD_THEMES: ThemeType[] = [
     name: 'Playa',
     colors: {
       primary: '#e04c85',
-      secondary: '#f21457',
-      bgButton: 'linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%)', // boton como volver a jugar
-      textButton: '#0f0806', // texto del boton como volver a jugar
-      gradientModalFeedbacks: 'linear-gradient(135deg, #8b4513 0%, #d2691e 50%, #8b4513 100%)',
-      borderModalFeedbacks: '6px solid #4a2511',
-      gradientModalInstructions: 'linear-gradient(135deg, #2c1810 0%, #4a2511 50%, #2c1810 100%)',
-      borderModalInstructionContent: '8px solid #8b4513d9'
+      secondary: '#791030',
+      bgButton: 'linear-gradient(135deg, #dc1d56 0%, #da406e 50%, #dc1d56 100%)', // boton como volver a jugar
+      textButton: '#141414', // texto del boton como volver a jugar
+      gradientModalFeedbacks: 'linear-gradient(135deg, #e04c85 0%, #d14d7f 50%, #bc3468 100%)',
+      borderModalFeedbacks: '6px solid #f21457',
+      gradientModalInstructions: 'linear-gradient(135deg, #dc1d56 0%, #da406e 50%, #dc1d56 100%)',
+      borderModalInstructionContent: '8px solid #f21457c5'
     },
     assets: {
       images: [
         //fondo del menuScene y sus capas
-        { name: 'background-1', path: 'assets/game-whack-a-question/images/background-initial/1.png' },
-        { name: 'bg-layer-1', path: 'assets/game-whack-a-question/images/background-initial/2.png' },
-        { name: 'bg-layer-2', path: 'assets/game-whack-a-question/images/background-initial/3.png' },
-        { name: 'bg-layer-3', path: 'assets/game-whack-a-question/images/background-initial/4.png' },
+        { name: 'background-1', path: 'assets/game-whack-a-question/images/background-initial/bg-1-beach.png' },
+        { name: 'bg-layer-1', path: 'assets/game-whack-a-question/images/background-initial/2-beach.png' },
+        { name: 'bg-layer-2', path: 'assets/game-whack-a-question/images/background-initial/capa-3-beach.png' },
+        { name: 'bg-layer-3', path: 'assets/game-whack-a-question/images/background-initial/capa-4-beach.png' },
         //fondo del juego y sus nubes
         { name: 'background_sky', path: 'assets/game-whack-a-question/images/backgrounds/background_sky.png' },
         { name: 'clouds_medium', path: 'assets/game-whack-a-question/images/backgrounds/background_clouds_medium.png' },

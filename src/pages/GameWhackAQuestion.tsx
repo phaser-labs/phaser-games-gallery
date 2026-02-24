@@ -38,6 +38,11 @@ export const WhackAQuestion = () => {
                 <strong>Personalización:</strong> Se puede escoger entre diferentes diseños de mundos, cada uno con su propio estilo visual.
               </p>
             </li>
+             <li>
+              <p>
+                <strong>Recomendación importante:</strong> Solo se pueden opciones de respuesta con textos cortos, para evitar problemas de visualización en el juego.
+              </p>
+            </li>
               </ul>
             </div>
             <GameWhackAQuestion data={dataGameWhackAQuestion} />
