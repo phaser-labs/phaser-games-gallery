@@ -35,35 +35,36 @@ export const TapRevealGame = () => {
         <h1>Tap Reveal</h1>
       </div>
       <div className={'container'} style={{ gridTemplateColumns: '1fr' }}>
-        <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
-          <h2 className=" u-fs-400">Descripción del juego:</h2>
-          <p>
-            Este juego es una dinámica interactiva donde el jugador debe adivinar imágenes ocultas. El desafío consiste
-            en descubrir qué imagen se encuentra detrás del panel, utilizando la intuición y las pistas disponibles. El
-            jugador dispone de tres ayudas especiales que solo pueden usarse una vez por ronda, y una ayuda ilimitada
-            que puede activarse tantas veces como sea necesario, con una penalización de 5 puntos por cada uso. Cada
-            respuesta incorrecta descuenta 10 puntos del marcador, por lo que la estrategia es fundamental para
-            maximizar la puntuación. El objetivo final es responder correctamente a todas las imágenes del conjunto y
-            obtener el puntaje más alto posible.
-          </p>
-          <p className="u-fs-300 u-font-bold">Características:</p>
-          <ul className="u-flow list_star">
-            <li>
-              <p>
-                <strong>Imágenes:</strong> Crea tantas adivinanzas como quieras, con la libertad de usar todas las
-                imágenes que desees para adivinar.
-              </p>
-            </li>
-            <li>
-              <p>
-                <strong>Personalización:</strong> Personaliza a tu gusto la totalidad de los elementos gráficos, desde
-                las imágenes de las adivinanzas hasta los fondos y botones.
-              </p>
-            </li>
-          </ul>
-        </div>
-        <Audio a11y src={`assets/audios/ally/aud_des_ova-26_sld-17__1.mp3`} />
         <Row justifyContent="center" alignItems="center">
+          <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
+            <h2 className=" u-fs-400">Descripción del juego:</h2>
+            <p>
+              Este juego es una dinámica interactiva donde el jugador debe adivinar imágenes ocultas. El desafío
+              consiste en descubrir qué imagen se encuentra detrás del panel, utilizando la intuición y las pistas
+              disponibles. El jugador dispone de tres ayudas especiales que solo pueden usarse una vez por ronda, y una
+              ayuda ilimitada que puede activarse tantas veces como sea necesario, con una penalización de 5 puntos por
+              cada uso. Cada respuesta incorrecta descuenta 10 puntos del marcador, por lo que la estrategia es
+              fundamental para maximizar la puntuación. El objetivo final es responder correctamente a todas las
+              imágenes del conjunto y obtener el puntaje más alto posible.
+            </p>
+            <p className="u-fs-300 u-font-bold">Características:</p>
+            <ul className="u-flow list_star">
+              <li>
+                <p>
+                  <strong>Imágenes:</strong> Crea tantas adivinanzas como quieras, con la libertad de usar todas las
+                  imágenes que desees para adivinar.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Personalización:</strong> Personaliza a tu gusto la totalidad de los elementos gráficos, desde
+                  las imágenes de las adivinanzas hasta los fondos y botones.
+                </p>
+              </li>
+            </ul>
+          </div>
+          <Audio a11y src={`assets/audios/ally/aud_des_ova-26_sld-17__1.mp3`} />
+
           {choose !== 0 ? (
             <Col xs="12" hd="10">
               <Audio addClass="u-mb-2" src={`assets/audios/aud_ova-26_sld-17_1.mp3`} />

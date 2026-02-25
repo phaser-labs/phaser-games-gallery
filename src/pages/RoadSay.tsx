@@ -67,6 +67,8 @@ export const RoadSay = () => {
         <h1>Camino de preguntas</h1>
       </div>
       <div className={'container'} style={{ gridTemplateColumns: '1fr' }}>
+         <Row justifyContent="center" alignItems="center">
+
         <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
           <h2 className=" u-fs-400">Descripción del juego:</h2>
           <p>
@@ -98,7 +100,7 @@ export const RoadSay = () => {
           </ul>
         </div>
         <Audio a11y src={`assets/audios/ally/aud_des_ova-26_sld-17__1.mp3`} />
-        <Row justifyContent="center" alignItems="center">
+      
           <Col xs="12" hd="10">
             <Audio addClass="u-mb-2" src={`assets/audios/aud_ova-26_sld-17_1.mp3`} />
             <p aria-live="polite" className="u-sr-only">

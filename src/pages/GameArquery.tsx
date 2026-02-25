@@ -76,6 +76,7 @@ export const GameArquerySimple = () => {
         <h1>Desafío del Arquero</h1>
       </div>
       <div className={'container'} style={{ gridTemplateColumns: '1fr' }}>
+         <Row justifyContent="center" alignItems="center">
         <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
           <h2 className=" u-fs-400">Descripción del juego:</h2>
           <p>
@@ -106,7 +107,7 @@ export const GameArquerySimple = () => {
           </ul>
         </div>
         <Audio a11y src="assets/audios/aud__des_ova-11_sld 1.mp3" />
-        <Row justifyContent="center" alignItems="center">
+       
           <Col xs="11" mm="10" md="9" lg="8" hd="8">
             <GameSimpleArquery questions={questionsDataArquery} onResult={handleResult} gameId="game-ova" />
           </Col>
