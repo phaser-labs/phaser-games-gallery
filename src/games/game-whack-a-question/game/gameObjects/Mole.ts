@@ -202,7 +202,7 @@ export class Mole extends Phaser.GameObjects.Container {
     this.isBeingHit = true; // Marcar que está siendo golpeado
     
     // Reproducir sonido de golpe
-    this.audioManager?.play('hurt_sound', { volume: 0.01 });
+    this.audioManager?.play('hurt_sound', { volume: 0.07 });
     // Desactivar el glow de selección
     this.setFocus(false);
     

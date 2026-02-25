@@ -62,7 +62,7 @@ export class Menu extends Phaser.Scene {
       x: width - 30,
       y: 40,
       depth: 50,
-      volume: 0.002
+      volume: 0.02
     });
 
     // Guardar referencia global para otras escenas
