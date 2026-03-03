@@ -2,9 +2,9 @@ import Phaser from 'phaser';
 
 export const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 549,
-  height: 480,
-  backgroundColor: "#a1ae57",
+  width: 800,
+  height: 520,
+  backgroundColor: "#869b51",
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH, 

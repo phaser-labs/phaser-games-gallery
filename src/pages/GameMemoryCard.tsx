@@ -5,6 +5,16 @@ import { GameMemory } from '@/games/game-memory-card/game-memory';
 
 import '@styles/global.css';
 
+const dataCards = [
+  { name: 'card-back', img: 'assets/game-memory-card/cards/back01.png' },
+  { name: 'card-0', img: 'assets/game-memory-card/cards/clubs_ace.png' },
+  { name: 'card-1', img: 'assets/game-memory-card/cards/diamonds_ace.png' },
+  { name: 'card-2', img: 'assets/game-memory-card/cards/hearts_ace.png' },
+  { name: 'card-3', img: 'assets/game-memory-card/cards/spades_ace.png' },
+  { name: 'card-4', img: 'assets/game-memory-card/cards/Joker1.png' },
+  { name: 'card-5', img: 'assets/game-memory-card/cards/Joker2.png' }
+]
+
 export const GameMemoryCard = () => {
   return (
     <>
@@ -13,6 +23,7 @@ export const GameMemoryCard = () => {
         <h1>Juego de Memoria</h1>
       </div>
       <div className={'container'} style={{ gridTemplateColumns: '1fr' }}>
+          <Audio addClass="u-mt-0 u-mb-0" src="assets/audios/aud__des_ova-11_sld 1.mp3" />
         <Row alignItems="center" justifyContent="center">
           <div style={{ width: '60%', margin: '0 auto' }} className="u-flow">
             <h2 className=" u-fs-400">Descripción del juego:</h2>
@@ -26,10 +37,9 @@ export const GameMemoryCard = () => {
               </li>
             </ul>
           </div>
-          <Audio addClass="u-mt-0 u-mb-0" src="assets/audios/aud__des_ova-11_sld 1.mp3" />
 
           <Col xs="12">
-            <GameMemory gameId="game-ova" />
+            <GameMemory gameId="game-ova" cards={dataCards} onResult={(isCorrect) => console.log('Resultado:', isCorrect)} />
           </Col>
         </Row>
       </div>

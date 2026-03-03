@@ -26,7 +26,7 @@ body,
   box-shadow: 0px 2px 3px 2px #3c3c3c57;
   background-size: 25px 25px;
   background-color: var(--bg-white-secundary);
-  background-image: radial-gradient(circle, #18181891 1px, rgba(0, 0, 0, 0) 1px);
+  background-image: radial-gradient(circle, #18181856 1px, rgba(0, 0, 0, 0) 1px);
   color: var(--text-black);
   
   
@@ -53,7 +53,16 @@ gap: 3rem;
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+}
+.txt-description {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #080a86;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
 }
 
 /* Card game */

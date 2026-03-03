@@ -2,14 +2,16 @@
 
 import { useEffect, useRef } from 'react';
 
-//import { ModalFeedback } from '@/shared/core/components';
 import PhaserGame from './main/main';
+import { ICardData } from './utils/types';
 
 import "./stylesMemory.css";
 
 
 interface GameMemoryProps {
   gameId?: string;
+  cards?: ICardData[];
+  onResult?: (isCorrect: boolean) => void;
 }
 
 // Helper para la región ARIA Live
@@ -22,7 +24,7 @@ const announce = (message: string) => {
   }
 };
 
-export const GameMemory = ({gameId }: GameMemoryProps) => {
+export const GameMemory = ({ gameId, cards, onResult }: GameMemoryProps) => {
   const gameContainer = useRef<HTMLDivElement>(null);
   const phaserGameInstanceRef = useRef<PhaserGame | null>(null);
   const hasInitializedPhaser = useRef(false);
@@ -30,16 +32,14 @@ export const GameMemory = ({gameId }: GameMemoryProps) => {
   const containerId = `game-container-${gameId || 'default'}`;
 
 
-
-
  useEffect(() => {
     if (!gameContainer.current || hasInitializedPhaser.current) {
         return;
     }
-    const game = new PhaserGame({ containerId }); 
+    const game = new PhaserGame({ containerId, cards, onResult }); 
     phaserGameInstanceRef.current = game;
     hasInitializedPhaser.current = true;
-    announce('¡Bienvenido al juego de memoria!, utiliza las flechas del teclado para mover las cartas, presiona la barra espaciadora para abrir las cartas. Para iniciar el juego, presiona la barra espaciadora o enter.'); // Mensaje inicial para el lector de pantalla
+    announce('¡Bienvenido al juego de memoria!, utiliza las flechas del teclado para mover las cartas, presiona la barra espaciadora para abrir las cartas. Para iniciar el juego, presiona la barra espaciadora o enter.');
     return () => {
       if (phaserGameInstanceRef.current) {
         phaserGameInstanceRef.current.destroy(true);
@@ -48,52 +48,40 @@ export const GameMemory = ({gameId }: GameMemoryProps) => {
       
       hasInitializedPhaser.current = false;
     };
-  }, [containerId ]); 
-
-
-
-
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps 
 
   return (
     <div className="gameMemory_container">
-      {/* Div oculto para anuncios ARIA Live */}
+      {/* Región ARIA Live polite — eventos de juego no críticos */}
       <div
         id="game-announcer"
+        role="status"
         aria-live="polite"
         aria-atomic="true"
-        style={{
-          position: 'absolute',
-          width: '1px',
-          height: '1px',
-          margin: '-1px',
-          padding: '0',
-          overflow: 'hidden',
-          clip: 'rect(0, 0, 0, 0)',
-          border: '0'
-        }}></div>
-      
+        className="sr-only"
+      />
+
+      {/* Región ARIA Live assertive — eventos críticos: victoria, derrota */}
+      <div
+        id="game-announcer-assertive"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        className="sr-only"
+      />
+
+      {/* Contador de vidas oculto — actualizado dinámicamente desde Play.ts */}
+      <span id="lives-counter" aria-live="polite" className="sr-only" />
 
       <div ref={gameContainer} id={containerId} tabIndex={0} />
 
-      {/* Modales
+      {/* Instrucciones de teclado visibles */}
+      <p className="memory-keyboard-hint" aria-label="Instrucciones de teclado">
+        Mover: <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> o <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        Voltear carta: <kbd>Space</kbd> o <kbd>Enter</kbd>
+      </p>
 
-      <ModalFeedback
-        type="success"
-        isOpen={modalType === 'success'}
-        onClose={closeModal}
-        finalFocusRef="#main"
-        audio={answerText.successAudio}>
-        <p dangerouslySetInnerHTML={{ __html: answerText.correctText }}></p>
-      </ModalFeedback>
-      <ModalFeedback
-        type="wrong"
-        isOpen={modalType === 'wrong'}
-        onClose={closeModal}
-        finalFocusRef="#main"
-        audio={answerText.wrongAudio}>
-        <p dangerouslySetInnerHTML={{ __html: answerText.incorrectText }}></p>
-      </ModalFeedback> 
-      */}
     </div>
   );
 };
