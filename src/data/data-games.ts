@@ -46,7 +46,7 @@ export const dataGames: dataGameProps[] = [
     name: 'Juego de Memoria',
     image: 'assets/images/game-memory.webp',
     url: 'memory-card',
-    accesibility: 'reduced'
+    accesibility: 'full'
   },
   {
     name: 'Pistas de Sabiduría',
@@ -95,5 +95,11 @@ export const dataGames: dataGameProps[] = [
     image: 'assets/images/game-mistery.webp',
     url: 'game-mistery-mode',
     accesibility: 'full'
+  },
+  {
+    name: 'Tricky Rush',
+    image: 'assets/images/trickyrush.webp',
+    url: 'tricky-rush',
+    accesibility: 'reduced'
   }
 ];

@@ -1,0 +1,448 @@
+:global(:root) {
+  --ui-text: #1e1e1e;
+  --ui-panel: #91a2c5;
+
+  /* Scroll neutro fijo (no depende del theme) */
+  --scroll-track-fixed: rgba(255, 255, 255, 0.1);
+  --scroll-thumb-fixed: rgba(255, 255, 255, 0.35);
+  --scroll-thumb-hover-fixed: rgba(255, 255, 255, 0.55);
+
+  --arcane-primary: #ff2fa8;
+  --arcane-dark: #91a2c5;
+  --arcane-glow: #4de2f0;
+}
+
+@font-face {
+  font-family: 'PixelFont';
+  src: url('/assets/game-tricky-tower/fonts/VT323-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* phrase builder */
+
+.pb-container {
+  position: relative;
+
+  display: flex;
+  padding-top: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  font-family: 'PixelFont', sans-serif;
+
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.pb-container:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px var(--arcane-primary);
+}
+
+.pb-btn {
+  border: 5px solid transparent;
+  border-image-source: url('assets/game-tricky-tower/images/others/container.png');
+  border-image-slice: 16;
+  border-image-repeat: stretch;
+
+  background-color: #ffffff;
+  color: var(--ui-text);
+}
+
+.pb-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.pb-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 2px #000,
+    0 2px 0 #a13c76;
+}
+
+.pb-btn-disabled {
+  background: #6d6d6d !important;
+  color: #cfcfcf !important;
+  border: 3px solid #2b2b2b !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.pb-slot {
+  min-width: 3.2rem;
+  border-bottom: 2px solid var(--ui-panel);
+  text-align: center;
+  font-weight: bold;
+  color: var(--ui-text);
+  background: transparent;
+}
+
+.pb-words {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pb-slots {
+  max-width: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* scrollbar */
+.pb-container::-webkit-scrollbar {
+  width: 10px;
+}
+.pb-container::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.pb-container::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+.pb-container::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+/* overlay */
+
+.modal-overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(10, 20, 40, 0.6);
+  backdrop-filter: blur(3px);
+  font-family: 'PixelFont', sans-serif;
+}
+
+.modal-card {
+  width: 450px;
+  padding: 28px 30px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+
+  /* ✅ theme */
+  background: color-mix(in srgb, #fff 98%, transparent);
+  color: var(--ui-text);
+  text-align: center;
+
+  /* ✅ morados -> variables */
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--arcane-dark) 85%, transparent),
+    0 0 0 6px color-mix(in srgb, var(--arcane-primary) 95%, transparent),
+    0 0 0 8px color-mix(in srgb, var(--arcane-glow) 70%, transparent),
+    0 14px 30px rgba(0, 0, 0, 0.55);
+
+  animation: modalPop 0.25s ease-out;
+  border-radius: 0.3rem;
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--ui-text);
+}
+
+.modal-body {
+  font-size: 1.1rem;
+  color: color-mix(in srgb, var(--ui-text) 85%, transparent);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.modal-btn {
+  padding: 0.5rem 2rem;
+
+  background: linear-gradient(to bottom, #ff06a3 0%, #ff6fc6 100%);
+
+  border: 1px solid #8c2a7a;
+  border-radius: 2rem;
+
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  font-family: 'PixelFont', sans-serif;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 0 #8c2a7a,
+    0 10px 20px rgba(0, 0, 0, 0.3);
+
+  transition: transform 0.08s ease;
+}
+
+.audio-btn {
+  padding: 0 0.3rem;
+  min-width: 1.5rem;
+  background: linear-gradient(to bottom, #ff06a3 0%, #ff6fc6 100%);
+  border-radius: 0.5rem;
+  border: 1px solid #8c2a7a;
+  box-shadow:
+    0 3px 0 #8c2a7a,
+    0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn:hover,
+.audio-btn:hover {
+  transform: translateY(-2px);
+}
+
+.modal-btn:active,
+.audio-btn:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 #8c2a7a,
+    0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* carousel */
+
+/* Layout general */
+.tt-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.8rem;
+}
+
+/* Cuando se hace hover en la card */
+.tt-item.active img:nth-child(1) {
+  animation: float1 0.9s ease-in-out infinite;
+}
+
+.tt-item.active img:nth-child(2) {
+  animation: float2 0.9s ease-in-out infinite;
+}
+
+.tt-item.active img:nth-child(3) {
+  animation: float3 0.9s ease-in-out infinite;
+}
+
+/* viewport */
+.tt-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* track */
+.tt-track {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* item */
+.tt-item {
+  min-width: 220px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+/* figuras tamaño fijo */
+.tt-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  backface-visibility: hidden;
+  transform-origin: center;
+}
+
+/* desorden visual estilo Tricky */
+.tt-item img:nth-child(1) {
+  transform: rotate(-12deg) translateY(-4px);
+}
+
+.tt-item img:nth-child(2) {
+  transform: rotate(8deg) translateY(5px);
+}
+
+.tt-item img:nth-child(3) {
+  transform: rotate(-6deg) translateY(-2px);
+}
+
+/* Flechas afuera */
+.tt-arrow {
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-family: 'PixelFont', sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+
+  color: var(--arcane-primary);
+  transition:
+    transform 0.1s ease,
+    color 0.1s ease;
+}
+
+/* Animación flotante suave */
+@keyframes float1 {
+  0% {
+    transform: rotate(-12deg) translateY(-4px);
+  }
+  50% {
+    transform: rotate(-16deg) translateY(-8px);
+  }
+  100% {
+    transform: rotate(-12deg) translateY(-4px);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    transform: rotate(8deg) translateY(5px);
+  }
+  50% {
+    transform: rotate(12deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(8deg) translateY(5px);
+  }
+}
+
+@keyframes float3 {
+  0% {
+    transform: rotate(-6deg) translateY(-2px);
+  }
+  50% {
+    transform: rotate(-10deg) translateY(-6px);
+  }
+  100% {
+    transform: rotate(-6deg) translateY(-2px);
+  }
+}
+
+.tt-track-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+
+.locked {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ===== KEYCAP STYLE ===== */
+
+.key-row-help {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: start;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+
+  font-family: 'PixelFont', sans-serif;
+  font-size: 0.95rem;
+  font-weight: bold;
+
+  background: linear-gradient(to bottom, #ffffff 0%, #e6e6e6 100%);
+  color: #222;
+
+  border-radius: 6px;
+  border: 2px solid #333;
+
+  box-shadow:
+    0 3px 0 #333,
+    0 5px 10px rgba(0, 0, 0, 0.25);
+
+  margin: 0 4px;
+}
+
+.key-wide {
+  min-width: 70px;
+}
+
+.key-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+/* --- CONTENEDOR PRINCIPAL DEL JUEGO --- */
+
+.gameTricky_container {
+  position: relative;
+  width: 100%;
+  height: 70vh; /* ya lo tenías */
+  min-height: 52rem; /* ✅ evita shrink/resize visual */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* el div donde Phaser mete el canvas */
+
+.gameMount {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hides visually and still accessible */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

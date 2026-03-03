@@ -1,0 +1,66 @@
+/* Variables CSS para temas */
+:root {
+  --theme-primary: #ff2fa8;
+  --theme-secondary: #91a2c5;
+  --theme-background: #fff8f0;
+  --theme-text: #121212;
+}
+
+.scene-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.theme-icon {
+  font-size: 20px;
+}
+
+.theme-label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.scene-buttons-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.scene-button {
+  position: relative;
+  border: 2px solid transparent;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: white;
+  color: var(--theme-text);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.scene-button img {
+  width: 7.5rem;
+  height: 7.5rem;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.scene-button.active {
+  border-color: var(--theme-primary);
+  box-shadow: 0 0 0 3px rgba(255, 47, 168, 0.25);
+}
+
+/* Check */
+.scene-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--theme-primary);
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}

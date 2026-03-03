@@ -14,6 +14,7 @@ import {
   RoadSay,
   TapRevealGame,
   TempleOfKnowledgePage,
+  TrickyRushPage,
   WhackAQuestion
 } from '@/pages';
 
@@ -99,5 +100,10 @@ export const paths: PathType[] = [
     title: 'Game mistery mode',
     path: '/game-mistery-mode',
     component: <MisteryModeGame />
+  },
+  {
+    title: 'Tricky Rush',
+    path: '/tricky-rush',
+    component: <TrickyRushPage />
   }
 ];
