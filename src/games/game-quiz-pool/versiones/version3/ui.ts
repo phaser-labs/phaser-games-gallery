@@ -6,7 +6,7 @@
 import gsap from 'gsap';
 import Phaser from 'phaser';
 
-import { Quiz } from '../types/AppTypes';
+import { Quiz } from '../../types/AppTypes';
 
 import css from '../../QuizPool.module.css';
 import cssV3 from "./QuizPool_version3.module.css"
@@ -69,28 +69,28 @@ function buildHeaderHTML(quiz: Quiz ): string {
         <h1 class="${css.textLogo} font-bold tracking-tight text-slate-900 dark:text-white">Question Pool</h1>
       </div>
       <div class="flex items-center gap-6">
-        <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center gap-3  bg-slate-800 px-4 py-2 rounded-lg border  border-slate-700">
           <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" class=${css.iconOne}>
             <path d="M280-120v-80h160v-124q-49-11-87.5-41.5T296-442q-75-9-125.5-65.5T120-640v-40q0-33 23.5-56.5T200-760h80v-80h400v80h80q33 0 56.5 23.5T840-680v40q0 76-50.5 132.5T664-442q-18 46-56.5 76.5T520-324v124h160v80H280zm0-408v-152h-80v40q0 38 22 68.5t58 43.5zm285 93q35-35 35-85v-240H360v240q0 50 35 85t85 35q50 0 85-35zm115-93q36-13 58-43.5t22-68.5v-40h-80v152zm-200-52z"/>
           </svg>
           <div class="flex flex-col leading-none">
-            <span class="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">Puntos</span>
+            <span class="text-[10px] uppercase font-bold  text-slate-400 tracking-wider">Puntos</span>
             <p class="${css.textScore} text-base font-bold text-slate-900 dark:text-white" data-score>0</p>
           </div>
         </div>
-        <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700">
+        <div class="flex items-center gap-3  bg-slate-800 px-4 py-2 rounded-lg border  border-slate-700">
           <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" class=${css.iconTwo}>
             <path d="M360-840v-80h240v80H360zm80 440h80v-240h-80v240zm-99.5 291.5Q275-137 226-186t-77.5-114.5Q120-366 120-440t28.5-139.5Q177-645 226-694t114.5-77.5Q406-800 480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80q-74 0-139.5-28.5zM678-242q82-82 82-198t-82-198q-82-82-198-82t-198 82q-82 82-82 198t82 198q82 82 198 82t198-82zM480-440z"/>
           </svg>
           <div class="flex flex-col leading-none">
-            <span class="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">Tiempo</span>
+            <span class="text-[10px] uppercase font-bold  text-slate-400 tracking-wider">Tiempo</span>
             <span class="text-base font-bold font-mono text-slate-900 dark:text-white" data-timer>0</span>
           </div>
         </div>
         <div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
         <div class="flex items-center justify-between gap-3">
 
-        <button data-mute style="pointer-events:auto" class="flex items-center justify-center size-15 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+        <button data-mute style="pointer-events:auto" class="flex items-center justify-center size-15 rounded-lg  hover:bg-slate-200 bg-slate-800 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
           <span data-mute-on>
             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFF">
               <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131zM120-360v-240h160l200-200v640L280-360H120zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320zM400-606l-86 86H200v80h114l86 86v-252zM300-480z"/>
@@ -148,7 +148,7 @@ function buildOptionsHTML(quiz: Quiz): string {
           (opcion, i) => `
         <div style="pointer-events:auto"
              data-option-id="${opcion.id}"
-             class="${cssV3.option} flex items-center direction-col gap-3 p-3 rounded-lg border border-primary/30 dark:bg-slate-800 cursor-pointer hover:border-primary/60 transition-colors">
+             class="${cssV3.option} flex items-center direction-col gap-3 p-3 rounded-lg border border-primary/30 bg-slate-800 cursor-pointer hover:border-primary/60 transition-colors">
           <div class="size-8 rounded-full flex items-center justify-center font-bold ${css.indexQuestion}">
             ${OPTION_LETTERS[i]}
           </div>

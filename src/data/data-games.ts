@@ -104,7 +104,7 @@ export const dataGames: dataGameProps[] = [
   },
   {
     name: 'Pool Question',
-    image: 'assets/images/en-construccion.webp',
+    image: 'assets/images/pool-question.webp',
     url: 'pool-question',
     accesibility: 'reduced'
   },

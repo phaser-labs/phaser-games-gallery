@@ -1,9 +1,10 @@
+// eslint-disable-next-line simple-import-sort/imports
 import Phaser from 'phaser';
 
-import { calcGuideWithCollision } from '../../../core/Guide';
+import { Quiz } from '../../../types/AppTypes';
+
 import { bounceSegment, framesForDir, getDir, resolveElasticCollision } from '../../../core/Physics';
 import { SOUND_KEYS, SoundManager } from '../../../core/Sounds';
-import type { Quiz } from '../../types/AppTypes';
 import type { CueState } from '../Constants';
 import {
   ALL_SEGMENTS,
@@ -43,6 +44,8 @@ import {
   updateScore,
   updateTimer
 } from '../ui';
+
+import { calcGuideWithCollision } from '../../../core/Guide';
 
 export class MainScene_v3 extends Phaser.Scene {
   // ── Bola blanca ───────────────────────
@@ -123,14 +126,14 @@ export class MainScene_v3 extends Phaser.Scene {
 
   // ─────────────────────────────────────────
   preload() {
-    // this.load.tilemapTiledJSON('mesaBillar', 'assets/maps/mesaPool.tmj');
-    // this.load.image('mesa', 'assets/tilesets/mesaDeBillar.png');
-    // this.load.spritesheet('ballWhite', 'assets/images/balls/spriteSheetBallWhite.png', {
+    // this.load.tilemapTiledJSON('mesaBillar', 'assets/game-pool-question/maps/mesaPool.tmj');
+    // this.load.image('mesa', 'assets/game-pool-question/tilesets/mesaDeBillar.png');
+    // this.load.spritesheet('ballWhite', 'assets/game-pool-question/images/balls/spriteSheetBallWhite.png', {
     //   frameWidth: 128,
     //   frameHeight: 128
     // });
-    // this.load.spritesheet('ball1', 'assets/images/balls/spriteSheetBall8.png', { frameWidth: 128, frameHeight: 128 });
-    // this.load.image('cue', 'assets/images/cue/poolCue_2.png');
+    // this.load.spritesheet('ball1', 'assets/game-pool-question/images/balls/spriteSheetBall8.png', { frameWidth: 128, frameHeight: 128 });
+    // this.load.image('cue', 'assets/game-pool-question/images/cue/poolCue_2.png');
     // //add audio files
     // SoundManager.preload(this); // ← agregar
   }
@@ -138,9 +141,9 @@ export class MainScene_v3 extends Phaser.Scene {
   // ─────────────────────────────────────────
   create() {
     // ── UI ────────────────────────────────
-    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      console.log(`x: ${Math.round(pointer.x)}, y: ${Math.round(pointer.y)}`);
-    });
+    // this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+    //   console.log(`x: ${Math.round(pointer.x)}, y: ${Math.round(pointer.y)}`);
+    // });
 
     const currentQuiz = this.quizList[this.currentIndex];
     console.log('Quiz actual:', currentQuiz);
@@ -329,6 +332,7 @@ export class MainScene_v3 extends Phaser.Scene {
       this.dragStartX = x;
       this.dragStartY = y;
       this.isDragging = true;
+      this.dirLocked = true;
       this.cueForce = 0;
     };
 
@@ -354,6 +358,7 @@ export class MainScene_v3 extends Phaser.Scene {
       this.dragStartX = x;
       this.dragStartY = y;
       this.isDragging = true;
+      this.dirLocked = true;
       this.cueForce = 0;
     };
 

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import type { Quiz } from '@/types/AppTypes';
+import { Quiz } from '../../../types/AppTypes';
 
 import css from '../QuizPool_version1.module.css';
 

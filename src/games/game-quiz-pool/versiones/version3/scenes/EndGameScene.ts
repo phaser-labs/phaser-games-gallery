@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import type { Quiz } from '@/types/AppTypes';
+import { Quiz } from '../../../types/AppTypes';
 
 import css from '../QuizPool_version3.module.css';
 export class EndGame_v3 extends Phaser.Scene {
@@ -69,7 +69,7 @@ export class EndGame_v3 extends Phaser.Scene {
         <img
           alt="Blurred study room environment"
           class="w-full h-full object-cover opacity-30 scale-105"
-          src="assets/images/bgEndSceneV3.png"
+          src="assets/game-pool-question/images/bgEndSceneV3.png"
         />
         <div class="absolute inset-0  from-background via-transparent to-background/50"></div>
       </div>

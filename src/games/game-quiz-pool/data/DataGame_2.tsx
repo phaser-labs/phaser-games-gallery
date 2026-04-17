@@ -1,4 +1,4 @@
-import type { Quiz } from '../../types/AppTypes';
+import type { Quiz } from '@game/types/AppTypes';
 export const DataGame_2: Quiz[] = [
   {
     id: 1,

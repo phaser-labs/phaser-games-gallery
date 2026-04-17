@@ -17,13 +17,13 @@ export const SOUND_KEYS = {
 
 // Rutas de los archivos de audio
 export const SOUND_PATHS: Record<keyof typeof SOUND_KEYS, string> = {
-  BALL_HIT: 'assets/audios/ball_hit.mp3',
-  CUEHITBALL: 'assets/audios/cue_hit.mp3',
-  POCKET: 'assets/audios/pocket.mp3',
-  CORRECT: 'assets/audios/correct.mp3',
-  INCORRECT: 'assets/audios/incorrect.mp3',
-  CUSHION: 'assets/audios/cushion.mp3',
-  FAULD: 'assets/audios/fauld.mp3'
+  BALL_HIT: 'assets/game-pool-question/audios/ball_hit.mp3',
+  CUEHITBALL: 'assets/game-pool-question/audios/cue_hit.mp3',
+  POCKET: 'assets/game-pool-question/audios/pocket.mp3',
+  CORRECT: 'assets/game-pool-question/audios/correct.mp3',
+  INCORRECT: 'assets/game-pool-question/audios/incorrect.mp3',
+  CUSHION: 'assets/game-pool-question/audios/cushion.mp3',
+  FAULD: 'assets/game-pool-question/audios/fauld.mp3'
 };
 
 

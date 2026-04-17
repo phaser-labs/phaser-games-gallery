@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import type { Quiz } from '@/types/AppTypes';
+import { Quiz } from '../../../types/AppTypes';
 
 // ─────────────────────────────────────────────────────────────
 //  LoadMedia_v2 — carga los assets de la versión 2
@@ -18,7 +18,7 @@ export class LoadMedia_v2 extends Phaser.Scene {
 
   preload() {
     // Solo el fondo de la pantalla de carga, necesario antes de create()
-    this.load.image('loadingBg', 'assets/images/loading_bg.png');
+    this.load.image('loadingBg', 'assets/game-pool-question/images/loading_bg.png');
   }
 
   create() {
@@ -92,27 +92,27 @@ export class LoadMedia_v2 extends Phaser.Scene {
     });
 
     // ── ASSETS DE LA VERSIÓN 2 ────────────────────────────────
-    this.load.tilemapTiledJSON('mesaPool2', 'assets/maps/mesaPool2.tmj');
-    this.load.image('mesa2', 'assets/tilesets/mesa2.png');
+    this.load.tilemapTiledJSON('mesaPool2', 'assets/game-pool-question/maps/mesaPool2.tmj');
+    this.load.image('mesa2', 'assets/game-pool-question/tilesets/mesa2.png');
 
-    this.load.spritesheet('ballWhite', 'assets/images/balls/spriteSheetBallWhite.png', {
+    this.load.spritesheet('ballWhite', 'assets/game-pool-question/images/balls/spriteSheetBallWhite.png', {
       frameWidth: 128,
       frameHeight: 128
     });
-    this.load.spritesheet('ball1', 'assets/images/balls/spriteSheetBall15.png', {
+    this.load.spritesheet('ball1', 'assets/game-pool-question/images/balls/spriteSheetBall15.png', {
       frameWidth: 128,
       frameHeight: 128
     });
 
-    this.load.image('cue', 'assets/images/cue/poolCue_1.png');
+    this.load.image('cue', 'assets/game-pool-question/images/cue/poolCue_1.png');
 
-    this.load.audio('sfx_ball_hit', 'assets/audios/ball_hit.mp3');
-    this.load.audio('sfx_cue_hit_ball', 'assets/audios/cue_hit.mp3');
-    this.load.audio('sfx_pocket', 'assets/audios/pocket.mp3');
-    this.load.audio('sfx_correct', 'assets/audios/correct.mp3');
-    this.load.audio('sfx_incorrect', 'assets/audios/incorrect.mp3');
-    this.load.audio('sfx_cushion', 'assets/audios/cushion.mp3');
-    this.load.audio('sfx_fauld', 'assets/audios/fauld.mp3');
+    this.load.audio('sfx_ball_hit', 'assets/game-pool-question/audios/ball_hit.mp3');
+    this.load.audio('sfx_cue_hit_ball', 'assets/game-pool-question/audios/cue_hit.mp3');
+    this.load.audio('sfx_pocket', 'assets/game-pool-question/audios/pocket.mp3');
+    this.load.audio('sfx_correct', 'assets/game-pool-question/audios/correct.mp3');
+    this.load.audio('sfx_incorrect', 'assets/game-pool-question/audios/incorrect.mp3');
+    this.load.audio('sfx_cushion', 'assets/game-pool-question/audios/cushion.mp3');
+    this.load.audio('sfx_fauld', 'assets/game-pool-question/audios/fauld.mp3');
 
     this.load.start();
   }

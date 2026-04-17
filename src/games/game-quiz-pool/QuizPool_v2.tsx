@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-import { Quiz } from './game/types/AppTypes';
-import PhaserGame from './game/version2/main';
+import {Quiz} from './types/AppTypes';
+import PhaserGame from './versiones/version2/main'; // Importa el juego
 
 // import { globalState } from './core/utils/GlobalState'; // Importa el estado global
 import css from './QuizPool.module.css';

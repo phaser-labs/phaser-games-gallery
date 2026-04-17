@@ -3,8 +3,8 @@ import Phaser from 'phaser';
 import { calcGuideWithCollision } from '../../../core/Guide';
 import { bounceSegment, framesForDir, getDir, resolveElasticCollision } from '../../../core/Physics';
 import { SOUND_KEYS, SoundManager } from '../../../core/Sounds';
-import type { Quiz } from '../../types/AppTypes';
-// import type {  } from '../../core/Constants';
+import { Quiz } from '../../../types/AppTypes';
+import type { CueState } from '../Constants';
 import {
   ALL_SEGMENTS,
   BALL_VISUAL_RADIUS,
@@ -16,7 +16,6 @@ import {
   CUE_PULLBACK,
   CUE_RETURN_SPEED,
   CUE_TIP_OFFSET,
-  CueState,
   DIRS,
   FRAME_RATE,
   FRAME_RATE_MIN,
@@ -35,16 +34,16 @@ import {
   animateQuestionChange,
   createAllPocketLabels,
   createHeaderUI,
-  createOptionsUI,
+  // createOptionsUI,
   showFeedback,
   toggleMuteButton,
   updateHeaderQuestion,
   updateOptionsContent,
   updatePocketLabels,
   updateScore,
-  updateTimer
-} from '../ui';
-export class Main extends Phaser.Scene {
+  updateTimer} from '../ui';
+
+export class Main_v2 extends Phaser.Scene {
   // ── Bola blanca ───────────────────────
   private ballWhite!: Phaser.GameObjects.Sprite;
   private vxW = 0;
@@ -69,7 +68,7 @@ export class Main extends Phaser.Scene {
   private outerY1 = 0;
   private outerX2 = 0;
   private outerY2 = 0;
-  private readonly BALL_RADIUS = 15;
+  private readonly BALL_RADIUS = 10;
   private readonly COLLISION_DIST = 30;
   private readonly FRICTION = 0.55;
   private readonly MIN_SPEED = 8;
@@ -109,7 +108,7 @@ export class Main extends Phaser.Scene {
   // ── Sonidos ───────────────────────────
   private sounds!: SoundManager;
   constructor() {
-    super('MainScene');
+    super('MainScene_v2');
   }
 
   /** Phaser llama a init() antes de preload/create — aquí recibimos los datos externos. */
@@ -123,39 +122,47 @@ export class Main extends Phaser.Scene {
 
   // ─────────────────────────────────────────
   preload() {
-    // this.load.tilemapTiledJSON('mesaBillar', 'assets/maps/mesaPool.tmj');
-    // this.load.image('mesa', 'assets/tilesets/mesaDeBillar.png');
-    // this.load.spritesheet('ballWhite', 'assets/images/balls/spriteSheetBallWhite.png', {
+    // this.load.tilemapTiledJSON('mesaBillar', 'assets/game-pool-question/maps/mesaPool.tmj');
+    // this.load.image('mesa', 'assets/game-pool-question/tilesets/mesaDeBillar.png');
+    // this.load.spritesheet('ballWhite', 'assets/game-pool-question/images/balls/spriteSheetBallWhite.png', {
     //   frameWidth: 128,
     //   frameHeight: 128
     // });
-    // this.load.spritesheet('ball1', 'assets/images/balls/spriteSheetBall8.png', { frameWidth: 128, frameHeight: 128 });
-    // this.load.image('cue', 'assets/images/cue/poolCue_2.png');
+    // this.load.spritesheet('ball1', 'assets/game-pool-question/images/balls/spriteSheetBall8.png', { frameWidth: 128, frameHeight: 128 });
+    // this.load.image('cue', 'assets/game-pool-question/images/cue/poolCue_2.png');
     // //add audio files
     // SoundManager.preload(this); // ← agregar
   }
 
   // ─────────────────────────────────────────
   create() {
+
     // ── UI ────────────────────────────────
+    // this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+    //   console.log(`x: ${Math.round(pointer.x)}, y: ${Math.round(pointer.y)}`);
+    // });
+
     const currentQuiz = this.quizList[this.currentIndex];
     console.log('Quiz actual:', currentQuiz);
     this.headerEl = createHeaderUI(this, currentQuiz, this.currentIndex, this.quizList.length);
-    this.optionsEl = createOptionsUI(this, currentQuiz);
-    const totalOpciones = this.quizList[this.currentIndex]?.opciones.length ?? 6;
-    this.pocketLabels = createAllPocketLabels(this, totalOpciones); // ← guardar
+
+    this.pocketLabels = createAllPocketLabels(this, currentQuiz.opciones.length);
 
     // ── MAPA ──────────────────────────────
-    const map = this.make.tilemap({ key: 'mesaBillar' });
-    const tileset = map.addTilesetImage('mesaDeBillar', 'mesa');
+
+    const map = this.make.tilemap({ key: 'mesaPool2' });
+    const tileset = map.addTilesetImage('mesa2', 'mesa2');
     if (!tileset) return;
-    map.createLayer('mesaBillar', tileset, 150, 240);
+
+    const layer = map.createLayer('Capa de patrones 1', tileset, 530, 80);
+    layer?.setScale(1.2);
+    layer?.setVisible(true);
 
     // ── BOUNDS ────────────────────────────
-    const tableLeft = 150,
-      tableRight = 1175,
-      tableTop = 235,
-      tableBottom = 790;
+    const tableLeft = 540,
+      tableRight = 1040,
+      tableTop =  80,
+      tableBottom = 980;
     this.outerX1 = tableLeft + this.BALL_RADIUS;
     this.outerX2 = tableRight - this.BALL_RADIUS;
     this.outerY1 = tableTop + this.BALL_RADIUS;
@@ -179,10 +186,10 @@ export class Main extends Phaser.Scene {
 
     // ── BOLAS ─────────────────────────────
     this.ballWhite = this.add.sprite(WHITE_BALL_START_X, WHITE_BALL_START_Y, 'ballWhite');
-    this.ballWhite.setScale(0.25).setFrame(framesForDir(DIRS.E)[0]);
+    this.ballWhite.setScale(0.18).setFrame(framesForDir(DIRS.E)[0]);
 
     this.ball1 = this.add.sprite(BALL1_START_X, BALL1_START_Y, 'ball1');
-    this.ball1.setScale(0.25).setFrame(framesForDir(DIRS.E)[0]);
+    this.ball1.setScale(0.18).setFrame(framesForDir(DIRS.E)[0]);
 
     // ── GRÁFICOS ──────────────────────────
     this.guideGraphics = this.add.graphics();
@@ -218,7 +225,7 @@ export class Main extends Phaser.Scene {
     exitBtn?.addEventListener('click', () => {
       this.sounds.stopAll();
       this.timerEvent?.remove();
-      this.scene.start('MenuScene'); // ← el string debe coincidir con super() de tu MenuScene
+      this.scene.start('MenuScene_v2'); // ← el string debe coincidir con super() de tu MenuScene
     });
 
     // ── DEBUG (activar si se necesita) ────
@@ -230,7 +237,13 @@ export class Main extends Phaser.Scene {
       g.lineStyle(2, 0xff0000, 0.9);
       for (const seg of WALL_SEGMENTS) g.lineBetween(seg.x1, seg.y1, seg.x2, seg.y2);
       g.lineStyle(2, 0x00ffff, 0.9);
-      for (const p of POCKETS) g.strokeCircle(p.x, p.y, p.r);
+      for (let i = 0; i < POCKETS.length; i++) {
+        const p = POCKETS[i];
+        g.strokeCircle(p.x, p.y, p.r);
+        this.add.text(p.x, p.y, `${p.index}:${p.letter}`, {
+          fontSize: '16px', color: '#00ffff', stroke: '#000', strokeThickness: 3
+        }).setOrigin(0.5);
+      }
       g.lineStyle(2, 0xff8800, 0.9);
       for (const seg of FUNNEL_SEGMENTS) g.lineBetween(seg.x1, seg.y1, seg.x2, seg.y2);
       this.debugCross = this.add.graphics();
@@ -301,6 +314,7 @@ export class Main extends Phaser.Scene {
       this.dragStartX = x;
       this.dragStartY = y;
       this.isDragging = true;
+      this.dirLocked = true;
       this.cueForce = 0;
     };
 
@@ -326,6 +340,7 @@ export class Main extends Phaser.Scene {
       this.dragStartX = x;
       this.dragStartY = y;
       this.isDragging = true;
+      this.dirLocked = true;
       this.cueForce = 0;
     };
 
@@ -498,7 +513,8 @@ export class Main extends Phaser.Scene {
       this.outerX1,
       this.outerY1,
       this.outerX2,
-      this.outerY2
+      this.outerY2,
+      ALL_SEGMENTS
     );
 
     // Línea blanca — hasta el impacto
@@ -685,20 +701,13 @@ export class Main extends Phaser.Scene {
   private _checkPockets(sprite: Phaser.GameObjects.Sprite, which: 'W' | '1') {
     const totalOpciones = this.quizList[this.currentIndex]?.opciones.length ?? 6;
 
-    for (let i = 0; i < POCKETS.length; i++) {
-      const p = POCKETS[i];
+    for(const p of POCKETS) {
       const dx = sprite.x - p.x,
         dy = sprite.y - p.y;
       if (Math.sqrt(dx * dx + dy * dy) >= p.r) continue;
 
       // ── Tronera sin opción asignada → ignorar completamente
-      if (which === '1' && i >= totalOpciones) continue;
-      for (let i = 0; i < POCKETS.length; i++) {
-        const p = POCKETS[i];
-        const dx = sprite.x - p.x,
-          dy = sprite.y - p.y;
-        if (Math.sqrt(dx * dx + dy * dy) >= p.r) continue;
-      }
+      if (which === '1' && p.index >= totalOpciones) continue;
       if (which === 'W') {
         this.sounds.play(SOUND_KEYS.POCKET);
         // Bola blanca cae — solo resetear, no evaluar respuesta
@@ -726,7 +735,7 @@ export class Main extends Phaser.Scene {
         if (sprite.anims.isPlaying) sprite.anims.stop();
 
         const currentQuiz = this.quizList[this.currentIndex];
-        const opcion = currentQuiz?.opciones[i]; // índice tronera = índice opción
+        const opcion = currentQuiz?.opciones[p.index]; // índice tronera = índice opción
         const esCorrecta = opcion?.correcta ?? false;
         this.tweens.add({
           targets: sprite,
@@ -759,13 +768,13 @@ export class Main extends Phaser.Scene {
         waitForBall1.remove();
 
         this.ballWhite.setPosition(WHITE_BALL_START_X, WHITE_BALL_START_Y);
-        this.ballWhite.setScale(0).setAlpha(1).setVisible(true).setActive(true);
+        this.ballWhite.setScale(0.18).setAlpha(1).setVisible(true).setActive(true);
         this.ballWhite.setFrame(framesForDir(DIRS.E)[0]);
 
         this.tweens.add({
           targets: this.ballWhite,
-          scaleX: 0.25,
-          scaleY: 0.25,
+          scaleX: 0.18,
+          scaleY: 0.18,
           duration: 350,
           ease: 'Back.easeOut',
           onComplete: () => {
@@ -837,13 +846,13 @@ export class Main extends Phaser.Scene {
     this.ball1Moving = false;
 
     this.ball1.setPosition(BALL1_START_X, BALL1_START_Y);
-    this.ball1.setScale(0).setAlpha(1).setVisible(true).setActive(true);
+    this.ball1.setScale(0.18).setAlpha(1).setVisible(true).setActive(true);
     this.ball1.setFrame(framesForDir(DIRS.E)[0]);
 
     this.tweens.add({
       targets: this.ball1,
-      scaleX: 0.25,
-      scaleY: 0.25,
+      scaleX: 0.18,
+      scaleY: 0.18,
       duration: 350,
       ease: 'Back.easeOut'
     });
@@ -859,14 +868,13 @@ export class Main extends Phaser.Scene {
     this.currentIndex = siguiente;
     const q = this.quizList[this.currentIndex];
 
-    // Actualizar labels de troneras según las opciones de la nueva pregunta
-    updatePocketLabels(this.pocketLabels, q.opciones.length); // ← agregar
+    updatePocketLabels(this.pocketLabels, q.opciones.length);
 
     animateQuestionChange(this.headerEl, this.optionsEl, () => {
       updateHeaderQuestion(this.headerEl, q, this.currentIndex, this.quizList.length);
-      updateOptionsContent(this.optionsEl, q);
+      updateOptionsContent(this.headerEl, q);
     });
-  }
+    }
   /**
    * Transición a la escena final cuando se agotan las preguntas.
    * Pasa el puntaje acumulado para mostrarlo en EndGame.
@@ -881,7 +889,7 @@ export class Main extends Phaser.Scene {
     // Pequeña pausa para que el feedback de "correcto" termine
     // antes de cambiar de escena
     this.time.delayedCall(2500, () => {
-      this.scene.start('endGameScene', {
+      this.scene.start('EndGame_v2', {
         score: this.score ?? 0,
         total: this.quizList.length,
         elapsedSecs: this.elapsedSecs,

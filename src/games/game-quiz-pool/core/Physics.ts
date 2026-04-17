@@ -1,5 +1,5 @@
-import type { Segment } from "../game/version1/Constants";
-import { ALL_SEGMENTS, DIRS, TOTAL_COLS, TOTAL_FRAMES } from "../game/version1/Constants";
+import type { Segment } from '../versiones/version1/Constants';
+import { ALL_SEGMENTS, DIRS, TOTAL_COLS, TOTAL_FRAMES } from '../versiones/version1/Constants';
 
 // ─────────────────────────────────────────────────────────────
 //  ANIMACIONES — helpers de spritesheet

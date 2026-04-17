@@ -1,6 +1,4 @@
-import Phaser from 'phaser';
-
-import type { Quiz } from '../../types/AppTypes';
+import { Quiz } from '../../../types/AppTypes';
 
 import css from '../QuizPool_version2.module.css';
 
@@ -106,7 +104,7 @@ export class MenuScene_v2 extends Phaser.Scene {
               </h1>
           <div>
             <!-- Imagen hero -->
-            <Img class=${css.heroImage} src="assets/images/imageMenu_v2.png" alt="Hero Pool"/>
+            <Img class=${css.heroImage} src="assets/game-pool-question/images/imageMenu_v2.png" alt="Hero Pool"/>
               <!-- Gradiente inferior -->
               <div class=${css.gradient}></div>
 

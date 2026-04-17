@@ -40,12 +40,12 @@ export interface Pocket {
 }
 
 export const POCKETS: Pocket[] = [
-  { x: 185, y: 270, r: 28 }, // top-left
-  { x: 660, y: 260, r: 25 }, // top-center
-  { x: 1135, y: 274, r: 28 }, // top-right
-  { x: 185, y: 760, r: 28 }, // bot-left
-  { x: 658, y: 770, r: 26 }, // bot-center
-  { x: 1135, y: 760, r: 28 } // bot-right
+  { x: 185, y: 270, r: 30 }, // top-left
+  { x: 660, y: 260, r: 30 }, // top-center
+  { x: 1135, y: 274, r: 30 }, // top-right
+  { x: 185, y: 760, r: 30 }, // bot-left
+  { x: 658, y: 770, r: 30 }, // bot-center
+  { x: 1135, y: 760, r: 30 } // bot-right
 ];
 export const POCKET_ANIM_MS = 350;
 
@@ -59,26 +59,26 @@ export interface Segment {
 export type CueState = 'idle' | 'pullback' | 'strike' | 'return' | 'hidden';
 
 // ── SEGMENTOS DE PARED ───────────────────────────────────────
-const WALL_TOP_L1 = 235;
-const WALL_TOP_R1 = 635;
-const WALL_TOP_L2 = 685;
-const WALL_TOP_R2 = 1090;
-const WALL_BOT_L1 = 230;
+const WALL_TOP_L1 = 243;
+const WALL_TOP_R1 = 630;
+const WALL_TOP_L2 = 692;
+const WALL_TOP_R2 = 1082;
+const WALL_BOT_L1 = 243;
 const WALL_BOT_R1 = 632;
-const WALL_BOT_L2 = 685;
+const WALL_BOT_L2 = 690;
 const WALL_BOT_R2 = 1085;
 const WALL_LEFT_T = 320;
-const WALL_LEFT_B = 720;
-const WALL_RIGHT_T = 320;
-const WALL_RIGHT_B = 720;
+const WALL_LEFT_B = 695;
+const WALL_RIGHT_T = 325;
+const WALL_RIGHT_B = 712;
 
 export const WALL_SEGMENTS: Segment[] = [
   { x1: WALL_TOP_L1, y1: 290, x2: WALL_TOP_R1, y2: 290 },
   { x1: WALL_TOP_L2, y1: 290, x2: WALL_TOP_R2, y2: 290 },
   { x1: WALL_BOT_L1, y1: 745, x2: WALL_BOT_R1, y2: 745 },
   { x1: WALL_BOT_L2, y1: 745, x2: WALL_BOT_R2, y2: 745 },
-  { x1: 205, y1: WALL_LEFT_T, x2: 205, y2: WALL_LEFT_B },
-  { x1: 1120, y1: WALL_RIGHT_T, x2: 1120, y2: WALL_RIGHT_B }
+  { x1: 203, y1: WALL_LEFT_T, x2: 205, y2: WALL_LEFT_B },
+  { x1: 1118, y1: WALL_RIGHT_T, x2: 1118, y2: WALL_RIGHT_B }
 ];
 
 export const FUNNEL_SEGMENTS: Segment[] = [
@@ -90,9 +90,9 @@ export const FUNNEL_SEGMENTS: Segment[] = [
   { x1: 694, y1: 290, x2: 669, y2: 250 },
   // top-right
   { x1: 1080, y1: 290, x2: 1130, y2: 250 },
-  { x1: 1120, y1: 330, x2: 1150, y2: 280 },
+  { x1: 1116, y1: 327, x2: 1138, y2: 301 },
   // bot-left
-  { x1: 250, y1: 740, x2: 180, y2: 790 },
+  { x1: 243, y1: 741, x2: 211, y2: 764 },
   { x1: 205, y1: 690, x2: 180, y2: 735 },
   // bot-center
   { x1: 630, y1: 745, x2: 645, y2: 800 },

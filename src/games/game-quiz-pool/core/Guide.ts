@@ -1,5 +1,5 @@
-import type { Segment } from "../game/version1/Constants";
-import { ALL_SEGMENTS, GUIDE_LENGTH } from  "../game/version1/Constants";
+import type { Segment } from '../versiones/version1/Constants';
+import { ALL_SEGMENTS, GUIDE_LENGTH } from '../versiones/version1/Constants';
 
 import { stepGuide } from './Physics';
 

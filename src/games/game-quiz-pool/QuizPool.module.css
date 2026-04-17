@@ -19,14 +19,15 @@
   width: 100%;
 }
 .quizPool__container {
-
     width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .quizPool__gameContainer {
     width: 100%;
-    height: 100vh;
 }
 .header {
   margin: 0 auto;

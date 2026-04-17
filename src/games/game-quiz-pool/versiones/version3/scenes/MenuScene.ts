@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import type { Quiz } from '../../types/AppTypes';
+import { Quiz } from '../../../types/AppTypes';
 
 import css from '../QuizPool_version3.module.css';
 export class MenuScene_v3 extends Phaser.Scene {
@@ -53,7 +53,7 @@ export class MenuScene_v3 extends Phaser.Scene {
 
 
         <div class=${css.containerBackgroundMenu}>
-          <img  class=${css.containerBackgroundMenuImage} src="../assets/images/bgMenuV_3.png" alt="Background de una mesa de billar"/>
+          <img  class=${css.containerBackgroundMenuImage} src="assets/game-pool-question/images/bgMenuV_3.png" alt="Background de una mesa de billar"/>
         </div>
 
         <!-- Textura sutil de puntos -->
