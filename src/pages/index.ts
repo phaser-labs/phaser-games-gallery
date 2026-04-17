@@ -16,3 +16,4 @@ export { TempleOfKnowledgePage } from '@/pages/TempleOfKnowledge';
 export { MisteryModeGame } from '@/pages/GameMisteryMode';
 export { TrickyRushPage } from '@/pages/TrickyRush';
 export { PoolQuestionPage } from '@/pages/PoolQuestion';
+export { GameMiauFarmPage } from '@/pages/GameMiauFarm';

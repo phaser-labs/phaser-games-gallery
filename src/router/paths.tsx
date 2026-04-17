@@ -7,6 +7,7 @@ import {
   GameArquerySimple,
   GameMazeQuestion,
   GameMemoryCard,
+  GameMiauFarmPage,
   GameQuizFlight,
   GameReorganize,
   Home,
@@ -111,5 +112,10 @@ export const paths: PathType[] = [
     title: 'Pool Question',
     path: '/pool-question',
     component: <PoolQuestionPage />
+  },
+  {
+    title: 'Miau Farm',
+    path: '/miau-farm',
+    component: <GameMiauFarmPage />
   }
 ];

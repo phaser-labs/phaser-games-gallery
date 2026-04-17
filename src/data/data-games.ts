@@ -107,5 +107,11 @@ export const dataGames: dataGameProps[] = [
     image: 'assets/images/en-construccion.webp',
     url: 'pool-question',
     accesibility: 'reduced'
+  },
+  {
+    name: 'Miau Farm',
+    image: 'assets/images/miau-farm.webp',
+    url: 'miau-farm',
+    accesibility: 'reduced'
   }
 ];
