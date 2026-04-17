@@ -12,6 +12,7 @@ export default defineConfig({
       ],
     },
   },
+  blocklist: ['container'],
   presets: [
     presetUno(), 
     presetOVA()

@@ -28,8 +28,6 @@ body,
   background-color: var(--bg-white-secundary);
   background-image: radial-gradient(circle, #18181856 1px, rgba(0, 0, 0, 0) 1px);
   color: var(--text-black);
-  
-  
 }
 
 .container-games {
