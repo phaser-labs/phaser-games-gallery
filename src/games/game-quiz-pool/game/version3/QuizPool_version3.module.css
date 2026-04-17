@@ -1,0 +1,349 @@
+/* ── Public Sans ─────────────────────────────────────────── */
+@font-face {
+    font-family: 'Public Sans Italic';
+    src: url('assets/fonts/PublicSans-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Public Sans';
+    src: url('assets/fonts/PublicSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+/* ── Work Sans ───────────────────────────────────────────── */
+@font-face {
+    font-family: 'Work Sans';
+    src: url('assets/fonts/WorkSans-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Work Sans Medium';
+    src: url('WorkSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+.backgroundMenu{
+    position: relative;
+    width: 1300px;
+    height: 1000px;
+    font-family: 'Public Sans',
+    sans-serif;
+    background: #0d1417;
+    color: #dde4e7;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.containerBackgroundMenu {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0d1417 0%, #161d1f 30%, #1a2124 60%, #0d1417 100%);
+    opacity: 0.95;
+}
+.containerBackgroundMenuImage{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 1;
+}
+.points{
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(240, 239, 239, 0.548) 1px, transparent 0);
+    background-size: 32px 32px;
+    pointer-events: none;
+}
+.gradientLeft{
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #0d1417 30%, rgba(13, 20, 23, 0.4) 60%, transparent 100%);
+    pointer-events: none;
+}
+.mainContainer{
+    position: relative;
+    z-index: 10;
+    padding: 0 64px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.label{
+    font-family: 'Work Sans', sans-serif;
+    color: #f4bb92;
+    text-transform: uppercase;
+    letter-spacing: 1.2em;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    display: block;
+}
+.title{
+    font-family: 'Public Sans', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #a1d1b4;
+    max-width: 600px;
+    margin-bottom: 32px;
+}
+.title .titleSpan{
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    color: white
+}
+.description{
+    font-size: 1.15rem;
+    color: #c0c9c1;
+    width: 100%;
+    margin-bottom: 48px;
+    line-height: 1.7;
+    font-weight: 400;
+}
+.buttonStart{
+    padding: 20px 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #a1d1b4, #2d5a43);
+    color: #063824;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 20px 40px rgba(45, 90, 67, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
+    letter-spacing: -0.01em;
+}
+.buttonStart:hover{
+    transform: scale(1.05);
+    box-shadow:0px 0px 17px 5px var(--background-light);
+}
+.containerQuestion{
+    padding: 0.5rem;
+    width: 1300px;
+    height: 100px;
+    overflow-y: auto;
+    text-align: center;
+}
+.containerQuestion h1{
+    margin: 0.5rem;
+}
+.option span{
+    /* border: 1px solid red; */
+    /* height: 140px; */
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow : auto;
+}
+/* ── END GAME ──────────────────────────────────────────────── */
+.endGameContainer {
+    position: relative;
+    width: 1300px;
+    height: 1000px;
+    background: #0d1417;
+    font-family: 'Public Sans', sans-serif;
+    color: #dde4e7;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 64px;
+    box-sizing: border-box;
+}
+
+.labelSession {
+    font-family: 'Work Sans', sans-serif;
+    color: #f4bb92;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.endGameTitle {
+    font-family: 'Public Sans', sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #a1d1b4;
+    margin: 0 0 24px 0;
+}
+
+.endGameDescription {
+    font-size: 1.1rem;
+    color: #c0c9c1;
+    line-height: 1.7;
+    font-weight: 400;
+    max-width: 420px;
+    margin: 0;
+}
+
+.endGameButtonPrimary {
+    padding: 16px 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #a1d1b4, #2d5a43);
+    color: #063824;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 16px 32px rgba(45, 90, 67, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    letter-spacing: -0.01em;
+}
+.endGameButtonPrimary:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px 6px rgba(161, 209, 180, 0.25);
+}
+
+.endGameButtonSecondary {
+    padding: 16px 32px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #dde4e7;
+    font-family: 'Public Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s ease;
+    letter-spacing: -0.01em;
+}
+.endGameButtonSecondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Scoreboard card ─────────────────────────────────────── */
+.scoreBoard {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 24px;
+}
+
+.scoreBoardCell {
+    background: rgba(161, 209, 180, 0.06);
+    border: 1px solid rgba(161, 209, 180, 0.1);
+    border-radius: 10px;
+    padding: 24px;
+}
+
+.scoreBoardLabel {
+    font-family: 'Work Sans', sans-serif;
+    color: #a1d1b4;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.scoreBoardValue {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #dde4e7;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.scoreBoardMax {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #a1d1b4;
+}
+
+.scoreBoardStatCell {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.scoreBoardStatLabel {
+    font-family: 'Work Sans', sans-serif;
+    color: #c0c9c1;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.scoreBoardStatValue {
+    font-family: 'Public Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #dde4e7;
+}
+
+.achievementChip {
+    background: rgba(244, 187, 146, 0.12);
+    border: 1px solid rgba(244, 187, 146, 0.2);
+    border-radius: 999px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.achievementText {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+    color: #f4bb92;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.scoreBoardFooter {
+    margin-top: 16px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    text-align: center;
+}
+
+.scoreBoardQuote {
+    font-style: italic;
+    color: rgba(192, 201, 193, 0.5);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin: 0;
+}

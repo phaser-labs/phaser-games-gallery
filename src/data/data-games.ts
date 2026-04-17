@@ -101,5 +101,11 @@ export const dataGames: dataGameProps[] = [
     image: 'assets/images/trickyrush.webp',
     url: 'tricky-rush',
     accesibility: 'reduced'
+  },
+  {
+    name: 'Pool Question',
+    image: 'assets/images/en-construccion.webp',
+    url: 'pool-question',
+    accesibility: 'reduced'
   }
 ];

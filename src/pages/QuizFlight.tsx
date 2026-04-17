@@ -12,7 +12,6 @@ export const GameQuizFlight = () => {
   // The sprite can only be moved in the MainMenu Scene
   const [, setCanMoveSprite] = useState(true);
 
-  //  References to the PhaserGame component (game and scene are exposed)
   const phaserRef = useRef<IRefQuizFlight | null>(null);
 
   // Event emitted from the PhaserGame component

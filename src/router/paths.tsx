@@ -11,6 +11,7 @@ import {
   GameReorganize,
   Home,
   MisteryModeGame,
+  PoolQuestionPage,
   RoadSay,
   TapRevealGame,
   TempleOfKnowledgePage,
@@ -105,5 +106,10 @@ export const paths: PathType[] = [
     title: 'Tricky Rush',
     path: '/tricky-rush',
     component: <TrickyRushPage />
+  },
+  {
+    title: 'Pool Question',
+    path: '/pool-question',
+    component: <PoolQuestionPage />
   }
 ];

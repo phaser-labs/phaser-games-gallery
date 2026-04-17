@@ -15,3 +15,4 @@ export { GameQuizFlight } from '@/pages/QuizFlight';
 export { TempleOfKnowledgePage } from '@/pages/TempleOfKnowledge';
 export { MisteryModeGame } from '@/pages/GameMisteryMode';
 export { TrickyRushPage } from '@/pages/TrickyRush';
+export { PoolQuestionPage } from '@/pages/PoolQuestion';
