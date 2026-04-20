@@ -113,5 +113,11 @@ export const dataGames: dataGameProps[] = [
     image: 'assets/images/miau-farm.webp',
     url: 'miau-farm',
     accesibility: 'reduced'
+  },
+  {
+    name: 'Space Typer',
+    image: 'assets/images/en-construccion.webp',
+    url: 'space-typer',
+    accesibility: 'reduced'
   }
 ];

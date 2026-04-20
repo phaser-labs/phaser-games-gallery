@@ -59,6 +59,7 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 .containerQuestion,
 .indexQuestion {
@@ -74,6 +75,7 @@ p {
 }
 .indexQuestion {
   background-color: var(--primary);
+  color: white;
 }
 
 .quizPool__containerOptionIndex{
@@ -82,12 +84,13 @@ p {
  display: flex !important;
  justify-content: center;
  align-items: center;
- background-color: var(--color-slate-800 );
+ background-color: #1d293d;
 user-select: none;
 -webkit-user-select: none;
 -moz-user-select: none;
 -ms-user-select: none;
 pointer-events: auto;
+color: white;
 
 }
 
@@ -119,7 +122,9 @@ pointer-events: auto;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background-color: var(--color-slate-800);
+    background-color: #1d293d;
+    color: white;
+    gap: 8px;
 }
 .exit:hover
 {

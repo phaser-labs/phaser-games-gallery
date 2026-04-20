@@ -14,11 +14,11 @@ import {
   MisteryModeGame,
   PoolQuestionPage,
   RoadSay,
+  SpaceTyperPage,
   TapRevealGame,
   TempleOfKnowledgePage,
   TrickyRushPage,
-  WhackAQuestion
-} from '@/pages';
+  WhackAQuestion} from '@/pages';
 
 import type { PathType } from '../types/types';
 
@@ -117,5 +117,10 @@ export const paths: PathType[] = [
     title: 'Miau Farm',
     path: '/miau-farm',
     component: <GameMiauFarmPage />
+  },
+  {
+    title: 'Space Typer',
+    path: '/space-typer',
+    component: <SpaceTyperPage />
   }
 ];

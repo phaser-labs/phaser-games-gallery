@@ -48,7 +48,7 @@
 
   /* ✅ theme */
   background: color-mix(in srgb, var(--ui-panel) 88%, transparent);
-  color: var(--ui-text);
+  color: #efefef;
   text-align: center;
 
   /* ✅ morados -> variables */
@@ -107,7 +107,7 @@
   font-size: 0.9rem;
   line-height: normal;
   text-align: center;
-  color: var(--ui-text);
+  color: white;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
 }

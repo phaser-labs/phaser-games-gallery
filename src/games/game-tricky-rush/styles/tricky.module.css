@@ -52,7 +52,7 @@
   border-image-repeat: stretch;
 
   background-color: #ffffff;
-  color: var(--ui-text);
+  color: #1e1e1e;
 }
 
 .pb-btn:hover:not(:disabled) {
@@ -167,12 +167,12 @@
 .modal-title {
   font-size: 1.8rem;
   font-weight: 900;
-  color: var(--ui-text);
+  color: #1e1e1e;
 }
 
 .modal-body {
   font-size: 1.1rem;
-  color: color-mix(in srgb, var(--ui-text) 85%, transparent);
+  color: color-mix(in srgb, #1e1e1e 85%, transparent);
 }
 
 .modal-buttons {

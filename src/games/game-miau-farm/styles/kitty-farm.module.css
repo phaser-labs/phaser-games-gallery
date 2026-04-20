@@ -437,6 +437,7 @@
   cursor: pointer;
   font-weight: bold;
   transition: transform 0.1s;
+  width: 2rem;
 }
 
 .audio-btn:hover {

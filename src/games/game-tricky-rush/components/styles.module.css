@@ -35,7 +35,7 @@
   border-radius: 12px;
   cursor: pointer;
   background: white;
-  color: var(--theme-text);
+  color: #121212;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
 }

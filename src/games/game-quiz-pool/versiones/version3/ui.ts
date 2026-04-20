@@ -66,31 +66,31 @@ function buildHeaderHTML(quiz: Quiz ): string {
             <path d="M189-160q-60 0-102.5-43T42-307q0-9 1-18t3-18l84-336q14-54 57-87.5t98-33.5h390q55 0 98 33.5t57 87.5l84 336q2 9 3.5 18.5T919-306q0 61-43.5 103.5T771-160q-42 0-78-22t-54-60l-28-58q-5-10-15-15t-21-5H385q-11 0-21 5t-15 15l-28 58q-18 38-54 60t-78 22zm3-80q19 0 34.5-10t23.5-27l28-57q15-31 44-48.5t63-17.5h190q34 0 63 18t45 48l28 57q8 17 23.5 27t34.5 10q28 0 48-18.5t21-46.5q0 1-2-19l-84-335q-7-27-28-44t-49-17H285q-28 0-49.5 17T208-659l-84 335q-2 6-2 18 0 28 20.5 47t49.5 19zm376.5-291.5Q580-543 580-560t-11.5-28.5Q557-600 540-600t-28.5 11.5Q500-577 500-560t11.5 28.5Q523-520 540-520t28.5-11.5zm80-80Q660-623 660-640t-11.5-28.5Q637-680 620-680t-28.5 11.5Q580-657 580-640t11.5 28.5Q603-600 620-600t28.5-11.5zm0 160Q660-463 660-480t-11.5-28.5Q637-520 620-520t-28.5 11.5Q580-497 580-480t11.5 28.5Q603-440 620-440t28.5-11.5zm80-80Q740-543 740-560t-11.5-28.5Q717-600 700-600t-28.5 11.5Q660-577 660-560t11.5 28.5Q683-520 700-520t28.5-11.5zm-367 63Q370-477 370-490v-40h40q13 0 21.5-8.5T440-560q0-13-8.5-21.5T410-590h-40v-40q0-13-8.5-21.5T340-660q-13 0-21.5 8.5T310-630v40h-40q-13 0-21.5 8.5T240-560q0 13 8.5 21.5T270-530h40v40q0 13 8.5 21.5T340-460q13 0 21.5-8.5zM480-480z"/>
           </svg>
         </div>
-        <h1 class="${css.textLogo} font-bold tracking-tight text-slate-900 dark:text-white">Question Pool</h1>
+        <h1 class="${css.textLogo} font-bold tracking-tight text-white ">Question Pool</h1>
       </div>
       <div class="flex items-center gap-6">
         <div class="flex items-center gap-3  bg-slate-800 px-4 py-2 rounded-lg border  border-slate-700">
           <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" class=${css.iconOne}>
             <path d="M280-120v-80h160v-124q-49-11-87.5-41.5T296-442q-75-9-125.5-65.5T120-640v-40q0-33 23.5-56.5T200-760h80v-80h400v80h80q33 0 56.5 23.5T840-680v40q0 76-50.5 132.5T664-442q-18 46-56.5 76.5T520-324v124h160v80H280zm0-408v-152h-80v40q0 38 22 68.5t58 43.5zm285 93q35-35 35-85v-240H360v240q0 50 35 85t85 35q50 0 85-35zm115-93q36-13 58-43.5t22-68.5v-40h-80v152zm-200-52z"/>
           </svg>
-          <div class="flex flex-col leading-none">
-            <span class="text-[10px] uppercase font-bold  text-slate-400 tracking-wider">Puntos</span>
-            <p class="${css.textScore} text-base font-bold text-slate-900 dark:text-white" data-score>0</p>
+          <div style={{fontSize: '0.875rem'}}  class="flex flex-col leading-none">
+            <span class=" uppercase font-bold  text-slate-400 tracking-wider">Puntos</span>
+            <p class="${css.textScore} text-base font-bold text-white " data-score>0</p>
           </div>
         </div>
         <div class="flex items-center gap-3  bg-slate-800 px-4 py-2 rounded-lg border  border-slate-700">
           <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" class=${css.iconTwo}>
             <path d="M360-840v-80h240v80H360zm80 440h80v-240h-80v240zm-99.5 291.5Q275-137 226-186t-77.5-114.5Q120-366 120-440t28.5-139.5Q177-645 226-694t114.5-77.5Q406-800 480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80q-74 0-139.5-28.5zM678-242q82-82 82-198t-82-198q-82-82-198-82t-198 82q-82 82-82 198t82 198q82 82 198 82t198-82zM480-440z"/>
           </svg>
-          <div class="flex flex-col leading-none">
-            <span class="text-[10px] uppercase font-bold  text-slate-400 tracking-wider">Tiempo</span>
-            <span class="text-base font-bold font-mono text-slate-900 dark:text-white" data-timer>0</span>
+          <div style={{fontSize: '0.875rem'}} class="flex flex-col leading-none">
+            <span  class=" uppercase font-bold  text-slate-400 tracking-wider">Tiempo</span>
+            <span class="text-base font-bold font-mono text-white " data-timer>0</span>
           </div>
         </div>
         <div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
         <div class="flex items-center justify-between gap-3">
 
-        <button data-mute style="pointer-events:auto" class="flex items-center justify-center size-15 rounded-lg  hover:bg-slate-200 bg-slate-800 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+        <button data-mute style="pointer-events:auto" class="flex items-center justify-center size-15 rounded-lg  hover:bg-slate-200 bg-slate-800 dark:hover:bg-slate-700 transition-colors text-white">
           <span data-mute-on>
             <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFF">
               <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131zM120-360v-240h160l200-200v640L280-360H120zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320zM400-606l-86 86H200v80h114l86 86v-252zM300-480z"/>
@@ -113,7 +113,7 @@ function buildHeaderHTML(quiz: Quiz ): string {
       </div>
     </header>
     <div class="flex flex-col items-center justify-center ${cssV3.containerQuestion}">
-      <h2 class="${css.question} font-bold text-slate-900 dark:text-white leading-tight drop-shadow-sm mb-2"
+      <h2 class="${css.question} font-bold text-white leading-tight drop-shadow-sm mb-2"
           data-question>
         ${quiz.pregunta}
       </h2>

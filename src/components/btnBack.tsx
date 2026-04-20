@@ -1,3 +1,4 @@
+import "@styles/global.css";
 
 export const BtnBack = () => {
   return (

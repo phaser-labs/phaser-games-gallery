@@ -1,0 +1,15 @@
+export const WORD_BANK: string[] = [
+  'PLANETA',
+  'ESTRELLA',
+  'CONSTELACION',
+  'SISTEMA',
+  'GALAXIA',
+  'COMETA',
+  'ASTEROIDE',
+  'METEORITO',
+  'ORBITA',
+  'GRAVEDAD',
+  'SUPERNOVA',
+  'NEBULOSA',
+  'COSMOS'
+];

@@ -1,5 +1,6 @@
 import { useHashLocation } from 'wouter/use-hash-location';
 
+import "@styles/global.css";
 
 interface CardGameProps {
     name: string;
