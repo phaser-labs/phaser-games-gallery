@@ -15,21 +15,19 @@ export class Alien extends Phaser.GameObjects.Container {
 
   private readonly fallSpeed: number;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, word: string) {
+  constructor(scene: Phaser.Scene, x: number, y: number, word: string, fallSpeed: number) {
     super(scene, x, y);
 
     this.word = word.toUpperCase();
-    this.fallSpeed = Phaser.Math.Between(28, 46);
+    this.fallSpeed = fallSpeed;
 
-    const body = scene.add.rectangle(0, 0, 96, 58, 0x16213e, 0.96);
-    body.setStrokeStyle(2, 0x7df9ff, 0.9);
+    // Create the sprite for the alien and select a random animation
+    const randomAlienId = Phaser.Math.Between(1, 6);
+    const sprite = scene.add.sprite(0, 0, `alien${randomAlienId}_frame1`);
+    sprite.play(`alien${randomAlienId}_moving`);
+    sprite.setScale(1); // adjust if needed
 
-    const eyeLeft = scene.add.circle(-18, -8, 5, 0x7df9ff, 1);
-    const eyeRight = scene.add.circle(18, -8, 5, 0x7df9ff, 1);
-    const core = scene.add.rectangle(0, 14, 48, 10, 0x0f172a, 1);
-    const glow = scene.add.rectangle(0, 0, 114, 70, 0x38bdf8, 0.08);
-
-    this.add([glow, body, eyeLeft, eyeRight, core]);
+    this.add(sprite);
 
     this.buildWord(scene);
     this.refreshWordStyle();

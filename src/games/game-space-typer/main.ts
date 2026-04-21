@@ -1,9 +1,9 @@
 import config from './config/config';
-import { MainScene } from './scenes/MainScene';
+import { Boot, GameOver, MainMenu, MainScene, Preloader } from './scenes';
 
 interface PhaserGameProps {
-    gameId: string;
-    gameEvents?: Phaser.Events.EventEmitter;
+  gameId: string;
+  gameEvents?: Phaser.Events.EventEmitter;
 }
 
 export default class PhaserGame extends Phaser.Game {
@@ -12,13 +12,11 @@ export default class PhaserGame extends Phaser.Game {
       ...config,
       backgroundColor: 'transparent',
       parent: gameId,
-      scene: [
-        MainScene
-      ]
+      scene: [Boot, Preloader, MainScene, GameOver, MainMenu]
     });
 
     if (gameEvents) {
-        this.registry.set('gameEvents', gameEvents);
+      this.registry.set('gameEvents', gameEvents);
     }
   }
 }

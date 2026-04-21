@@ -11,8 +11,12 @@ export function HUD() {
     gameManager.reset();
   };
 
+  if (gameState === 'quieto') {
+    return null;
+  }
+
   return (
-    <div className={css.hud} aria-live="polite">
+    <div className={`${css.hud} ${css.hudEnter}`} aria-live="polite">
       <section className={css.hud__panel}>
         <div className={css.hud__brand}>
           <span className={css.hud__eyebrow}>Medidor de desempeño</span>
@@ -31,17 +35,31 @@ export function HUD() {
 
           <div className={css.hud__stat}>
             <span>Estado</span>
-            <strong>{gameState === 'gameOver' ? 'Critico' : gameState}</strong>
+            <strong>{gameState === 'gameOver' ? 'Critico' : gameState === 'gameWin' ? 'Misión Cumplida' : gameState}</strong>
           </div>
         </div>
       </section>
 
       {gameState === 'gameOver' && (
-        <section className={css.hud__panel + ' ' + css.hud__panel_alert}>
+        <section className={css.hud__panel_alert} style={{ position: 'relative', top: '-84px' }}>
+          <div className={css.modalGlitch} aria-hidden="true">
+            <p className={css.hud__alert_title}>Game Over</p>
+            <p className={css.hud__alert_copy}>Puntaje final: {score}</p>
+          </div>
           <p className={css.hud__alert_title}>Game Over</p>
           <p className={css.hud__alert_copy}>Puntaje final: {score}</p>
-          <button type="button" className={css.hud__button} onClick={handleRestart}>
+          <button type="button" className={css.hud__button_alert} onClick={handleRestart}>
             Reiniciar misión
+          </button>
+        </section>
+      )}
+
+      {gameState === 'gameWin' && (
+        <section className={css.hud__panel_alert} style={{ position: 'relative', border: '1px solid #00ff00', top: '-84px', background: 'linear-gradient(180deg, #1a2f19f2), #061908e6)' }}>
+          <p className={css.hud__alert_title} style={{ color: '#00ff00', textShadow: '0 0 10px #00ff00' }}>¡Misión Cumplida!</p>
+          <p className={css.hud__alert_copy}>Puntaje final: {score}</p>
+          <button type="button" className={css.hud__button_win} onClick={handleRestart}>
+            Jugar de nuevo
           </button>
         </section>
       )}

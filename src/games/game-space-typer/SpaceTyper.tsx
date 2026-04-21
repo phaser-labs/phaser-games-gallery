@@ -18,6 +18,7 @@ export function SpaceTyperGame({ gameId }: SpaceTyperProps) {
     const containerId = `game-container-${gameId ?? 'default'}`;
 
 
+    
     useEffect(() => {
         if (phaserGameInstanceRef.current) {
             phaserGameInstanceRef.current.destroy(true);

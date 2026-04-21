@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { create } from 'zustand';
 
-export type GameState = 'quieto' | 'jugando' | 'gameOver';
+export type GameState = 'quieto' | 'jugando' | 'gameOver' | 'gameWin';
 
 export interface GameManagerState {
   score: number;
@@ -14,6 +14,7 @@ export const GAME_MANAGER_EVENTS = {
   LIVES_UPDATED: 'LIVES_UPDATED',
   GAME_STARTED: 'GAME_STARTED',
   GAME_OVER: 'GAME_OVER',
+  GAME_WIN: 'GAME_WIN',
   GAME_RESET: 'GAME_RESET',
 } as const;
 
@@ -97,6 +98,17 @@ class GameManager extends Phaser.Events.EventEmitter {
 
     useGameManagerStore.setState({ gameState: 'gameOver' });
     this.emit(GAME_MANAGER_EVENTS.GAME_OVER, finalScore);
+  }
+
+  setGameWin(): void {
+    if (useGameManagerStore.getState().gameState === 'gameWin') {
+      return;
+    }
+
+    const finalScore = useGameManagerStore.getState().score;
+
+    useGameManagerStore.setState({ gameState: 'gameWin' });
+    this.emit(GAME_MANAGER_EVENTS.GAME_WIN, finalScore);
   }
 
   reset(): void {

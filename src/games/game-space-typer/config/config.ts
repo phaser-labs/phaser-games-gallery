@@ -9,6 +9,7 @@ const config: Phaser.Types.Core.GameConfig = {
     powerPreference: 'high-performance',
   },
   dom: { createContainer: true },
+  backgroundColor: 'trasnparent',
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
