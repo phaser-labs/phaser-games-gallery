@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 
+import { EventBus } from '../EventBus';
 import { announceGuardian } from '../utils/announce';
 
 import css from '../styles/space-typer.module.css';
@@ -27,6 +28,10 @@ export class MainMenu extends Scene {
   }
 
   create() {
+    // detener cualquier otro audio activo
+    this.sound.stopAll();
+    this.sound.play('Ambience-menu', { loop: true, volume: 0.5 });
+
     const { width, height } = this.scale;
 
     const asteroides = ['asteroid1', 'asteroid2', 'asteroid3', 'asteroid4'];
@@ -63,12 +68,19 @@ export class MainMenu extends Scene {
     // --- Overlay (Historia / Instrucciones) ---
     this.createOverlayDom();
 
+    EventBus.on('toggle-mute', this.handleToggleMute, this);
+
     // cleanup
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      EventBus.off('toggle-mute', this.handleToggleMute, this);
       this.startBtnDom?.destroy();
       this.overlayDom?.destroy();
     });
   }
+
+  private handleToggleMute = (): void => {
+    this.sound.mute = !this.sound.mute;
+  };
 
   private renderIntroUI() {
     const { width, height } = this.scale;
@@ -94,10 +106,17 @@ export class MainMenu extends Scene {
     (this.startBtnDom.node as HTMLDivElement).style.pointerEvents = 'none';
     startBtn.style.pointerEvents = 'auto';
 
-    startBtn.addEventListener('click', () => this.openStory());
+    startBtn.addEventListener('click', () => {
+      this.sound.play('menu-click', { volume: 0.5 });
+      this.openStory();
+    });
+    startBtn.addEventListener('mouseenter', () => {
+      this.sound.play('menu-hover', { volume: 0.2 });
+    });
     startBtn.addEventListener('keydown', (e) => {
       if (e.code === 'Enter' || e.code === 'Space') {
         e.preventDefault();
+        this.sound.play('menu-click', { volume: 0.5 });
         this.openStory();
       }
     });
@@ -184,18 +203,28 @@ export class MainMenu extends Scene {
     // bloquear wheel hacia el canvas
     this.overlayRoot?.addEventListener('wheel', (e) => e.stopPropagation(), { passive: true });
 
-    this.overlayBtn?.addEventListener('click', () => this.onOverlayNext());
+    this.overlayBtn?.addEventListener('mouseenter', () => this.sound.play('menu-hover', { volume: 0.3 }));
+    this.overlayBtn?.addEventListener('click', () => {
+      this.sound.play('menu-click', { volume: 0.5 });
+      this.onOverlayNext();
+    });
     this.overlayBtn?.addEventListener('keydown', (e) => {
       if (e.code === 'Enter' || e.code === 'Space') {
         e.preventDefault();
+        this.sound.play('menu-click', { volume: 0.5 });
         this.onOverlayNext();
       }
     });
 
-    closeBtn?.addEventListener('click', () => this.hideOverlay());
+    closeBtn?.addEventListener('mouseenter', () => this.sound.play('menu-hover', { volume: 0.3 }));
+    closeBtn?.addEventListener('click', () => {
+      this.sound.play('menu-click', { volume: 0.5 });
+      this.hideOverlay();
+    });
     closeBtn?.addEventListener('keydown', (e) => {
       if (e.code === 'Enter' || e.code === 'Space' || e.code === 'Escape') {
         e.preventDefault();
+        this.sound.play('menu-click', { volume: 0.5 });
         this.hideOverlay();
       }
     });

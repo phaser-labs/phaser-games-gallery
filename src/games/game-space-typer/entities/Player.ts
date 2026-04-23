@@ -13,6 +13,12 @@ export class Player extends Phaser.GameObjects.Sprite {
   }
 
   shoot(targetX: number, targetY: number): Laser {
+    this.scene.sound.play('laser-sound', { volume: 0.4 });
     return new Laser(this.scene, this.x, this.y - 18, targetX, targetY);
+  }
+
+  shootBig(targetX: number, targetY: number): Laser {
+    this.scene.sound.play('laser-sound', { volume: 0.6 });
+    return new Laser(this.scene, this.x, this.y - 18, targetX, targetY, true);
   }
 }

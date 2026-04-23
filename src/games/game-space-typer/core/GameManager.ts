@@ -7,6 +7,7 @@ export interface GameManagerState {
   score: number;
   lives: number;
   gameState: GameState;
+  isBossActive: boolean;
 }
 
 export const GAME_MANAGER_EVENTS = {
@@ -22,6 +23,7 @@ export const useGameManagerStore = create<GameManagerState>(() => ({
   score: 0,
   lives: 3,
   gameState: 'quieto',
+  isBossActive: false,
 }));
 
 class GameManager extends Phaser.Events.EventEmitter {
@@ -56,6 +58,7 @@ class GameManager extends Phaser.Events.EventEmitter {
       score: 0,
       lives: 3,
       gameState: 'jugando',
+      isBossActive: false,
     });
 
     this.emit(GAME_MANAGER_EVENTS.GAME_STARTED);
@@ -111,11 +114,16 @@ class GameManager extends Phaser.Events.EventEmitter {
     this.emit(GAME_MANAGER_EVENTS.GAME_WIN, finalScore);
   }
 
+  setBossActive(isActive: boolean): void {
+    useGameManagerStore.setState({ isBossActive: isActive });
+  }
+
   reset(): void {
     useGameManagerStore.setState({
       score: 0,
       lives: 3,
       gameState: 'quieto',
+      isBossActive: false,
     });
 
     this.emit(GAME_MANAGER_EVENTS.SCORE_UPDATED, 0);

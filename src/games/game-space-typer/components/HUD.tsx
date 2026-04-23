@@ -6,6 +6,7 @@ export function HUD() {
   const score = useGameManagerStore((state) => state.score);
   const lives = useGameManagerStore((state) => state.lives);
   const gameState = useGameManagerStore((state) => state.gameState);
+  const isBossActive = useGameManagerStore((state) => state.isBossActive);
 
   const handleRestart = (): void => {
     gameManager.reset();
@@ -14,31 +15,30 @@ export function HUD() {
   if (gameState === 'quieto') {
     return null;
   }
+  
 
   return (
     <div className={`${css.hud} ${css.hudEnter}`} aria-live="polite">
-      <section className={css.hud__panel}>
-        <div className={css.hud__brand}>
-          <span className={css.hud__eyebrow}>Medidor de desempeño</span>
-        </div>
-
-        <div className={css.hud__stats}>
-          <div className={css.hud__stat}>
-            <span>Puntos</span>
-            <strong>{score}</strong>
+      {!isBossActive && (
+        <section className={css.hud__panel}>
+          <div className={css.hud__brand}>
+            <span className={css.hud__eyebrow}>Medidor de desempeño</span>
           </div>
 
-          <div className={css.hud__stat}>
-            <span>Vidas</span>
-            <strong>{lives}</strong>
-          </div>
+          <div className={css.hud__stats}>
+            <div className={css.hud__stat}>
+              <span>Puntos</span>
+              <strong>{score}</strong>
+            </div>
 
-          <div className={css.hud__stat}>
-            <span>Estado</span>
-            <strong>{gameState === 'gameOver' ? 'Critico' : gameState === 'gameWin' ? 'Misión Cumplida' : gameState}</strong>
+            <div className={css.hud__stat}>
+              <span>Vidas</span>
+              <strong>{lives}</strong>
+            </div>
+
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {gameState === 'gameOver' && (
         <section className={css.hud__panel_alert} style={{ position: 'relative', top: '-84px' }}>
@@ -64,7 +64,11 @@ export function HUD() {
         </section>
       )}
 
-      <p className={css.hud__hint}>Escribe la siguiente letra de la palabra del alien más cercano.</p>
+      {(!isBossActive || gameState === 'gameOver' || gameState === 'gameWin') && (
+        <p className={css.hud__hint}>
+          {gameState === 'jugando' && !isBossActive ? 'Escribe la siguiente letra de la palabra del alien más cercano.' : ''}
+        </p>
+      )}
     </div>
   );
 }

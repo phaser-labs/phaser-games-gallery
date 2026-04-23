@@ -6,13 +6,20 @@ export class Laser extends Phaser.GameObjects.Container {
     startX: number,
     startY: number,
     targetX: number,
-    targetY: number
+    targetY: number,
+    isBig: boolean = false
   ) {
     super(scene, startX, startY);
 
-    const glow = scene.add.rectangle(0, 0, 12, 30, 0x7df9ff, 0.24);
-    const beam = scene.add.rectangle(0, 0, 4, 24, 0xe0fbff, 1);
-    beam.setStrokeStyle(1, 0x7df9ff, 1);
+    const glowWidth = isBig ? 36 : 12;
+    const glowHeight = isBig ? 90 : 30;
+    const beamWidth = isBig ? 12 : 4;
+    const beamHeight = isBig ? 72 : 24;
+    
+    // Boss laser defaults to red/orange tint if big? Un no, player shoots boss, so maybe cyan/blue but bigger
+    const glow = scene.add.rectangle(0, 0, glowWidth, glowHeight, 0x00ffff, 0.24);
+    const beam = scene.add.rectangle(0, 0, beamWidth, beamHeight, 0xffffff, 1);
+    beam.setStrokeStyle(isBig ? 3 : 1, 0x00ffff, 1);
 
     this.add([glow, beam]);
     this.setDepth(8);
@@ -26,7 +33,7 @@ export class Laser extends Phaser.GameObjects.Container {
       targets: this,
       x: targetX,
       y: targetY,
-      duration: 220,
+      duration: isBig ? 180 : 220,
       ease: 'Sine.easeOut',
       onComplete: () => {
         if (this.active) {

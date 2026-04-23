@@ -7,6 +7,7 @@ export class Preloader extends Scene {
 
   preload() {
     this.createProgressBar();
+        this.loadAudio();
 
     this.load.image('background', 'assets/space-typer-game/blue-stars.png');
     this.load.image('bg-quiet', 'assets/space-typer-game/background.jpg');
@@ -44,6 +45,8 @@ export class Preloader extends Scene {
     this.load.image('alien6_frame1', 'assets/space-typer-game/enemies/Enemy02_Teal_Frame_1_png_processed.png');
     this.load.image('alien6_frame2', 'assets/space-typer-game/enemies/Enemy02_Teal_Frame_2_png_processed.png');
     this.load.image('alien6_frame3', 'assets/space-typer-game/enemies/Enemy02_Teal_Frame_3_png_processed.png');
+    //Boss
+    this.load.image('boss', 'assets/space-typer-game/enemies/EnemyBoss.png');
 
     //Bala láser
     this.load.image('laser1', 'assets/space-typer-game/fx/bullet1.png');
@@ -143,4 +146,45 @@ export class Preloader extends Scene {
       percentText.destroy();
     });
   }
+    private loadAudio() {
+      // musica ambiente inicial(solo escena Menu)
+      this.load.audio('Ambience-menu', 'assets/space-typer-game/music/music-menu.wav');
+      //musica ambiente de juego (MainScene)
+      this.load.audio('Ambience-game', 'assets/space-typer-game/music/music-game.m4a');
+      //botones del menu
+      this.load.audio('menu-hover', 'assets/space-typer-game/music/open-btn.wav');
+      //boton start
+      this.load.audio('menu-click', 'assets/space-typer-game/music/confirm-btn.wav');
+      //musica MAIN
+      this.load.audio('inicio-game', 'assets/space-typer-game/music/inicio-game.wav');
+      //Sonido de los laseres
+      this.load.audio('laser-sound', 'assets/space-typer-game/music/Laser_Gun.wav');
+      //Sonido de daño al jugador
+      this.load.audio('player-damage', 'assets/space-typer-game/music/daño-nave.wav');
+      //muerte enemies
+      this.load.audio('enemy-death', 'assets/space-typer-game/music/alien-die.ogg');
+      //Muerte BOSS
+      this.load.audio('boss-death', 'assets/space-typer-game/music/explosionBoss.wav');
+      //Musica de inicio de boss fight
+      this.load.audio('boss-fight', 'assets/space-typer-game/music/Boss-inicio.mp3');
+      //boss hit
+      this.load.audio('boss-hit', 'assets/space-typer-game/music/golpe-boss.wav');
+
+      //keystroke-correct
+      this.load.audio('keystroke-correct', 'assets/space-typer-game/music/Powerup.wav');
+      //keystroke-wrong
+      this.load.audio('keystroke-wrong', 'assets/space-typer-game/music/Powerdown.wav');
+      //Sonido de tecla
+      this.load.audio('key-press', 'assets/space-typer-game/music/Keyboard_Key.wav');
+      //Sonido de Space bar
+      this.load.audio('space-press', 'assets/space-typer-game/music/Keyboard_SPACE.wav');
+
+      //Musica terminada de la oleada
+      this.load.audio('wave-complete', 'assets/space-typer-game/music/level-up.wav');
+
+      //musica fin del juego - Game Over
+      this.load.audio('game-over', 'assets/space-typer-game/music/endgame.wav');
+      //musica de victoria
+      this.load.audio('game-win', 'assets/space-typer-game/music/game-win.mp3');
+    }
 }

@@ -9,7 +9,7 @@
   --text: #edf4ff;
   --muted: #9fb0d0;
   --accent: #7df9ff;
-  --accent-2: #ff8d6b;
+  --accent-2: #ff6b6b;
   --warning: #ffd166;
   --success: #43da43;
 }
@@ -172,8 +172,8 @@
 }
 
 .hud__panel {
-  width: min(100%, 400px);
-  padding: 1rem;
+  width: min(100%, 96px);
+  padding: .5rem;
   border: 1px solid var(--line-strong);
   border-radius: 2px;
   background: linear-gradient(180deg, rgba(14, 16, 15, 0.85), rgba(5, 8, 22, 0.8));
@@ -194,7 +194,7 @@
 
 .hud__eyebrow {
   color: var(--accent);
-  font-size: 0.7rem;
+  font-size: 0.5rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   font-weight: bold;
@@ -210,16 +210,20 @@
 
 .hud__stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
 .hud__stat {
-  padding: 0.5rem;
+  padding: 0.4rem;
   border-radius: 4px;
   border: 1px solid rgba(125, 249, 255, 0.2);
   background: rgba(125, 249, 255, 0.05);
   box-shadow: inset 0 0 10px rgba(125, 249, 255, 0.02);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hud__stat span {
@@ -233,7 +237,7 @@
 }
 
 .hud__stat strong {
-  font-size: 1.4rem;
+  font-size: 1rem;
   letter-spacing: 0.05em;
   color: var(--text);
   font-family: 'Cyber', system-ui, sans-serif;
@@ -530,10 +534,9 @@
   pointer-events: none;
   animation: glitch 2.5s infinite;
 
-
-    left: 0px;
-    top: 61px;
-    text-align: center;
+  left: 0px;
+  top: 61px;
+  text-align: center;
 }
 
 .modalGlitch,

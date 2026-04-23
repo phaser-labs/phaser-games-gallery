@@ -18,17 +18,17 @@ export function SpaceTyperApp() {
     EventBus.emit('toggle-mute');
   };
 
+  const togglePause = () => {
+    setIsPaused(!isPaused);
+    EventBus.emit('toggle-pause', !isPaused);
+  };
+
   const goToMenu = () => {
     if (isPaused) {
       setIsPaused(false);
       EventBus.emit('toggle-pause', false);
     }
     EventBus.emit('go-home');
-  };
-
-  const togglePause = () => {
-    setIsPaused(!isPaused);
-    EventBus.emit('toggle-pause', !isPaused);
   };
 
   return (
