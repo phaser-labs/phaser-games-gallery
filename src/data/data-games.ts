@@ -116,7 +116,7 @@ export const dataGames: dataGameProps[] = [
   },
   {
     name: 'Space Typer',
-    image: 'assets/images/en-construccion.webp',
+    image: 'assets/images/space-typer.webp',
     url: 'space-typer',
     accesibility: 'reduced'
   }
