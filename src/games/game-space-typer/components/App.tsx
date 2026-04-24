@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { useGameManagerStore } from '../core/GameManager';
+import GameManager, { useGameManagerStore } from '../core/GameManager';
 import { EventBus } from '../EventBus';
 import { SpaceTyperGame } from '../SpaceTyper';
 
@@ -8,10 +8,22 @@ import { HUD } from './HUD';
 
 import css from '../styles/space-typer.module.css';
 
-export function SpaceTyperApp() {
+interface SpaceTyperAppProps {
+  id?: string;
+  words?: string[];
+  waves?: number;
+}
+
+export function SpaceTyperApp({ id, words = [], waves = 2 }: SpaceTyperAppProps) {
   const [isMuted, setIsMuted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const gameState = useGameManagerStore((state) => state.gameState);
+
+  useEffect(() => {
+    if (words.length > 0) {
+      GameManager.getInstance().setGameData(words, waves);
+    }
+  }, [words, waves]);
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -89,7 +101,7 @@ export function SpaceTyperApp() {
         </header>
 
         <div className={css['game-frame__stage']} style={{ position: 'relative' }}>
-          <SpaceTyperGame />
+          <SpaceTyperGame gameId={id} />
           <HUD />
         </div>
       </section>

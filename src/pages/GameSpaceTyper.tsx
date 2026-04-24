@@ -1,6 +1,7 @@
 import { Col, Row } from 'books-ui';
 
 import { BtnBack } from '@/components/btnBack';
+import { WORD_BANK } from '@/data/data-game-space-typer';
 import { SpaceTyperApp } from '@/games/game-space-typer/components/App';
 
 import '@styles/global.css';
@@ -36,7 +37,7 @@ export const SpaceTyperPage = () => {
               </ul>
             </div>
 
-            <SpaceTyperApp />
+            <SpaceTyperApp id="space-typer-app" words={WORD_BANK} waves={2} />
             
           </Col>
         </Row>

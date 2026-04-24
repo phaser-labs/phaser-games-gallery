@@ -28,7 +28,6 @@ export class MainMenu extends Scene {
   }
 
   create() {
-    // detener cualquier otro audio activo
     this.sound.stopAll();
     this.sound.play('Ambience-menu', { loop: true, volume: 0.5 });
 
@@ -36,7 +35,6 @@ export class MainMenu extends Scene {
 
     const asteroides = ['asteroid1', 'asteroid2', 'asteroid3', 'asteroid4'];
 
-    // Distribuir asteroides al azar para usarlos como capa de parallax
     this.asteroids = this.add.group();
     for (let i = 0; i < 10; i++) {
       const x = Phaser.Math.Between(2, width);
@@ -51,21 +49,7 @@ export class MainMenu extends Scene {
       this.asteroids.add(ast);
     }
 
-
-    // --- UI Intro ---
     this.renderIntroUI();
-    // música
-    /*     this.audio = new Audio(this, {
-      musicKey: 'initial',
-      x: width - 30,
-      y: 36,
-      cssButtonMusic: css['button-music'],
-      cssButtonMusicMuted: css['button-music-muted'],
-      volume: 0.1,
-      storageKey: 'mm_music_muted', // importante: mismo key en todas las escenas
-    }); */
-
-    // --- Overlay (Historia / Instrucciones) ---
     this.createOverlayDom();
 
     EventBus.on('toggle-mute', this.handleToggleMute, this);
@@ -84,12 +68,8 @@ export class MainMenu extends Scene {
 
   private renderIntroUI() {
     const { width, height } = this.scale;
-
-    // Título / Base del botón
     const btnX = width / 2;
     const btnY = height / 2;
-
-    // Usaremos la clase cyberBtn que ya creamos en CSS para mantener la estética
     this.startBtnDom = this.add.dom(btnX, btnY).createFromHTML(`
       <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
         <button id="btn-start" aria-label="Iniciar Misión" class="${css.cyberBtn}" style="font-size: 1.8rem; height: 72px; padding: 0 3rem; color: var(--accent); white-space: nowrap;">
@@ -102,7 +82,6 @@ export class MainMenu extends Scene {
 
     const startBtn = this.startBtnDom.node.querySelector('#btn-start') as HTMLButtonElement;
     
-    // Para asegurar que reciba clics de Phaser en el overlay top
     (this.startBtnDom.node as HTMLDivElement).style.pointerEvents = 'none';
     startBtn.style.pointerEvents = 'auto';
 
@@ -121,12 +100,11 @@ export class MainMenu extends Scene {
       }
     });
 
-    // 3) Animaciones suaves
     this.playIntroTweens();
   }
 
   private playIntroTweens() {
-    // Escalar la escala del contenedor para un efecto de latido leve
+    
     this.tweens.add({
       targets: this.startBtnDom,
       scaleX: 1.04,
@@ -138,9 +116,6 @@ export class MainMenu extends Scene {
     });
   }
 
-  // ---------------------------
-  // Overlay DOM
-  // ---------------------------
 
   private createOverlayDom() {
     const { width, height } = this.scale;
@@ -191,7 +166,7 @@ export class MainMenu extends Scene {
 
     const root = this.overlayDom.node as HTMLDivElement;
     
-    // Si Phaser retorna el div 'mm-overlay' directamente como nodo es porque no necesitaba encapsularlo
+    
     this.overlayRoot = (root.id === 'mm-overlay') ? root : root.querySelector('#mm-overlay') as HTMLDivElement;
     
     this.overlayTitle = root.querySelector('#mm-title') as HTMLDivElement;
@@ -199,8 +174,6 @@ export class MainMenu extends Scene {
     this.overlayBtn = root.querySelector('#mm-next') as HTMLButtonElement;
 
     const closeBtn = root.querySelector('#mm-close') as HTMLButtonElement;
-
-    // bloquear wheel hacia el canvas
     this.overlayRoot?.addEventListener('wheel', (e) => e.stopPropagation(), { passive: true });
 
     this.overlayBtn?.addEventListener('mouseenter', () => this.sound.play('menu-hover', { volume: 0.3 }));
@@ -230,9 +203,7 @@ export class MainMenu extends Scene {
     });
   }
 
-  // ---------------------------
-  // Flow: Iniciar → Historia → Instrucciones → Game
-  // ---------------------------
+  //  Iniciar → Historia → Instrucciones → Game
 
   private setModalContent(title: string, body: string, btnText: string) {
     this.overlayTitle.innerHTML = title;
@@ -301,9 +272,6 @@ export class MainMenu extends Scene {
     }
   }
 
-  // ---------------------------
-  // Show/Hide helpers
-  // ---------------------------
 
   private showOverlay() {
     this.isTransitioning = true;
@@ -356,13 +324,9 @@ export class MainMenu extends Scene {
       this.asteroids.getChildren().forEach((child) => {
         const ast = child as Phaser.GameObjects.Image;
         
-        // Movimiento muy lento hacia abajo (capa lejana de parallax vertical)
         ast.y -= 0.012 * delta; 
-        
-        // Rotación sutil durante la caída
         ast.rotation += 0.0003 * delta; 
-        
-        // Si sale totalmente de la pantalla por arriba, devolverla abajo
+      
         if (ast.y < -50) {
           ast.y = this.scale.height + 50;
           ast.x = Phaser.Math.Between(0, this.scale.width);

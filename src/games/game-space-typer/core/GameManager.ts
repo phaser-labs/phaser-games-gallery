@@ -8,6 +8,8 @@ export interface GameManagerState {
   lives: number;
   gameState: GameState;
   isBossActive: boolean;
+  words: string[];
+  totalWaves: number;
 }
 
 export const GAME_MANAGER_EVENTS = {
@@ -24,6 +26,8 @@ export const useGameManagerStore = create<GameManagerState>(() => ({
   lives: 3,
   gameState: 'quieto',
   isBossActive: false,
+  words: [],
+  totalWaves: 2,
 }));
 
 class GameManager extends Phaser.Events.EventEmitter {
@@ -51,6 +55,18 @@ class GameManager extends Phaser.Events.EventEmitter {
 
   getGameState(): GameState {
     return useGameManagerStore.getState().gameState;
+  }
+
+  getWords(): string[] {
+    return useGameManagerStore.getState().words;
+  }
+
+  getTotalWaves(): number {
+    return useGameManagerStore.getState().totalWaves;
+  }
+
+  setGameData(words: string[], totalWaves: number): void {
+    useGameManagerStore.setState({ words, totalWaves });
   }
 
   startGame(): void {

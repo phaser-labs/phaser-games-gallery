@@ -1,5 +1,5 @@
 import config from './config/config';
-import { Boot, GameOver, MainMenu, MainScene, Preloader } from './scenes';
+import { Boot, MainMenu, MainScene, Preloader } from './scenes';
 
 interface PhaserGameProps {
   gameId: string;
@@ -12,7 +12,7 @@ export default class PhaserGame extends Phaser.Game {
       ...config,
       backgroundColor: 'transparent',
       parent: gameId,
-      scene: [Boot, Preloader, MainScene, GameOver, MainMenu]
+      scene: [Boot, Preloader, MainScene, MainMenu]
     });
 
     if (gameEvents) {

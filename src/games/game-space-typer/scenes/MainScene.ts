@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 
-import { WORD_BANK } from '../../../data/data-game-space-typer';
 import GameManager, { GAME_MANAGER_EVENTS, useGameManagerStore } from '../core/GameManager';
 import { Alien } from '../entities/Alien';
 import { Player } from '../entities/Player';
@@ -17,14 +16,15 @@ export class MainScene extends Phaser.Scene {
 
   private spawnTimer: Phaser.Time.TimerEvent | null = null;
 
-  private readonly laneCenters = [0.14, 0.34, 0.54, 0.74, 0.9];
+  private readonly laneCenters = [0.25, 0.42, 0.58, 0.74, 0.9];
   
   // Lógica de oleadas
-  private totalWaves = 2;
   private currentWave = 1;
   private wordsLeftToSpawn = 0;
+  private availableWords: string[] = [];
+  private hasSpawnedBoss = false;
   private waveText!: Phaser.GameObjects.Text;
-  // Lógica del Boss (Nave Grande)
+  // Lógica del Boss
   private isBossSequence = false;
   private bossSprite: Phaser.GameObjects.Sprite | null = null;
   private bossHealth = 0;
@@ -118,7 +118,7 @@ export class MainScene extends Phaser.Scene {
     this.input.keyboard?.on('keydown', this.handleInput, this);
     this.gameManager.on(GAME_MANAGER_EVENTS.GAME_RESET, this.handleGameReset);
 
-    // Eventos globales desde React (Zustand / EventBus)
+    // Eventos globales desde React
     EventBus.on('toggle-mute', this.handleToggleMute, this);
     EventBus.on('go-home', this.handleGoHome, this);
     EventBus.on('toggle-pause', this.handleTogglePause, this);
@@ -159,13 +159,20 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.currentWave = wave;
-    this.wordsLeftToSpawn = 8 + (wave * 4);
+    this.hasSpawnedBoss = false;
 
-    if (wave >= 2) {
-      this.startBossSequence(wave);
+    const wordBank = this.gameManager.getWords();
+    const totalWaves = this.gameManager.getTotalWaves();
+
+    if (totalWaves === 1) {
+      this.availableWords = [...wordBank];
+      this.wordsLeftToSpawn = this.availableWords.length > 0 ? this.availableWords.length : 12;
     } else {
-      this.showWaveText(`OLEADA ${wave}`, () => this.beginSpawning(wave));
+      this.wordsLeftToSpawn = 8 + (wave * 4);
     }
+
+    // Comenzar spawning de palabras (ya no adelantamos el boss)
+    this.showWaveText(`OLEADA ${wave}`, () => this.beginSpawning(wave));
   }
 
   private startBossSequence(wave: number): void {
@@ -183,7 +190,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   private spawnBoss(wave: number): void {
-    this.bossMaxHealth = 105 + (wave * 5);
+    this.bossMaxHealth = 55 + (wave * 5);
     this.bossHealth = this.bossMaxHealth;
 
     this.bossSprite = this.add.sprite(this.scale.width / 2, -100, 'boss')
@@ -216,7 +223,9 @@ export class MainScene extends Phaser.Scene {
                 this.sound.stopByKey('boss-fight');
                 this.sound.play('inicio-game', { loop: true, volume: 0.3 });
                 this.destroyBoss();
-                this.beginSpawning(this.currentWave);
+                if (this.gameManager.getLives() > 0) {
+                  this.handleWaveComplete();
+                }
               }
             }
           });
@@ -259,7 +268,7 @@ export class MainScene extends Phaser.Scene {
           this.sound.play('inicio-game', { loop: false, volume: 0.3 });
           this.gameManager.addScore(100);
           this.destroyBoss();
-          this.showWaveText('¡NAVE DESTRUIDA!', () => this.beginSpawning(this.currentWave));
+          this.showWaveText('¡NAVE DESTRUIDA!', () => this.handleWaveComplete());
         }
       });
     }
@@ -344,7 +353,17 @@ export class MainScene extends Phaser.Scene {
       this.spawnTimer.remove();
     }
 
-    if (this.currentWave >= this.totalWaves) {
+    const totalWaves = this.gameManager.getTotalWaves();
+
+    // Spawn the boss at the end of the wave if it is the boss wave (or the final wave) and hasn't spawned yet
+    const isBossWave = totalWaves === 1 || this.currentWave >= 2;
+    if (isBossWave && !this.hasSpawnedBoss) {
+      this.hasSpawnedBoss = true;
+      this.startBossSequence(this.currentWave);
+      return;
+    }
+
+    if (this.currentWave >= totalWaves && this.hasSpawnedBoss && !this.isBossSequence) {
       this.sound.stopAll();
       this.sound.play('game-win', { loop: true, volume: 0.8 });
       this.gameManager.setGameWin();
@@ -372,20 +391,32 @@ export class MainScene extends Phaser.Scene {
   }
 
   private getWordForWave(): string {
-    let filteredWords = WORD_BANK;
+    const wordBank = this.gameManager.getWords();
+    const totalWaves = this.gameManager.getTotalWaves();
+    
+    // Si es solo una oleada, usamos las palabras asignadas en `availableWords` consecutivamente o aleatorio sin repetir.
+    if (totalWaves === 1 && this.availableWords.length > 0) {
+      const idx = Phaser.Math.Between(0, this.availableWords.length - 1);
+      const word = this.availableWords.splice(idx, 1)[0];
+      return word;
+    }
+
+    const words = wordBank.length > 0 ? wordBank : ['REACT', 'PHASER', 'VITE'];
+
+    let filteredWords = words;
 
     if (this.currentWave === 1) {
       // Palabras cortas: longitud <= 7
-      filteredWords = WORD_BANK.filter(w => w.length <= 7);
+      filteredWords = words.filter((w: string) => w.length <= 7);
     } else if (this.currentWave === 2) {
       // Longitud media
-      filteredWords = WORD_BANK.filter(w => w.length >= 7 && w.length <= 9);
+      filteredWords = words.filter((w: string) => w.length >= 7 && w.length <= 9);
     } else {
       // Diferentes, largas > 8
-      filteredWords = WORD_BANK.filter(w => w.length >= 8);
+      filteredWords = words.filter((w: string) => w.length >= 8);
     }
 
-    if (filteredWords.length === 0) filteredWords = WORD_BANK;
+    if (filteredWords.length === 0) filteredWords = words;
     return Phaser.Utils.Array.GetRandom(filteredWords);
   }
 
