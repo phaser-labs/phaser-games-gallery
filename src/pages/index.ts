@@ -18,3 +18,4 @@ export { TrickyRushPage } from '@/pages/TrickyRush';
 export { PoolQuestionPage } from '@/pages/PoolQuestion';
 export { GameMiauFarmPage } from '@/pages/GameMiauFarm';
 export { SpaceTyperPage } from '@/pages/GameSpaceTyper';
+export { GameVerdictalePage } from '@/pages/Verdictale';

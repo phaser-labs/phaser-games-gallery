@@ -119,5 +119,11 @@ export const dataGames: dataGameProps[] = [
     image: 'assets/images/space-typer.webp',
     url: 'space-typer',
     accesibility: 'reduced'
+  },
+  {
+    name: 'Verdictale',
+    image: 'assets/images/veredicto.webp',
+    url: 'verdictale',
+    accesibility: 'full'
   }
 ];

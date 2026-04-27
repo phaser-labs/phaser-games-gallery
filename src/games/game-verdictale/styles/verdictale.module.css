@@ -1,0 +1,407 @@
+@font-face {
+  font-family: 'PixelFont';
+  src: url('/assets/game-kitty-farmer/fonts/VT323-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- CONTENEDOR GENERAL ---- */
+.container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+}
+
+/* ---- PANEL ---- */
+.panel {
+  background: #000;
+  border: 3px solid #fff;
+  width: 92%;
+  max-width: 520px;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* ---- HEADER ---- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px 6px;
+}
+
+.profile {
+  image-rendering: pixelated;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
+.enemyName {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.questionCount {
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ---- DIVIDER ---- */
+.divider {
+  border-top: 2px solid #fff;
+  margin: 0 12px;
+}
+
+/* ---- STATEMENT ---- */
+.statement {
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  min-height: 48px;
+}
+
+/* ---- OPTIONS ---- */
+.options {
+  display: flex;
+  padding: 10px 12px;
+}
+
+.option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.selected {
+  color: #ff0;
+}
+
+.unselected {
+  color: #fff;
+}
+
+.cursor {
+  color: #ff0;
+  font-size: 14px;
+}
+
+/* ---- RESULT MODAL ---- */
+.resultContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.resultPanel {
+  background: #000;
+  border: 3px solid #fff;
+  width: 92%;
+  max-width: 520px;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  padding: 12px 14px;
+  box-sizing: border-box;
+}
+
+.resultPanel {
+  animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.resultTitle {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.correct {
+  color: #4ade80;
+}
+
+.incorrect {
+  color: #f87171;
+}
+
+.resultText {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #ddd;
+  margin-bottom: 12px;
+}
+
+.resultActions {
+  text-align: right;
+}
+
+.resultButton {
+  background: #000;
+  border: 2px solid #fff;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  padding: 6px 16px;
+  cursor: pointer;
+}
+
+/* ---- END MODAL (victory / gameover) ---- */
+
+.endOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.endPanel {
+  background: #000;
+  border: 3px solid #fff;
+  width: 80%;
+  max-width: 380px;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+  padding: 20px 24px;
+  text-align: center;
+  box-sizing: border-box;
+  animation: popIn 0.2s ease;
+}
+
+.endTitle {
+  font-size: 15px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.victory {
+  color: #4ade80;
+}
+
+.gameover {
+  color: #f87171;
+}
+
+.endMessage {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #ddd;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.endButton {
+  background: #000;
+  border: 2px solid #fff;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+/* --- animación --- */
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* --- QUESTION COUNTER --- */
+
+.hud-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.hud-icon {
+  background: #070707;
+  border: 4px solid #d97b2d;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 5px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-icon img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.hud-count {
+  color: #edebeb;
+  font-size: 0.75rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+/* --- PANEL DE INFORMACIÓN --- */
+
+.panel-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.94);
+}
+
+/* CAJA */
+.panel-box {
+  background: #000;
+  border: 3px solid #fff;
+  width: 82%;
+  max-width: 500px;
+  padding: 20px 24px;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+  color: #fff;
+}
+
+/* TITULO */
+.panel-title {
+  color: #ff6600;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+
+/* CONTENIDO */
+.panel-content {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #ddd;
+  margin-bottom: 18px;
+}
+
+/* ESPACIADO */
+.panel-spacer {
+  height: 6px;
+}
+
+/* BOTÓN */
+.panel-actions {
+  text-align: right;
+}
+
+.panel-button {
+  background: #000;
+  border: 2px solid #ff6600;
+  color: #ff6600;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  padding: 6px 18px;
+  cursor: pointer;
+}
+
+.panel-button:hover {
+  background: #ff6600;
+  color: #000;
+}
+
+/* --- AUDIO --- */
+
+.audio-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 10px;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.audio-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: all;
+}
+
+.audio-button {
+  background: #070707;
+  border: 2px solid #d97b2d;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.audio-icon {
+  width: 1rem;
+  height: 1rem;
+  image-rendering: pixelated;
+}
+
+/* 🔥 estado desactivado */
+.audio-disabled {
+  opacity: 0.3;
+}
+
+/* opcional: hover retro */
+.audio-button:hover {
+  filter: brightness(1.4);
+}
+
+/* --- CONTENEDOR PRINCIPAL DEL JUEGO --- */
+
+.gameVerdictale_container {
+  position: relative;
+  width: 100%;
+  height: 70vh; /* ya lo tenías */
+  min-height: 52rem; /* ✅ evita shrink/resize visual */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* el div donde Phaser mete el canvas */
+
+.gameMount {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hides visually and still accessible */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

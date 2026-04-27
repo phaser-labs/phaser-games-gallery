@@ -10,6 +10,7 @@ import {
   GameMiauFarmPage,
   GameQuizFlight,
   GameReorganize,
+  GameVerdictalePage,
   Home,
   MisteryModeGame,
   PoolQuestionPage,
@@ -122,5 +123,10 @@ export const paths: PathType[] = [
     title: 'Space Typer',
     path: '/space-typer',
     component: <SpaceTyperPage />
+  },
+  {
+    title: 'Verdictale',
+    path: '/verdictale',
+    component: <GameVerdictalePage />
   }
 ];
